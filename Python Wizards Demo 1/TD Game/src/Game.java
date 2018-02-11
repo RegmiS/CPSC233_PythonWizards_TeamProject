@@ -1,12 +1,20 @@
 
 import javafx.animation.PathTransition;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
-import javafx.scene.layout.Pane;
 
 // game runs after the menu
 public class Game extends Application {
@@ -20,14 +28,36 @@ public class Game extends Application {
 		
 	}
 	
+	
+	
+	
+	
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws InterruptedException {
     	Path path = createPath();
     	spawnBase();
+    	
+    	Button twr = placeTower();
+        twr.setLayoutX(GameMenu.getWidth() - 200); // distance from the edge of the screen
+        twr.setLayoutY(0);
+    	
+    	canvas.getChildren().addAll(
+    			path,
+    			twr);
+    	primaryStage.setScene(scene);
+    	primaryStage.show();
+    	
+        
+        
+    	
+    	placeTower();
+    			
     	spawnEnemies(path);
-    	canvas.getChildren().add(path);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    	//placeTower();
+    	primaryStage.show();
+    	Thread.sleep(50);
+    	
+    		
     }
     
     // creates the path to be followed by the enemies
@@ -54,7 +84,7 @@ public class Game extends Application {
     
     // spawns the base for now, in the future base might be its own class
     public static void spawnBase() {
-    	Rectangle base = new Rectangle(50, 50, Color.BLACK);
+    	Rectangle base = new Rectangle(50, 50, Color.BLUE);
     	base.setX(1150);
     	base.setY(600);
     	canvas.getChildren().add(base);
@@ -63,7 +93,7 @@ public class Game extends Application {
     // creates the PathTransition and returns it
     public static PathTransition createTransition(Path path) {
     	PathTransition transition = new PathTransition();
-    	transition.setDuration(Duration.seconds(25.0));
+    	transition.setDuration(Duration.seconds(5.0));
     	transition.setPath(path);
 		return transition;
     }
@@ -72,9 +102,25 @@ public class Game extends Application {
     public static void spawnEnemies(Path path){
     	PathTransition transition = createTransition(path);
     	Enemy e1 = new Enemy(Color.RED, canvas, path, transition );
+    	//Enemy e2 = new Enemy(Color.BLUE, canvas, path, transition );
     	
-    
-
     }
+    
+    
+    public static Button placeTower() 
+    {
+    	Button twr = new Button("Place Tower");
+        twr.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+            	System.out.println("Tower Coming Soon");
+            }
+        });
+        
+        return twr;
+    
+    }
+    
     
 }
