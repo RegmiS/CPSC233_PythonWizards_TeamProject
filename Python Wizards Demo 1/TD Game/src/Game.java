@@ -31,15 +31,14 @@ public class Game extends Application {
 	
 	
 	
-	
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
     	Path path = createPath();
     	spawnBase();
     	
     	Button twr = placeTower();
-        twr.setLayoutX(GameMenu.getWidth() - 200); // distance from the edge of the screen
-        twr.setLayoutY(0);
+        twr.setLayoutX(GameMenu.getWidth() - 200);  // distance from the edge of the screen
+        twr.setLayoutY(0);							// distance from the top
     	
     	canvas.getChildren().addAll(
     			path,
@@ -47,13 +46,10 @@ public class Game extends Application {
     	primaryStage.setScene(scene);
     	primaryStage.show();
     	
-        
-        
-    	
-    	placeTower();
+		
     			
     	spawnEnemies(path);
-    	//placeTower();
+    	
     	primaryStage.show();
     	Thread.sleep(50);
     	
@@ -114,7 +110,25 @@ public class Game extends Application {
  
             @Override
             public void handle(ActionEvent event) {
-            	System.out.println("Tower Coming Soon");
+            	canvas.setOnMousePressed(new EventHandler<MouseEvent>()
+        		{
+        		    @Override
+        		    public void handle(MouseEvent event) 
+        		    {
+        		    	
+        		    	double xc = event.getSceneX();
+        		    	double yc = event.getSceneY();
+        		    	Tower t1 = new Tower(xc,yc,Color.ROYALBLUE, canvas);
+        		    	
+        		    	//Tower(event.getSceneX(), event.getSceneY());
+        		    	System.out.println(event.getSceneX());
+        		        System.out.println(event.getSceneY());
+        		        //double xcoord = event.getSceneX();
+        				//double ycoord = event.getSceneY();
+        		    }  
+        		});
+            	
+            	//Tower t1 = new Tower(Color.ROYALBLUE, canvas);
             }
         });
         
