@@ -15,5 +15,3 @@ what we are currently working on:
 - assigning the base health
 - a point system for placing towers
 - a new background (using squares like a grid for placing towers)
-
-TEST EDIT
