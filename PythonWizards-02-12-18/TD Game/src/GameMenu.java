@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 
 public class GameMenu extends Application {
 	
-	//private final int WIDTH = 1280, HEIGHT = 720; //Set window dimensions
 	private static int WIDTH = 1280, HEIGHT = 720; //Set window dimensions
 
 	public static int getWidth() {
