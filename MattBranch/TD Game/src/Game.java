@@ -40,6 +40,10 @@ public class Game extends Application {
         twr.setLayoutX(GameMenu.getWidth() - 200);  // distance from the edge of the screen
         twr.setLayoutY(0);							// distance from the top
     	
+        
+        
+        
+        
     	canvas.getChildren().addAll(
     			path,
     			twr);

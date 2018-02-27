@@ -18,7 +18,9 @@ public class Enemy extends Application {
 	private int health = 50;
 	private int damage = 30;
 	
-	
+	public void setHealth(int dmg) {
+		this.health = health - dmg;
+	}
     // Constructor creates a circle for each enemy created and will later use startCords and path to enter the screen
 	public Enemy(Color color, Pane canvas, Path path, PathTransition transition ) {
     	this.circle = new Circle(5,color);

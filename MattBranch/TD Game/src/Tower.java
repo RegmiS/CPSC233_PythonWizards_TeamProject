@@ -3,12 +3,15 @@ import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
@@ -25,31 +28,42 @@ import javafx.stage.Stage;
 
 public class Tower extends Application {
 	
-	private Rectangle rectangle;
+	private Rectangle tower;
+	private Circle aimRadius;
 	//private int rateOfFire = 1;
 	//private int damage = 5;
 	//private int health = 10;
 	private double xcoord;
 	private double ycoord;
+	private int range = 50;
 	
 	
-
+	public int getRange(){return range;}
 	
 	public Tower(double xc, double yc,Color color, Pane canvas) {
 		//getCoord(canvas);
+		this.tower = new Rectangle(20, 20, color);
+		this.tower.setLayoutX(xc);
+		this.tower.setLayoutY(yc);
 		
-		this.rectangle = new Rectangle(25, 25, color);
-		this.rectangle.setLayoutX(xc);
-		this.rectangle.setLayoutY(yc);
 		
-		canvas.getChildren().add(this.rectangle);
+		this.aimRadius = new Circle(range, Color.CRIMSON);
+		this.aimRadius.setLayoutX(xc+10);
+		this.aimRadius.setLayoutY(yc+10);
+		
+		Missle mis = new Missle();
+		
+		canvas.getChildren().addAll(this.aimRadius,this.tower, mis);
     	
-		
 		
 	}
 	
 	
-	
+	public void inRange() {
+		Canvas hit = new Canvas();
+		//hit.addEventFilter(EventType <>, arg1);
+		
+	}
 	
 	@Override
 	public void start(Stage arg0) throws Exception {
