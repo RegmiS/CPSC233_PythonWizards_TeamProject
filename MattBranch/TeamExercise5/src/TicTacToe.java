@@ -70,23 +70,38 @@ public class TicTacToe {
 	}
 	
 	/**
-	 * checks the win if the win condition has been met, only works for 3x3!!
-	 *  @return true if no one has won, false if some has won
+	 * checks the win if the win condition has been met
+	 * for larger board sizes i have decided to make the win condition a 3 in a row anywhere on the board
+	 *  @return true if no one has won, false if someone has won
 	 */
 	public boolean checkWin() {
-		for(int i = 0; i<3;i++) {
-			if(this.board[i][0] == this.board[i][1] && this.board[i][0] == this.board[i][2] && this.board[i][0] != -1) {
-				return false;
-			}else if(this.board[0][i] == this.board[1][i] && this.board[0][i] == this.board[2][i] && this.board[0][i] != -1) {
-				return false;
+		
+		//Checks Horizontal or Vertical win
+		
+		for(int i = 0; i<this.gameSize;i++) {
+			for(int j = 0; j<this.gameSize - 2;j++) {
+				if(this.board[i][j] == this.board[i][j+1] && this.board[i][j] == this.board[i][j+2] && this.board[i][j] != -1) {
+					return false;
+				}else if(this.board[j][i] == this.board[j+1][i] && this.board[j][i] == this.board[j+2][i] && this.board[j][i] != -1) {
+					return false;
+				}
 			}
 		}
-		
-		if(this.board[0][0] == this.board[1][1] && this.board[0][0] == this.board[2][2] && this.board[0][0] != -1) {
-			return false;
+		//Checks right/down diagonal win
+		for(int i = 0; i < this.gameSize -2;i++) {
+			for(int j= 0; j < this.gameSize - 2; j++) {
+				if(this.board[i][j] == this.board[i+1][j+1] && this.board[i][j] == this.board[i+2][j+2] && this.board[i][j] != -1) {
+					return false;
+				}
+			}
 		}
-		if(this.board[2][0] == this.board[1][1] && this.board[2][0] == this.board[0][2] && this.board[2][0] != -1) {
-			return false;
+		//checks left/up diagonal win
+		for(int i = this.gameSize-1; i > 1;i--) {
+			for(int j = 0; j < this.gameSize-2; j++) {
+				if(this.board[i][j] == this.board[i-1][j+1] && this.board[i][j] == this.board[i-2][j+2] && this.board[i][j] != -1) {
+					return false;
+				}
+			}
 		}
 		
 		return true;
