@@ -22,9 +22,7 @@ public class Main extends Application
         primaryStage.setScene(new Scene(createBoard(board)));
         primaryStage.show();
         board.printBoard();
-        
-       
-        
+ 
 	}
 	
 	

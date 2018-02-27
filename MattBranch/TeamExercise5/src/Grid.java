@@ -7,10 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
-/**
- * @author Matt
- *
- */
+
 public class Grid extends StackPane{
 		
 		/**Grid

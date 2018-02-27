@@ -1,14 +1,9 @@
 
-
-/**
- * @author Matt
- *
- */
 public class TicTacToe {
 
-	private int[][] board;   //empty int double arry
+	private int[][] board;   //empty int double array
 	private int turn = 0; 	//Turn counter 0 for x, 1 for O
-	private int gameSize = 6; // change the size of the board
+	private int gameSize = 8; // change the size of the board
 	
 	
 	/**TicTacToe
