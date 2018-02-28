@@ -39,6 +39,13 @@ public class Tower extends Application {
 	
 	
 	public int getRange(){return range;}
+	public void setXcoord(double xc) {
+		this.xcoord = xc;
+	}
+	
+	public void setYcoord(double yc) {
+		this.ycoord = yc;
+	}
 	
 	public Tower(double xc, double yc,Color color, Pane canvas) {
 		//getCoord(canvas);
@@ -46,14 +53,19 @@ public class Tower extends Application {
 		this.tower.setLayoutX(xc);
 		this.tower.setLayoutY(yc);
 		
+		setXcoord(xc);
+		setYcoord(yc);
 		
 		this.aimRadius = new Circle(range, Color.CRIMSON);
 		this.aimRadius.setLayoutX(xc+10);
 		this.aimRadius.setLayoutY(yc+10);
 		
-		Missle mis = new Missle();
+		/*Rectangle mis = new Rectangle(1,1,color.BLACK);
+		mis.setLayoutX(xc);
+		mis.setLayoutY(yc);*/
+		Missle mis = new Missle(xc,yc,canvas);
 		
-		canvas.getChildren().addAll(this.aimRadius,this.tower, mis);
+		canvas.getChildren().addAll(this.aimRadius,this.tower);
     	
 		
 	}
