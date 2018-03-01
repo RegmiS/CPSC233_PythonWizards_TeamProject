@@ -33,15 +33,13 @@ public class Game extends Application {
 	
     @Override
     public void start(Stage primaryStage) throws InterruptedException {
-    	Path path = createPath();
+    /*	Path path = createPath();
     	spawnBase();
     	
     	Button twr = placeTower();
         twr.setLayoutX(GameMenu.getWidth() - 200);  // distance from the edge of the screen
         twr.setLayoutY(0);							// distance from the top
     	
-        
-        
         
         
     	canvas.getChildren().addAll(
@@ -56,9 +54,33 @@ public class Game extends Application {
     	
     	primaryStage.show();
     	Thread.sleep(50);
+    	*/
     	
-    		
+    	createMap();
+    	primaryStage.setScene(new Scene(createMap()));
+        primaryStage.show();
+    	
     }
+    
+    
+    public Pane createMap() {
+    	Pane root = new Pane();
+		root.setPrefSize(500, 500);			//change this to tile size * amount of tiles
+		
+		
+		for(int i = 0; i<50; i++) {			// i < amount of tiles
+			for(int j = 0; j<50; j++) {
+				Tiles grid = new Tiles(j,i);
+				grid.setTranslateX(i*10);
+				grid.setTranslateY(j*10);
+				root.getChildren().add(grid);
+			}
+		}
+		return root;
+    }
+    
+    
+    
     
     // creates the path to be followed by the enemies
     public static Path createPath() {
@@ -102,7 +124,15 @@ public class Game extends Application {
     public static void spawnEnemies(Path path){
     	PathTransition transition = createTransition(path);
     	Enemy e1 = new Enemy(Color.RED, canvas, path, transition );
-    	//Enemy e2 = new Enemy(Color.BLUE, canvas, path, transition );
+    	canvas.setOnMousePressed(new EventHandler<MouseEvent>()
+    			{
+    	@Override
+	    public void handle(MouseEvent event) 
+	    {
+    		System.out.println(e1.getXCoord());
+	    } 
+    	}
+    	);
     	
     }
     
@@ -116,6 +146,8 @@ public class Game extends Application {
             public void handle(ActionEvent event) {
             	canvas.setOnMousePressed(new EventHandler<MouseEvent>()
         		{
+            		
+   
         		    @Override
         		    public void handle(MouseEvent event) 
         		    {
@@ -123,7 +155,7 @@ public class Game extends Application {
         		    	double xc = event.getSceneX();
         		    	double yc = event.getSceneY();
         		    	Tower t1 = new Tower(xc,yc,Color.ROYALBLUE, canvas);
-        		    	
+        		    	//System.out.println(e1.getXCoord());
         		    	//Tower(event.getSceneX(), event.getSceneY());
         		    	System.out.println(event.getSceneX());
         		        System.out.println(event.getSceneY());

@@ -17,6 +17,12 @@ public class Enemy extends Application {
 	private Circle circle;
 	private int health = 50;
 	private int damage = 30;
+	private double xCoord;
+	private double yCoord;
+	
+	public double getXCoord() {
+		return this.circle.getCenterX();
+	}
 	
 	public void setHealth(int dmg) {
 		this.health = health - dmg;

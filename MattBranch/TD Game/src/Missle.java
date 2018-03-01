@@ -8,7 +8,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import sun.font.CreatedFontTracker;
+
 import javafx.application.Application;
 
 public class Missle{
