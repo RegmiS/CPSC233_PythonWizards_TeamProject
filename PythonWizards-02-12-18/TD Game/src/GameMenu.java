@@ -4,23 +4,26 @@ import java.io.FileNotFoundException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class GameMenu extends Application {
+	
 	
 	private static int WIDTH = 1280, HEIGHT = 720; //Set window dimensions
 
 	public static int getWidth() {
 		return WIDTH;
 	}
-	public static int getHeight() {
+	public static int getHeight() { 
 		return HEIGHT;
 	}
 	
@@ -39,12 +42,17 @@ public class GameMenu extends Application {
 		Label title = new Label("Tower Defence Game");
 		title.setFont(new Font("Arial", 65));
 		
-		Pane canvas = new Pane();
-		canvas.setPrefSize(WIDTH, HEIGHT); //Set window size 
-		Scene scene = new Scene(canvas);
+		GridPane canvas = new GridPane();
+		canvas.setHgap(10);
+		canvas.setVgap(10);
+		canvas.setPadding(new Insets(10, 10, 10, 10));
+		//canvas.setPrefSize(WIDTH, HEIGHT); //Set window size 
+		Scene scene = new Scene(canvas, 300, 200);
+		
+		GridPane.setConstraints(title, 10, 20);
 		
 		canvas.getChildren().addAll( //Place images, buttons, etc. on canvas
-				backgroundImage("grass.jpg"),
+				//backgroundImage("grass.jpg"),
 				title,
 				playButton, 
 				helpButton, 
@@ -53,6 +61,10 @@ public class GameMenu extends Application {
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		
+		canvas.add(playButton, 10, 10);
+		canvas.add(helpButton, 10, 20);
+		canvas.add(exitButton, 10, 30);
+				
 		
 		playButton.setOnAction(new EventHandler<ActionEvent>() {
 			//Play button Event handler, will call next Game state when pressed
@@ -100,12 +112,12 @@ public class GameMenu extends Application {
 			
 		});
 
-		playButton.setLayoutX((WIDTH / 2) - 100);
-		playButton.setLayoutY(HEIGHT / 2);
-		helpButton.setLayoutX(WIDTH / 2);
-		helpButton.setLayoutY(HEIGHT / 2);
-		exitButton.setLayoutX((WIDTH / 2) + 100);
-		exitButton.setLayoutY(HEIGHT / 2);
+		//playButton.setLayoutX((WIDTH / 2) - 100);
+		//playButton.setLayoutY(HEIGHT / 2);
+		//helpButton.setLayoutX(WIDTH / 2);
+		//helpButton.setLayoutY(HEIGHT / 2);
+		//exitButton.setLayoutX((WIDTH / 2) + 100);
+		//exitButton.setLayoutY(HEIGHT / 2);
 		title.setLayoutX((WIDTH / 2) - 300); //Placeholder position 
 		title.setLayoutY((HEIGHT / 2) - 100);
 		
