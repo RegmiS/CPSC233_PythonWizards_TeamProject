@@ -1,11 +1,14 @@
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.LineTo;
@@ -33,11 +36,10 @@ public class GridVersionGame extends Application{
 	
 	@Override 
 	public void start(Stage stage) throws Exception {
-		Path path = createPath();		
-		gridpane = new GridPane();
-		
+		gridpane = new GridPane();	
+
 		//gridpane.setPadding(new Insets(10, 10, 10, 10));
-		gridpane.setGridLinesVisible(true);
+		//gridpane.setGridLinesVisible(true);
 
 		//Grid builder - Creates a grid of Rectangles, each rectangle is a StackPane node with its own texture 	
 		for (int col = 0; col < ((WIDTH)/ TILE_SIZE); col++) {
@@ -57,37 +59,29 @@ public class GridVersionGame extends Application{
 				gridpane.getChildren().addAll(stackpane);
 			}
 		}
+		//
+		
+
+		
+		//Side menu
+		BorderPane borderpane = new BorderPane();
+		VBox menubar = new VBox(10);
+		menubar.getChildren().addAll(new Button("Test1"), new Button("Test2"), new Button("Test3"));
+		borderpane.setRight(menubar);
+		GridPane.setRowIndex(borderpane, 0);
+		GridPane.setColumnIndex(borderpane, 24);
+		gridpane.getChildren().addAll(borderpane);
+		//
+		
 		
 		//gridpane.getChildren().addAll(path); //Adds pathing method to grid(not working currently)
-
+		
 		scene = new Scene(gridpane, WIDTH, HEIGHT);
 		
 		stage.setTitle("The Python Wizards");
 		stage.setScene(scene);
 		stage.show();
 	}
-	
-    // creates the path to be followed by the enemies
-    public static Path createPath() {
-    	Path path = new Path();;
-    	MoveTo move1 = new MoveTo();
-    	move1.setX(0);
-    	move1.setY(100);
-    	LineTo line1 = new LineTo();
-    	line1.setX(800);
-    	line1.setY(100);
-    	LineTo line2 = new LineTo();
-    	line2.setX(800);
-    	line2.setY(300);
-    	LineTo line3 = new LineTo();
-    	line3.setX(50);
-    	line3.setY(300);
-    	LineTo line4 = new LineTo();
-    	line4.setX(1150);
-    	line4.setY(625);
-    	path.getElements().addAll(move1, line1, line2, line3, line4);
-		return path;
-    }
     
 	
 	public static void main(String[] args) {
