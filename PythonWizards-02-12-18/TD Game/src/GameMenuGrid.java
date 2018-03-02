@@ -82,10 +82,12 @@ public class GameMenuGrid extends Application {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					Game game = new Game(canvas, scene);
+					GridVersionGame game = new GridVersionGame(canvas, scene);
 					try {
+						System.out.println("Loading...");	
 						game.start(primaryStage);
-					} catch (InterruptedException e) {
+						System.out.println("Done");
+					} catch (Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}

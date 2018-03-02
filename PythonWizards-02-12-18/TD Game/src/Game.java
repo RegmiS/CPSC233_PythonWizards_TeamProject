@@ -3,11 +3,12 @@ import javafx.animation.PathTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
@@ -37,9 +38,8 @@ public class Game extends Application {
     	spawnBase();
     	
     	Button twr = placeTower();
-        twr.setLayoutX(GameMenu.getWidth() - 200);  // distance from the edge of the screen
-        twr.setLayoutY(0);							// distance from the top
-    	
+        GridPane.setConstraints(twr, 0, 0);
+    	GridPane.setHalignment(twr, HPos.CENTER);
     	canvas.getChildren().addAll(
     			path,
     			twr);
