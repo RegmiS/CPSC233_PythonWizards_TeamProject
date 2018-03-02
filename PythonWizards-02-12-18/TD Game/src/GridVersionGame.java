@@ -8,6 +8,7 @@ import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -45,46 +46,27 @@ public class GridVersionGame extends Application{
 		//gridpane.setPadding(new Insets(10, 10, 10, 10));
 		//gridpane.setGridLinesVisible(true);
 
-		//Grid builder - Creates a grid of Rectangles, each rectangle is a StackPane node with its own texture 	
-		for (int col = 0; col < ((WIDTH)/ TILE_SIZE); col++) {
-			for (int row = 0; row < ((HEIGHT)/ TILE_SIZE); row++) {
-				//StackPane stackpane = new StackPane();
-				FileInputStream inputstream = new FileInputStream("res/images/grass.jpg"); 
-				Image texture = new Image(inputstream);
-				Rectangle rec = new Rectangle();
-				ImagePattern texturePattern = new ImagePattern(texture);
-				rec.setId(Integer.toString(col) + ", " + Integer.toString(row)); //Assign Id to each node
-				rec.setHeight(TILE_SIZE);
-				rec.setWidth(TILE_SIZE);
-				rec.setFill(texturePattern);
-				rec.setStroke(Color.BLACK);
-				System.out.println(rec.getId());
-				//stackpane.getChildren().addAll(rec);
-				GridPane.setRowIndex(rec, row);
-				GridPane.setColumnIndex(rec, col);
-				gridpane.getChildren().addAll(rec);
-			}
-		}
-		//
+		drawGrid();
+		spawnBase();
 		
 		Button twr = placeTower();
         GridPane.setConstraints(twr, 0, 1);
         GridPane.setColumnSpan(twr, 2);
     	gridpane.getChildren().addAll(twr);
 		
-		spawnBase();
 		
 		//Enemy path
-		enemyPathH("right", 2, 0, 5);
-		enemyPathV("down", 2, 5, 5);
-		enemyPathH("left", 7, 5, 3);
-		enemyPathV("down", 7, 2, 3);
-		enemyPathH("right", 10, 2, 10);
-		enemyPathV("up", 10, 12, 5);
-		enemyPathH("right", 5, 12, 12);
+		enemyPath("right", 2, 0, 5);
+		enemyPath("down", 2, 5, 5);
+		enemyPath("left", 7, 5, 3);
+		enemyPath("down", 7, 2, 3);
+		enemyPath("right", 10, 2, 10);
+		enemyPath("up", 10, 12, 5);
+		enemyPath("right", 5, 12, 12);
 		//
 		
 		//Side menu - WIP
+		/*
 		BorderPane borderpane = new BorderPane();
 		VBox menubar = new VBox(10);
 		menubar.getChildren().addAll(new Button("Test1"), new Button("Test2"), new Button("Test3"));
@@ -92,7 +74,7 @@ public class GridVersionGame extends Application{
 		GridPane.setRowIndex(borderpane, 0);
 		GridPane.setColumnIndex(borderpane, 24);
 		gridpane.getChildren().addAll(borderpane);
-		//
+		*/
 		
 		
 		//gridpane.getChildren().addAll(path); //Adds pathing method to grid(not working currently)
@@ -104,48 +86,77 @@ public class GridVersionGame extends Application{
 		stage.show();
 	}
 	
-	public void enemyPathH(String direction, int row, int col, int Hlength) {
-		if (direction == "right") {
-		for (int i = col; i < (Hlength + col); i++) {
-				Rectangle enemypathH = new Rectangle(TILE_SIZE, TILE_SIZE);
-				enemypathH.setFill(Color.BROWN);
-				GridPane.setRowIndex(enemypathH, row);
-				GridPane.setColumnIndex(enemypathH, i);
-				gridpane.getChildren().addAll(enemypathH);
-			}
-		}
-		if (direction == "left") {
-			for (int i = col; i > (col - Hlength); i--) {
-				Rectangle enemypathH = new Rectangle(TILE_SIZE, TILE_SIZE);
-				enemypathH.setFill(Color.BROWN);
-				GridPane.setRowIndex(enemypathH, row);
-				GridPane.setColumnIndex(enemypathH, i);
-				gridpane.getChildren().addAll(enemypathH);
+	public void drawGrid() throws FileNotFoundException {
+		//Grid builder - Creates a grid of Rectangles, each rectangle is a StackPane node with its own texture 	
+		for (int col = 0; col < ((WIDTH)/ TILE_SIZE); col++) {
+			for (int row = 0; row < ((HEIGHT)/ TILE_SIZE); row++) {
+				Rectangle rec = new Rectangle(TILE_SIZE, TILE_SIZE);
+				ImagePattern texturePattern = new ImagePattern(backgroundImage("grass.jpg"));
+				rec.setId(Integer.toString(col) + ", " + Integer.toString(row)); //Assign Id to each node
+				rec.setFill(texturePattern);
+				rec.setStroke(Color.BLACK);
+				System.out.println(rec.getId());
+				GridPane.setRowIndex(rec, row);
+				GridPane.setColumnIndex(rec, col);
+				gridpane.getChildren().addAll(rec);
 			}
 		}
 	}
 	
-	public void enemyPathV(String direction, int row, int col, int Vlength) {
+	public void enemyPath(String direction, int row, int col, int length) {
+		if (direction == "right") {
+		for (int i = col; i < (length + col); i++) {
+				Rectangle enemypath = new Rectangle(TILE_SIZE, TILE_SIZE);
+				enemypath.setFill(Color.BROWN);
+				GridPane.setRowIndex(enemypath, row);
+				GridPane.setColumnIndex(enemypath, i);
+				gridpane.getChildren().addAll(enemypath);
+			}
+		}
+		if (direction == "left") {
+			for (int i = col; i > (col - length); i--) {
+				Rectangle enemypath = new Rectangle(TILE_SIZE, TILE_SIZE);
+				enemypath.setFill(Color.BROWN);
+				GridPane.setRowIndex(enemypath, row);
+				GridPane.setColumnIndex(enemypath, i);
+				gridpane.getChildren().addAll(enemypath);
+			}
+		}
 		if (direction == "up") {
-			for (int i = row; i > (row - Vlength); i--) {
-				Rectangle enemypathV = new Rectangle(TILE_SIZE, TILE_SIZE);
-				enemypathV.setFill(Color.BROWN);
-				GridPane.setRowIndex(enemypathV, i);
-				GridPane.setColumnIndex(enemypathV, col);
-				gridpane.getChildren().addAll(enemypathV);
+			for (int i = row; i > (row - length); i--) {
+				Rectangle enemypath = new Rectangle(TILE_SIZE, TILE_SIZE);
+				enemypath.setFill(Color.BROWN);
+				GridPane.setRowIndex(enemypath, i);
+				GridPane.setColumnIndex(enemypath, col);
+				gridpane.getChildren().addAll(enemypath);
 
 			}
 		}
+		
 		if (direction == "down") {
-			for (int i = row; i < (Vlength + row); i++) {
-				Rectangle enemypathV = new Rectangle(TILE_SIZE, TILE_SIZE);
-				enemypathV.setFill(Color.BROWN);
-				GridPane.setRowIndex(enemypathV, i);
-				GridPane.setColumnIndex(enemypathV, col);
-				gridpane.getChildren().addAll(enemypathV);
+			for (int i = row; i < (length + row); i++) {
+				Rectangle enemypath = new Rectangle(TILE_SIZE, TILE_SIZE);
+				enemypath.setFill(Color.BROWN);
+				GridPane.setRowIndex(enemypath, i);
+				GridPane.setColumnIndex(enemypath, col);
+				gridpane.getChildren().addAll(enemypath);
 
 			}
 		}
+	}
+	
+	public Image backgroundImage(String filename) throws FileNotFoundException {
+		/*
+		 * Takes image filename from "res/images/" directory and sets it as window background 
+		 */
+		FileInputStream inputStream = new FileInputStream("res/images/" + filename);
+		Image image = new Image(inputStream);
+		ImageView imageView = new ImageView(image);
+		imageView.setFitWidth(TILE_SIZE); 
+		imageView.setFitHeight(TILE_SIZE);
+		
+		return image;
+		
 	}
 	
     public static void spawnBase() {
@@ -169,7 +180,7 @@ public class GridVersionGame extends Application{
         		    	
         		    	double xc = event.getSceneX();
         		    	double yc = event.getSceneY();
-        		    	Tower t1 = new Tower(xc,yc,Color.ROYALBLUE, gridpane);
+        		    	Tower t1 = new Tower(xc,yc,Color.RED, gridpane);
         		    	
         		    	//Tower(event.getSceneX(), event.getSceneY());
         		    	System.out.println(event.getSceneX());
