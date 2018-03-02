@@ -1,5 +1,6 @@
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -15,13 +16,17 @@ public class Tower extends Application {
 	//private int damage = 5;
 	//private int health = 10;
 	
-	public Tower(int xc, int yc,Color color, Pane canvas) {
-		//getCoord(canvas);
-		
-		this.rectangle = new Rectangle(25, 25, color);
-		GridPane.setConstraints(this.rectangle, xc, yc);
-		GridPane.setHalignment(this.rectangle, HPos.CENTER);
-		canvas.getChildren().add(this.rectangle);		
+	public Tower(int xc, int yc,Color color, Pane canvas)  {
+		Platform.runLater(new Runnable() {
+			@Override 
+			public void run() { //From https://stackoverflow.com/a/17395191/8645685
+				rectangle = new Rectangle(25, 25, color);
+				GridPane.setConstraints(rectangle, xc, yc);
+				GridPane.setHalignment(rectangle, HPos.CENTER);
+				canvas.getChildren().add(rectangle);
+			}
+		});
+				
 	}
 	
 	@Override

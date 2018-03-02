@@ -100,6 +100,9 @@ public class GridVersionGame extends Application{
 	}
 	
 	public void enemyPath(String direction, int row, int col, int length) {
+		/*
+		 * Creates a horizontal/vertical path for enemies to move on
+		 */
 		if (direction == "right") {
 		for (int i = col; i < (length + col); i++) {
 				Rectangle enemypath = new Rectangle(TILE_SIZE, TILE_SIZE);
@@ -175,10 +178,10 @@ public class GridVersionGame extends Application{
                         @Override
                         public void handle(MouseEvent e) {
                         	
-                            for( Node node: gridpane.getChildren()) {
-                                if( node instanceof Rectangle) {
-                                    if( node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY())) {
-                                        System.out.println( "Node: at " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex( node));
+                            for(Node node: gridpane.getChildren()) {
+                                if(node instanceof Rectangle) {
+                                    if(node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY())) {
+                                        System.out.println( "Node: at " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
                                     	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), Color.RED, gridpane);
                                     	
                                     }
@@ -186,23 +189,6 @@ public class GridVersionGame extends Application{
                             }
                         }
                     });
-        		    /*@Override
-        		    public void handle(MouseEvent event) 
-        		    {
-        		    	
-        		    	double xc = event.getSceneX();
-        		    	double yc = event.getSceneY();
-        		    
-        		    	
-        		    	//Tower(event.getSceneX(), event.getSceneY());
-        		    	System.out.println(event.getSceneX());
-        		        System.out.println(event.getSceneY());
-        		        //double xcoord = event.getSceneX();
-        				//double ycoord = event.getSceneY();
-        		    }  
-        		});*/
-            	
-            	//Tower t1 = new Tower(Color.ROYALBLUE, canvas);
             }
         });
         
