@@ -4,21 +4,15 @@ import java.io.FileNotFoundException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
@@ -84,6 +78,8 @@ public class GridVersionGame extends Application{
 		stage.setTitle("The Python Wizards");
 		stage.setScene(scene);
 		stage.show();
+	
+		
 	}
 	
 	public void drawGrid() throws FileNotFoundException {
@@ -172,15 +168,31 @@ public class GridVersionGame extends Application{
  
             @Override
             public void handle(ActionEvent event) {
-            	gridpane.setOnMousePressed(new EventHandler<MouseEvent>()
-        		{
-        		    @Override
+//            	gridpane.setOnMousePressed(new EventHandler<MouseEvent>()
+  //      		{
+            		
+            		gridpane.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {  //From https://stackoverflow.com/questions/28320110/javafx-how-to-get-column-and-row-index-in-gridpane
+                        @Override
+                        public void handle(MouseEvent e) {
+                        	
+                            for( Node node: gridpane.getChildren()) {
+                                if( node instanceof Rectangle) {
+                                    if( node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY())) {
+                                        System.out.println( "Node: at " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex( node));
+                                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), Color.RED, gridpane);
+                                    	
+                                    }
+                                }
+                            }
+                        }
+                    });
+        		    /*@Override
         		    public void handle(MouseEvent event) 
         		    {
         		    	
         		    	double xc = event.getSceneX();
         		    	double yc = event.getSceneY();
-        		    	Tower t1 = new Tower(xc,yc,Color.RED, gridpane);
+        		    
         		    	
         		    	//Tower(event.getSceneX(), event.getSceneY());
         		    	System.out.println(event.getSceneX());
@@ -188,7 +200,7 @@ public class GridVersionGame extends Application{
         		        //double xcoord = event.getSceneX();
         				//double ycoord = event.getSceneY();
         		    }  
-        		});
+        		});*/
             	
             	//Tower t1 = new Tower(Color.ROYALBLUE, canvas);
             }
