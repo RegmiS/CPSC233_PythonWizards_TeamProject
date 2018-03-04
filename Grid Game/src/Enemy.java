@@ -17,20 +17,25 @@ public class Enemy extends Application {
 	private Circle circle;
 	private int health = 50;
 	private int damage = 30;
+	private int type;
 	
 	
     // Constructor creates a circle for each enemy created and will later use startCords and path to enter the screen
-	public Enemy(Color color, Pane canvas, Path path, PathTransition transition ) {
-    	this.circle = new Circle(5,color);
-    	if (color == Color.BLUE) {
+	public Enemy(int type, Pane pane, Path path, PathTransition transition ) {
+		if (type == 1)
+    		this.circle = new Circle(5, Color.RED);
+		else if (type == 2) {
+    		this.circle = new Circle(5, Color.BLUE);
     		this.health = this.health * 2;
     		this.damage = this.damage * 2;
     	} 
-    	else if (color == Color.GREEN) {
+    	else if (type == 3) {
+    		this.circle = new Circle(5, Color.GREEN);
     		this.health = this.health * 4;
     		this.damage = this.damage * 4;
-    	}	
-    	canvas.getChildren().add(this.circle);
+    	}
+    	
+    	pane.getChildren().add(this.circle);
     	transition.setNode(this.circle);
 //    	transition.setOnFinished(this.homeBase(base, canvas)); to be used when we have a base class setup
     	transition.play();
