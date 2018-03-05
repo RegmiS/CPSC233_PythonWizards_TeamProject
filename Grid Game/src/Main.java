@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.ArrayList;
 
 public class Main {
-
+	
+	// all the static variables that are used throughout the game itself
     public static int HEALTH = 0;
     public static int LEVEL = 0;
     public static int ENEMIES = 0;
@@ -13,9 +14,11 @@ public class Main {
     private static int TILE_SIZE;
     private static int NUM_ROWS;
     private static int NUM_COLOUMS;
-
+    
+    // public arraylist that hosts all of the grid game
     public static ArrayList< ArrayList<String>> textgame;
-
+    
+    // all the getts and setters for the game
     public void setHealth(int healthval) {
         this.HEALTH = healthval;
     }
@@ -26,6 +29,7 @@ public class Main {
         this.ENEMIES = enemieNum;
     }
 
+    // constructor for the class( used in the grid game to create an object of this class)
     public Main(int height, int width, int tile_size) {
         this.HEIGHT = height;
         this.WIDTH = width;
@@ -38,11 +42,13 @@ public class Main {
 
     }
     
+    //returns the game in case it needs to be edited or changed
     public ArrayList<ArrayList<String>> getTextgame()
     {
     	return this.textgame;
     }
 
+    // creates the arraylist to use for the game in the constructor
     public static void createArrayList() {
         for(int a = 0; a < NUM_ROWS; a++)
             textgame.add(new ArrayList<String>());
@@ -54,6 +60,7 @@ public class Main {
         }
     }
 
+    //draws the game using a simple loop
     public static void drawGame() {
     	System.out.println();
         for(int a = 0; a < NUM_ROWS; a++){
@@ -73,6 +80,7 @@ public class Main {
         System.out.println("");
     }
     
+    //editing the game, enemies and paths
     public void editGridTower(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
     	
