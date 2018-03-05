@@ -97,7 +97,7 @@ public class Game extends Application {
     // spawns enemies, in the future will spawn more than one
     public static void spawnEnemies(Path path){
     	PathTransition transition = createTransition(path);
-    	Enemy e1 = new Enemy(Color.RED, canvas, path, transition );
+    	//Enemy e1 = new Enemy(Color.RED, canvas, path, transition );
     	//Enemy e2 = new Enemy(Color.BLUE, canvas, path, transition );
     	
     }
@@ -118,7 +118,7 @@ public class Game extends Application {
         		    	
         		    	double xc = event.getSceneX();
         		    	double yc = event.getSceneY();
-        		    	Tower t1 = new Tower(xc,yc,Color.ROYALBLUE, canvas);
+        		    	//Tower t1 = new Tower(xc,yc,Color.ROYALBLUE, canvas);
         		    	
         		    	//Tower(event.getSceneX(), event.getSceneY());
         		    	System.out.println(event.getSceneX());

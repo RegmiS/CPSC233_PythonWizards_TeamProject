@@ -1,6 +1,9 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -35,6 +38,12 @@ public class GridVersionGame extends Application{
 	public static Timeline timeline;
 	public static int round = 1;
 	public static Enemy reference;
+	public static AnimationTimer timer;
+	public static int framecount = 0;
+	
+	
+	private ArrayList<Enemy> enemyList;
+	public ArrayList<Tower> towerList;
 	
 	
 	public GridVersionGame(GridPane gridpane, Scene scene1) {
@@ -49,14 +58,34 @@ public class GridVersionGame extends Application{
 	@Override 
 	public void start(Stage stage) throws Exception {
 		gridpane = new GridPane();
-
+		this.enemyList = new ArrayList<Enemy>();
+		towerList = new ArrayList<Tower>();
+		
+		
+		timer = new AnimationTimer() {
+			
+			@Override
+			public void handle(long arg0) {
+				// TODO Auto-generated method stub
+				
+				towerList.forEach(Tower -> Tower.checkInRange(enemyList));
+				
+				
+				
+				removeEnemies(enemyList);
+				framecount++;
+			}
+		};
+		
+		
+		
 		//gridpane.setPadding(new Insets(10, 10, 10, 10));
 		//gridpane.setGridLinesVisible(true);
 
 		drawGrid();
 		spawnBase();
 		
-		Button twr = placeTower();
+		Button twr = placeTower(towerList);
         GridPane.setConstraints(twr, 0, 1);
         GridPane.setColumnSpan(twr, 2);
     	gridpane.getChildren().addAll(twr);
@@ -87,7 +116,7 @@ public class GridVersionGame extends Application{
 		*/
 		
 		
-		spawnEnemies(reference, 1); 
+		spawnEnemies(reference, 1, enemyList); 
 		
 		scene = new Scene(gridpane, WIDTH, HEIGHT);
 		
@@ -96,9 +125,31 @@ public class GridVersionGame extends Application{
 		stage.show();
 	
 		
+	
+		timer.start();
+		
+		
 	}
-	public static void spawnEnemies(Enemy reference, int round){
+	
+	public void removeEnemies (ArrayList<Enemy> enemyList) {
+		Iterator<Enemy> iter = enemyList.iterator();
+		while(iter.hasNext()) {
+			Enemy enemy = iter.next();
+			if(enemy.getHealth() < 0) {
+				System.out.println("DEAD");
+				enemy.removeEnemy();
+				iter.remove();
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	public static void spawnEnemies(Enemy reference, int round,ArrayList<Enemy> enemyList){
     	Enemy e1 = new Enemy(1, gridpane, reference, TILE_SIZE);
+    	enemyList.add(e1);
     	//Enemy e2 = new Enemy(Color.BLUE, canvas, path, transition );
 	}
     	
@@ -213,7 +264,7 @@ public class GridVersionGame extends Application{
     	gridpane.getChildren().add(base);
     }
     
-    public static Button placeTower() 
+    public static Button placeTower(ArrayList<Tower> towerList) 
     {
     	Button twr = new Button("Place Tower");
         twr.setOnAction(new EventHandler<ActionEvent>() {
@@ -234,6 +285,7 @@ public class GridVersionGame extends Application{
                                     	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), Color.RED, gridpane);
                                     	textgame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
                                     	textgame.drawGame();
+                                    	towerList.add(t1);
                                     	
                                     }
                                 }

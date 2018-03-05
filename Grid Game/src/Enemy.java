@@ -25,7 +25,7 @@ public class Enemy extends Application {
 	private int radius = 5;
 	private List<int[][]> list;
 	private Enemy reference;
-	
+	private Pane pane;
 	
 	public double getX()
 	{
@@ -54,6 +54,27 @@ public class Enemy extends Application {
 		this.list.add(list);
 	}
 	
+	public Circle getCircle() {return this.circle;}
+	public int getHealth() {return this.health;}
+	
+	public void setHealth(int dmg) {
+		if(health < 0 ) {
+			System.out.println("TEST HEALTH 0");
+		}
+		
+		this.health = this.health - dmg;
+	}
+	
+	public void setPane(Pane pane) {
+		this.pane = pane;
+	}
+	
+	public void removeEnemy() {
+		this.pane.getChildren().remove(this.circle);
+	}
+	
+	
+	
 	public Enemy()
 	{
 		reference = this;
@@ -64,6 +85,9 @@ public class Enemy extends Application {
 	public Enemy(int type, Pane pane, Enemy reference, double TILE_SIZE) {
 		double TILE_ADJ = TILE_SIZE / 2.0;
 	
+		setPane(pane);
+		
+		
 		if (type == 1)
     		this.circle = new Circle(radius, Color.RED);
 		else if (type == 2) {
