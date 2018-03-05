@@ -2,6 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import javafx.animation.PathTransition;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,12 +31,17 @@ public class GridVersionGame extends Application{
 
 	public static GridPane gridpane;
 	public static Scene scene;
-	public static Path path;
+	public static Main textgame;
+	public static Timeline timeline;
+	public static int round = 1;
+	public static Enemy reference;
 	
 	
 	public GridVersionGame(GridPane gridpane, Scene scene1) {
 		GridVersionGame.gridpane = gridpane;
 		scene = scene1;
+		textgame = new Main(HEIGHT, WIDTH, TILE_SIZE);
+		reference = new Enemy();
 		
 	}
 	
@@ -43,7 +49,6 @@ public class GridVersionGame extends Application{
 	@Override 
 	public void start(Stage stage) throws Exception {
 		gridpane = new GridPane();
-		path = new Path();
 
 		//gridpane.setPadding(new Insets(10, 10, 10, 10));
 		//gridpane.setGridLinesVisible(true);
@@ -58,13 +63,16 @@ public class GridVersionGame extends Application{
 		
 		
 		//Enemy path
-		enemyPath("right", 2, 0, 5);
-		enemyPath("down", 2, 5, 5);
-		enemyPath("left", 7, 5, 3);
-		enemyPath("down", 7, 2, 3);
-		enemyPath("right", 10, 2, 10);
-		enemyPath("up", 10, 12, 5);
-		enemyPath("right", 5, 12, 12);
+		enemyPath("right", 2, 0, 5, reference);
+		enemyPath("down", 2, 5, 5, reference);
+		enemyPath("left", 7, 5, 3, reference);
+		enemyPath("down", 7, 2, 3, reference);
+		enemyPath("right", 10, 2, 10, reference);
+		enemyPath("up", 10, 12, 5, reference);
+		enemyPath("right", 5, 12, 12, reference);
+		
+		//
+		textgame.drawGame();
 		//
 		
 		//Side menu - WIP
@@ -79,7 +87,7 @@ public class GridVersionGame extends Application{
 		*/
 		
 		
-		spawnEnemies(path, 1); //Adds pathing method to grid
+		spawnEnemies(reference, 1); 
 		
 		scene = new Scene(gridpane, WIDTH, HEIGHT);
 		
@@ -89,19 +97,10 @@ public class GridVersionGame extends Application{
 	
 		
 	}
-	public static void spawnEnemies(Path path, int round){
-    	PathTransition transition = createTransition(path);
-    	Enemy e1 = new Enemy(1, gridpane, path, transition );
+	public static void spawnEnemies(Enemy reference, int round){
+    	Enemy e1 = new Enemy(1, gridpane, reference, TILE_SIZE);
     	//Enemy e2 = new Enemy(Color.BLUE, canvas, path, transition );
 	}
-	
-	 // creates the PathTransition and returns it
-    public static PathTransition createTransition(Path path) {
-    	PathTransition transition = new PathTransition();
-    	transition.setDuration(Duration.seconds(15.0));
-    	transition.setPath(path);
-		return transition;
-    }
     	
 	
 	public void drawGrid() throws FileNotFoundException {
@@ -124,16 +123,13 @@ public class GridVersionGame extends Application{
 	/*
 	 * Creates a horizontal/vertical path for enemies to move on
 	 */
-	public void enemyPath(String direction, int row, int col, int length) {
-	
-		LineTo line = new LineTo();
-
-		if (direction == "right" && row == 2)
-		{
-		    	path.getElements().add(new MoveTo(0, 2 * TILE_SIZE));
-		}
+	public void enemyPath(String direction, int row, int col, int length, Enemy e1) {
 
 		if (direction == "right") {
+			int[] start = {col, row};
+			int[] end = {col + length, row};
+			int[][] temp = new int[][] {start, end};
+			e1.addList(temp);
 			
 			for (int i = col; i < (length + col); i++) {
 				Rectangle enemypath = new Rectangle(TILE_SIZE, TILE_SIZE);
@@ -141,47 +137,59 @@ public class GridVersionGame extends Application{
 				GridPane.setRowIndex(enemypath, row);
 				GridPane.setColumnIndex(enemypath, i);
 				gridpane.getChildren().addAll(enemypath);
+				textgame.editGridPath(row, i, " ");
 			}
-			line.setX((col + length) * TILE_SIZE + TILE_ADJ );
-			line.setY(row * TILE_SIZE);
 		}
 		if (direction == "left") {
+			
+			int[] start = {col, row};
+			int[] end = {col - length, row};
+			int[][] temp = new int[][] {start, end};
+			e1.addList(temp);
+			
 			for (int i = col; i > (col - length); i--) {
 				Rectangle enemypath = new Rectangle(TILE_SIZE, TILE_SIZE);
 				enemypath.setFill(Color.BROWN);
 				GridPane.setRowIndex(enemypath, row);
 				GridPane.setColumnIndex(enemypath, i);
 				gridpane.getChildren().addAll(enemypath);
+				textgame.editGridPath(row, i, " ");
 			}
-			line.setX((col - length) * TILE_SIZE + TILE_ADJ );
-			line.setY(row * TILE_SIZE);
 		}
 		if (direction == "up") {
+			
+			int[] start = {col, row};
+			int[] end = {col, row - length};
+			int[][] temp = new int[][] {start, end};
+			e1.addList(temp);
+			
 			for (int i = row; i > (row - length); i--) {
 				Rectangle enemypath = new Rectangle(TILE_SIZE, TILE_SIZE);
 				enemypath.setFill(Color.BROWN);
 				GridPane.setRowIndex(enemypath, i);
 				GridPane.setColumnIndex(enemypath, col);
 				gridpane.getChildren().addAll(enemypath);
+				textgame.editGridPath(i, col, " ");
 
 			}
-			line.setX(col * TILE_SIZE + TILE_ADJ );
-			line.setY((row - length) * TILE_SIZE);
 		}
 		
 		if (direction == "down") {
+			
+			int[] start = {col, row};
+			int[] end = {col, row + length};
+			int[][] temp = new int[][] {start, end};
+			e1.addList(temp);
+			
 			for (int i = row; i < (length + row); i++) {
 				Rectangle enemypath = new Rectangle(TILE_SIZE, TILE_SIZE);
 				enemypath.setFill(Color.BROWN);
 				GridPane.setRowIndex(enemypath, i);
 				GridPane.setColumnIndex(enemypath, col);
 				gridpane.getChildren().addAll(enemypath);
-
+				textgame.editGridPath(i, col, " ");
 			}
-			line.setX(col * TILE_SIZE + TILE_ADJ );
-			line.setY((row + length) * TILE_SIZE);
 		}
-		path.getElements().add(line);
 	}
 	
 	public Image backgroundImage(String filename) throws FileNotFoundException {
@@ -201,6 +209,7 @@ public class GridVersionGame extends Application{
     public static void spawnBase() {
     	Rectangle base = new Rectangle(50, 50, Color.BLUE);
     	GridPane.setConstraints(base, 24, 5);
+    	textgame.setBase(5, 24, "B");
     	gridpane.getChildren().add(base);
     }
     
@@ -223,6 +232,8 @@ public class GridVersionGame extends Application{
                                     if(node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY())) {
                                         System.out.println( "Node: at " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
                                     	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), Color.RED, gridpane);
+                                    	textgame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
+                                    	textgame.drawGame();
                                     	
                                     }
                                 }
@@ -235,15 +246,21 @@ public class GridVersionGame extends Application{
         return twr;
     }
     
-//    public static Button startRound()
-//    {
-//    	Button start = new Button("Start Round");
-//    	start.setOnAction(new EventHandler<ActionEvent>()
-//    			{
-//    		
-//    			}
-//		return start;
-//    }
+    public static Button startButton()
+{
+    	Button start = new Button("Start Round");
+    	start.setOnAction(new EventHandler<ActionEvent>() {
+
+        @Override
+        public void handle(ActionEvent event) {
+//        	spawnEnemies(timeline, round);
+        	round ++;
+//        	gridpane.getChildren().remove(start);  // for when the game is playable
+        }
+	});
+	return start;
+}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
