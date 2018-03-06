@@ -70,7 +70,9 @@ public class GridVersionGame extends Application{
 				
 				towerList.forEach(Tower -> Tower.checkInRange(enemyList));
 				
-				
+				if(framecount % 15 == 0) {
+					spawnEnemies(reference, 1, enemyList); 
+				}
 				
 				removeEnemies(enemyList);
 				framecount++;
