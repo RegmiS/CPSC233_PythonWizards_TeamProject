@@ -15,10 +15,20 @@ import javafx.stage.Stage;
 
 public class GameMenu extends Application {
 	
-	private final int WIDTH = 1280, HEIGHT = 720; //Set window dimensions 
+	//private final int WIDTH = 1280, HEIGHT = 720; //Set window dimensions
+	private static int WIDTH = 1280, HEIGHT = 720; //Set window dimensions
 
+	public static int getWidth() {
+		return WIDTH;
+	}
+	public static int getHeight() {
+		return HEIGHT;
+	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+	
+		
 	
 		
 // Buttons, labels, text, etc., with event handlers & coordinates -- Try to see if this can be put into its own method
@@ -57,7 +67,12 @@ public class GameMenu extends Application {
 					e.printStackTrace();
 				}
 				Game game = new Game(canvas, scene);
-				game.start(primaryStage);
+				try {
+					game.start(primaryStage);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 //				System.out.println("Coming soon...");
 			}
