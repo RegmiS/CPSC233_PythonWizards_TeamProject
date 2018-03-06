@@ -4,7 +4,7 @@ public class BankAccount {
 	// Instance variables
 	public Customer c1;
 	public double balance = 0.0;
-	private double overdraftAmount = 100.0;
+	private double TransactionAmount = 0;
 	
 	/**
 	 * No parameter constructor
@@ -40,8 +40,8 @@ public class BankAccount {
 	{
 		String name = this.c1.getName();
 		String ID = Integer.toString(this.c1.getID());
-		return "Name: " + name + " ID: " + ID + " Balance: " + this.balance +
-				" Over Draft Amount: "+ this.overdraftAmount;
+		return "Name: " + name + " ID: " + ID + " Balance: " + this.balance/* +
+				" Over Draft Amount: "+ this.overdraftAmount*/;
 	}
 	
 	/**
@@ -49,8 +49,7 @@ public class BankAccount {
 	 * @return the new customer object
 	 */
 	public Customer getCustomer() {
-		Customer c = new Customer(this.c1);
-		return c; 
+		return this.c1; 
 		}
 	
 	
@@ -64,11 +63,11 @@ public class BankAccount {
 	 * Setter method for overdraft amount
 	 * @param amount: the new overdraft amount
 	 */
-	public void setOverdraftAmount(double amount) 
+	/*public void setOverdraftAmount(double amount) //removed as per assignment, but kept just in case
 	{
 		if (amount >= 0)
 			this.overdraftAmount = amount; 
-	}
+	}*/
 	
 	/**
 	 * method for depositing money, does not accept negative amount
@@ -86,16 +85,31 @@ public class BankAccount {
 	 */
 	public void withdraw(double amount)
 	{
-		if ( amount > 0 && (this.balance - amount >= -this.overdraftAmount))
+		if ( amount > 0 && (this.balance - amount >= 0))
 				this.balance -= amount;
 	}
 	
+	/**
+	 * Transfers money from one account to another, checks if the first account will allow that much to be withdrawn 
+	 * before depositing it in another account
+	 * @param amount, double, the amount to be transfered
+	 * @param account, BankAccount, the account the money is transfered to.
+	 */
 	public void transfer(double amount, BankAccount account) {
+		double placeholder = this.getBalance();
 		withdraw(amount);
-		account.deposit(amount);
+		if (placeholder != this.getBalance()) { 		//if withdraw changed the amount it means it succeeded
+			account.deposit(amount);					//therefore allows deposit to be called
+		}
 	}
 	
+	/**
+	 * sets the account balance
+	 * @param balance, new balance to be set
+	 */
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+	
+	
 }
