@@ -49,7 +49,9 @@ public class BankAccount {
 	 * @return the new customer object
 	 */
 	public Customer getCustomer() {
-		return this.c1; 
+		
+		Customer c = new Customer(c1);
+		return c; 
 		}
 	
 	
