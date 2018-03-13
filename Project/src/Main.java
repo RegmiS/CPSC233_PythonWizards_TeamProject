@@ -15,28 +15,28 @@ public class Main {
     // public arraylist that hosts all of the grid game
     public static ArrayList< ArrayList<String>> textgame;
     
-    // all the getts and setters for the game
+    // all the getters and setters for the game
     public void setHealth(int healthval) {
-        this.HEALTH = healthval;
+        Main.HEALTH = healthval;
     }
     public void setLevel(int levelVal) {
-        this.LEVEL = levelVal;
+        Main.LEVEL = levelVal;
     }
     public void addEnemies() {
-        this.ENEMIES += 1;
+    	Main.ENEMIES += 1;
     }
     
     public void removeEnemies() {
-    	this.ENEMIES -= 1;
+    	Main.ENEMIES -= 1;
     }
    
     // constructor for the class( used in the grid game to create an object of this class)
     public Main(int height, int width, int tile_size) {
-        this.HEIGHT = height;
-        this.WIDTH = width;
-        this.TILE_SIZE = tile_size;
-        this.NUM_ROWS = this.HEIGHT/this.TILE_SIZE;
-        this.NUM_COLOUMS = this.WIDTH / this.TILE_SIZE;
+    	Main.HEIGHT = height;
+    	Main.WIDTH = width;
+    	Main.TILE_SIZE = tile_size;
+    	Main.NUM_ROWS = Main.HEIGHT/Main.TILE_SIZE;
+    	Main.NUM_COLOUMS = Main.WIDTH / Main.TILE_SIZE;
         
         textgame = new ArrayList<ArrayList<String>>();
         createArrayList();
@@ -46,7 +46,7 @@ public class Main {
     //returns the game in case it needs to be edited or changed
     public ArrayList<ArrayList<String>> getTextgame()
     {
-    	return this.textgame;
+    	return Main.textgame;
     }
 
     // creates the arraylist to use for the game in the constructor
