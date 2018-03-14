@@ -24,16 +24,19 @@ public class GridVersionGame extends Application{
 	private static final int WIDTH = 1280;
 	private static final int HEIGHT = 720;
 	private static final int TILE_SIZE = 50;
-	private static final int TILE_ADJ = TILE_SIZE / 2;
+//	private static final int TILE_ADJ = TILE_SIZE / 2;
 
 	private static GridPane gridpane;
 	private static Scene scene;
 	private static Main textgame;
 	private static Timeline timeline;
-	private static int round = 1;
+//	private static int round = 1;
 	private static Enemy reference;
 	private static AnimationTimer timer;
 	private static int framecount = 0;
+	private static int state;
+//	private static final int IS_RUNNING = 0;
+//	private static final int IS_PAUSED = 1;
 	
 	
 	private static ArrayList<Enemy> enemyList;
@@ -52,9 +55,9 @@ public class GridVersionGame extends Application{
 	@Override 
 	public void start(Stage stage) throws Exception {
 		gridpane = new GridPane();
-		this.enemyList = new ArrayList<Enemy>();
+		GridVersionGame.enemyList = new ArrayList<Enemy>();
 		towerList = new ArrayList<Tower>();
-		this.timeline = new Timeline();
+		GridVersionGame.timeline = new Timeline();
 		
 		
 		timer = new AnimationTimer() {
@@ -70,7 +73,7 @@ public class GridVersionGame extends Application{
 					textgame.addEnemies();
 				}
 				if (framecount % 100 == 0) 
-					textgame.drawGame();
+					Main.drawGame();
 				
 				removeEnemies(enemyList);
 				framecount++;
@@ -113,7 +116,7 @@ public class GridVersionGame extends Application{
 		enemyPath("right", 5, 12, 12, reference);
 		
 		//
-		textgame.drawGame();
+		Main.drawGame();
 		//
 		
 		//Side menu - WIP
@@ -161,8 +164,25 @@ public class GridVersionGame extends Application{
 	
 	
 	public static void spawnEnemies(Enemy reference, int type, ArrayList<Enemy> enemyList, Timeline timeline){
-		Enemy e1 = new Enemy(type, gridpane, reference, TILE_SIZE, timeline);
+		Enemy e1 = new Enemy(type, gridpane, reference, TILE_SIZE);
 		enemyList.add(e1);
+	}
+	
+	public static void setState(int num)
+	{
+		if (num == 0)
+			state = 0;
+		else if (num == 1)
+			state = 1;
+	}
+	
+	public static boolean getState()
+	{
+		if (state == 0)
+			return true;
+		else if (state == 1)
+			return false;
+		return true;
 	}
     	
 	
@@ -297,7 +317,7 @@ public class GridVersionGame extends Application{
                                         System.out.println( "Node: at " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
                                     	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), Color.RED, gridpane);
                                     	textgame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
-                                    	textgame.drawGame();
+                                    	Main.drawGame();
                                     	towerList.add(t1);
                                     	
                                     }
@@ -332,8 +352,12 @@ public class GridVersionGame extends Application{
     	play.setOnAction(new EventHandler<ActionEvent>() {
     		@Override
     		public void handle(ActionEvent event) {
-    			timeline.play();
     			timer.start();
+    			ArrayList<Timeline> list = Enemy.getTimelineList();
+    			for (int i = 0; i < list.size(); i++  )
+    			{
+    				list.get(i).play();
+    			}
     		}
     	});
 		return play;
@@ -343,15 +367,19 @@ public class GridVersionGame extends Application{
     // experimenting with a pause button
     public static Button pauseButton(Timeline timeline) {
     	Button pause = new Button("||");
-    	pause.setOnAction(new EventHandler<ActionEvent>() {
+    	pause.setOnAction(new EventHandler<ActionEvent>() 
+    	{
     		
     		@Override
     		public void handle(ActionEvent event) {
     			
-    			timeline.pause();
     			timer.stop();
-    		    		}
-    		    	});
+    			ArrayList<Timeline> list = Enemy.getTimelineList();
+    			for (int i = 0; i < list.size(); i++  )
+    			{
+    				list.get(i).pause();
+    			}
+    	}});
 		return pause;
     }
 

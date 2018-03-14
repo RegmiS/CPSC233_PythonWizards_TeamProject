@@ -20,11 +20,13 @@ public class Enemy extends Application {
 	private Circle circle;
 	private int health = 150;
 	private int damage = 30;
-	private int type;
+//	private int type;
 	private int radius = 5;
 	private List<int[][]> list;
 	private Enemy reference;
 	private Pane pane;
+	private static ArrayList<Timeline> timelineList = new ArrayList<Timeline>();
+	private Timeline animation;
 	
 	// Getters and setters for the circle object and list
 	public double getX() { return this.circle.getCenterX();	}
@@ -32,6 +34,11 @@ public class Enemy extends Application {
 	public void setY(double yValue)	{ this.circle.setCenterY(yValue);	}
 	public double getY() { return this.circle.getCenterY(); }
 	public void addList(int[][] list) { this.list.add(list); }
+	
+	public static ArrayList<Timeline> getTimelineList()
+	{
+		return Enemy.timelineList;
+	}
 	
 	
 	public void setPane(Pane pane) { this.pane = pane;	}
@@ -47,7 +54,11 @@ public class Enemy extends Application {
 	}
 	
 	
-	public void removeEnemy() {	this.pane.getChildren().remove(this.circle); }
+	public void removeEnemy() 
+	{	
+		this.pane.getChildren().remove(this.circle);
+		Enemy.timelineList.remove(this.animation);
+	}
 	
 	// default constructor
 	public Enemy()
@@ -61,7 +72,7 @@ public class Enemy extends Application {
 	 * @param reference: enemy object with the list used to make the path for the animation
 	 * @param TILE_SIZE: constant used for the tiles
 	 */
-	public Enemy(int type, Pane pane, Enemy reference, double TILE_SIZE, Timeline timeline) {
+	public Enemy(int type, Pane pane, Enemy reference, double TILE_SIZE) {
 		double TILE_ADJ = TILE_SIZE / 2.0;
 		this.pane = pane;
 		
@@ -83,7 +94,7 @@ public class Enemy extends Application {
 		this.circle.setCenterY(reference.list.get(0)[0][1]);
     	pane.getChildren().add(this.circle);
     	animation.setAutoReverse(false);
-    	animation.setOnFinished(e -> pane.getChildren().remove(this.circle));
+    	animation.setOnFinished(e -> this.removeEnemy());//pane.getChildren().remove(this.circle), e2 -> timelineList.remove(animation));
     	int dur = 3000;
     	list = reference.list;
     	
@@ -107,6 +118,8 @@ public class Enemy extends Application {
     		this.setY(list.get(i)[1][1] * TILE_SIZE);
     		dur += 3000;
     	}
+    	this.animation = animation;
+    	timelineList.add(animation);
     	animation.play();
 	}
 
