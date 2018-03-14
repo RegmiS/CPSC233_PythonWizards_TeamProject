@@ -164,7 +164,7 @@ public class GridVersionGame extends Application{
 	
 	
 	public static void spawnEnemies(Enemy reference, int type, ArrayList<Enemy> enemyList, Timeline timeline){
-		Enemy e1 = new Enemy(type, gridpane, reference, TILE_SIZE);
+		Enemy e1 = new Enemy(type, gridpane, TILE_SIZE);
 		enemyList.add(e1);
 	}
 	

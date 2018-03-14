@@ -22,8 +22,8 @@ public class Enemy extends Application {
 	private int damage = 30;
 //	private int type;
 	private int radius = 5;
-	private List<int[][]> list;
-	private Enemy reference;
+	private static List<int[][]> list;
+	private static Enemy reference;
 	private Pane pane;
 	private static ArrayList<Timeline> timelineList = new ArrayList<Timeline>();
 	private Timeline animation;
@@ -39,6 +39,8 @@ public class Enemy extends Application {
 	{
 		return Enemy.timelineList;
 	}
+	
+	public void setReference(Enemy ref) { Enemy.reference = ref; }
 	
 	
 	public void setPane(Pane pane) { this.pane = pane;	}
@@ -64,7 +66,7 @@ public class Enemy extends Application {
 	public Enemy()
 	{
 		reference = this;
-		this.list = new ArrayList<>();
+		Enemy.list = new ArrayList<>();
 	}
 	/** Constructor creates a circle for each enemy then animates it
 	 * @param type: the type of enemy (1-3)
@@ -72,7 +74,7 @@ public class Enemy extends Application {
 	 * @param reference: enemy object with the list used to make the path for the animation
 	 * @param TILE_SIZE: constant used for the tiles
 	 */
-	public Enemy(int type, Pane pane, Enemy reference, double TILE_SIZE) {
+	public Enemy(int type, Pane pane, double TILE_SIZE) {
 		double TILE_ADJ = TILE_SIZE / 2.0;
 		this.pane = pane;
 		
@@ -90,22 +92,25 @@ public class Enemy extends Application {
     	}
 		
 		Timeline animation = new Timeline();
-		this.circle.setCenterX(reference.list.get(0)[0][0]);
-		this.circle.setCenterY(reference.list.get(0)[0][1]);
+//		this.circle.setCenterX(list.get(0)[0][0]);
+//		this.circle.setCenterY(list.get(0)[0][1]);
     	pane.getChildren().add(this.circle);
     	animation.setAutoReverse(false);
-    	animation.setOnFinished(e -> this.removeEnemy());//pane.getChildren().remove(this.circle), e2 -> timelineList.remove(animation));
-    	int dur = 3000;
-    	list = reference.list;
+    	animation.setOnFinished(e -> this.removeEnemy());
     	
     	KeyFrame initial = new KeyFrame (Duration.ZERO, 
-    			new KeyValue(this.circle.translateXProperty(), reference.list.get(0)[0][0] * TILE_SIZE),
-                new KeyValue(this.circle.translateYProperty(), reference.list.get(0)[0][1] * TILE_SIZE));
+    			new KeyValue(this.circle.translateXProperty(), list.get(0)[0][0] * TILE_SIZE),
+                new KeyValue(this.circle.translateYProperty(), list.get(0)[0][1] * TILE_SIZE));
     	animation.getKeyFrames().addAll(initial);
-    	for (int i = 0; i < reference.list.size(); i++) 
+    	int size = 0;
+    	int dur = 0;
+    	for (int i = 0; i < list.size(); i++) 
     	{
-    		KeyValue moveY = new KeyValue(this.circle.translateYProperty(), reference.list.get(i)[0][1] *TILE_SIZE);
-    		KeyValue moveX = new KeyValue(this.circle.translateXProperty(), reference.list.get(i)[0][0] * TILE_SIZE + TILE_ADJ);
+    		size = Math.max(Math.abs(list.get(i)[1][0] - list.get(i)[0][0]),
+    				Math.abs(list.get(i)[1][1] - list.get(i)[0][1] ));
+    		dur += size * 500;
+    		KeyValue moveY = new KeyValue(this.circle.translateYProperty(), list.get(i)[0][1] *TILE_SIZE);
+    		KeyValue moveX = new KeyValue(this.circle.translateXProperty(), list.get(i)[0][0] * TILE_SIZE + TILE_ADJ);
     		
     		if (list.get(i)[0][0] == list.get(i)[1][0])
     			moveY = new KeyValue(this.circle.translateYProperty(), list.get(i)[1][1] * TILE_SIZE);
@@ -116,7 +121,6 @@ public class Enemy extends Application {
     		animation.getKeyFrames().add(frame);
     		this.setX(list.get(i)[1][0] * TILE_SIZE + TILE_ADJ);
     		this.setY(list.get(i)[1][1] * TILE_SIZE);
-    		dur += 3000;
     	}
     	this.animation = animation;
     	timelineList.add(animation);
