@@ -14,19 +14,21 @@ public class Tower extends Application {
 	
 	private Rectangle rectangle;
 	//private int rateOfFire = 1;
-	private int damage = 1;
+	private int damage = 5;
 	//private int health = 10;
 	private int xCoord;
 	private int yCoord;
 	private int range = 50;
-	
+	private Pane pane;
 	
 	public int getDmg() {return this.damage;}
 	public int getX() {return this.xCoord;}
 	public int getY() {return this.yCoord;}
 	
 	
-	
+	private void setPane(Pane pane) {
+		this.pane = pane;
+	}
 	private void setXCoord(int x) {
 		this.xCoord = x;
 	}
@@ -39,7 +41,7 @@ public class Tower extends Application {
 		
 		setXCoord(xc);
 		setYCoord(yc);
-
+		setPane(canvas);
 		
 		Platform.runLater(new Runnable() {
 			@Override 
@@ -65,6 +67,7 @@ public class Tower extends Application {
 			Enemy enemy = (Enemy)iter.next();
 			
 			if(distanceFrom(enemy) < 100) {
+				Missles m1 = new Missles(this.pane, enemy, getX(),getY(), this.damage);
 				enemy.setHealth(this.damage);
 				return;
 			}

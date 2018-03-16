@@ -35,6 +35,8 @@ public class Enemy extends Application {
 	public double getY() { return this.circle.getCenterY(); }
 	public void addList(int[][] list) { this.list.add(list); }
 	
+	
+	
 	public static ArrayList<Timeline> getTimelineList()
 	{
 		return Enemy.timelineList;
