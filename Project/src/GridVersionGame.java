@@ -26,6 +26,7 @@ public class GridVersionGame extends Application{
 	private static final int TILE_SIZE = 50;
 //	private static final int TILE_ADJ = TILE_SIZE / 2;
 
+	private static Rectangle base;
 	private static GridPane gridpane;
 	private static Scene scene;
 	private static Main textgame;
@@ -75,6 +76,7 @@ public class GridVersionGame extends Application{
 				}
 				if (framecount % 100 == 0) 
 					Main.drawGame();
+			
 				
 				removeEnemies(enemyList);
 				framecount++;
@@ -86,6 +88,7 @@ public class GridVersionGame extends Application{
 		//gridpane.setPadding(new Insets(10, 10, 10, 10));
 		//gridpane.setGridLinesVisible(true);
 
+		Enemy.setPane(gridpane);
 		drawGrid();
 		spawnBase();
 		
@@ -147,6 +150,10 @@ public class GridVersionGame extends Application{
 		
 	}
 	
+	public static ArrayList<Enemy> getEnemyList() { return GridVersionGame.enemyList; }
+	
+	public static Rectangle getBase() { return GridVersionGame.base; }
+	
 	public void removeEnemies (ArrayList<Enemy> enemyList) {
 		Iterator<Enemy> iter = enemyList.iterator();
 		while(iter.hasNext()) {
@@ -165,7 +172,7 @@ public class GridVersionGame extends Application{
 	
 	
 	public static void spawnEnemies(Enemy reference, int type, ArrayList<Enemy> enemyList, Timeline timeline){
-		Enemy e1 = new Enemy(type, gridpane, TILE_SIZE);
+		Enemy e1 = new Enemy(type, TILE_SIZE);
 		enemyList.add(e1);
 	}
 	
@@ -195,7 +202,7 @@ public class GridVersionGame extends Application{
 				ImagePattern texturePattern = new ImagePattern(backgroundImage("grass.jpg"));
 				rec.setId(Integer.toString(col) + ", " + Integer.toString(row)); //Assign Id to each node
 				rec.setFill(texturePattern);
-				rec.setStroke(Color.BLACK);
+//				rec.setStroke(Color.BLACK);
 				System.out.println(rec.getId());
 				GridPane.setRowIndex(rec, row);
 				GridPane.setColumnIndex(rec, col);
@@ -295,6 +302,7 @@ public class GridVersionGame extends Application{
     	GridPane.setConstraints(base, 24, 5);
     	textgame.setBase(5, 24, "B");
     	gridpane.getChildren().add(base);
+    	GridVersionGame.base = base;
     }
     
     public static Button placeTower(ArrayList<Tower> towerList) 
@@ -354,11 +362,12 @@ public class GridVersionGame extends Application{
     		@Override
     		public void handle(ActionEvent event) {
     			timer.start();
-    			ArrayList<Timeline> list = Enemy.getTimelineList();
-    			for (int i = 0; i < list.size(); i++  )
-    			{
-    				list.get(i).play();
-    			}
+    			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
+    			for (int i = 0; i < enemyList.size(); i++  )
+    				enemyList.get(i).play();
+    			ArrayList<Timeline> missleList = Missles.getTimelineList();
+    			for (int i = 0; i < missleList.size(); i++)
+    				missleList.get(i).play();
     		}
     	});
 		return play;
@@ -375,11 +384,12 @@ public class GridVersionGame extends Application{
     		public void handle(ActionEvent event) {
     			
     			timer.stop();
-    			ArrayList<Timeline> list = Enemy.getTimelineList();
-    			for (int i = 0; i < list.size(); i++  )
-    			{
-    				list.get(i).pause();
-    			}
+    			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
+    			for (int i = 0; i < enemyList.size(); i++  )
+    				enemyList.get(i).pause();
+    			ArrayList<Timeline> missleList = Missles.getTimelineList();
+    			for (int i = 0; i < missleList.size(); i++)
+    				missleList.get(i).pause();
     	}});
 		return pause;
     }
