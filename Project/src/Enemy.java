@@ -17,7 +17,7 @@ public class Enemy extends Application {
 	// Instance variables
 	private Circle circle;
 	private int health = 150;
-	private int damage = 30;
+	private int damage = 5;
 	private int radius = 5;
 	private static List<int[][]> list;
 	private static Pane pane;
@@ -30,7 +30,7 @@ public class Enemy extends Application {
 	public void setY(double yValue)	{ this.circle.setCenterY(yValue);	}
 	public double getY() { return this.circle.getCenterY(); }
 	public void addList(int[][] list) { Enemy.list.add(list); }
-	
+	public int getDmg() { return this.damage;}
 	
 
 	

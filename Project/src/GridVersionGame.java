@@ -60,8 +60,10 @@ public class GridVersionGame extends Application{
 		towerList = new ArrayList<Tower>();
 		GridVersionGame.timeline = new Timeline();
 		
+		//Base b1 = new Base(gridpane);
 		
-		timer = new AnimationTimer() {
+		
+		/*timer = new AnimationTimer() {
 			
 			@Override
 			public void handle(long arg0) {
@@ -77,11 +79,11 @@ public class GridVersionGame extends Application{
 				if (framecount % 100 == 0) 
 					Main.drawGame();
 			
-				
+				b1.takeDamage(enemyList);
 				removeEnemies(enemyList);
 				framecount++;
 			}
-		};
+		};*/
 		
 		
 		
@@ -90,8 +92,8 @@ public class GridVersionGame extends Application{
 
 		Enemy.setPane(gridpane);
 		drawGrid();
-		spawnBase();
-		
+		spawnBase(); // does text base
+		Base b1 = new Base(gridpane);		
 		
 		Button twr = placeTower(towerList);
         GridPane.setConstraints(twr, 0, 0);
@@ -133,6 +135,51 @@ public class GridVersionGame extends Application{
 		GridPane.setColumnIndex(borderpane, 24);
 		gridpane.getChildren().addAll(borderpane);
 		*/
+		
+		timer = new AnimationTimer() {
+			
+			@Override
+			public void handle(long arg0) {
+				// TODO Auto-generated method stub
+				if (framecount % 10 == 0) {
+					towerList.forEach(Tower -> Tower.checkInRange(enemyList));
+				}
+				if (framecount % 40 == 0) {
+					spawnEnemies(reference, 1, enemyList, timeline);
+					textgame.addEnemies();
+					//towerList.forEach(Tower -> Tower.checkInRange(enemyList));
+				}
+				if (framecount % 100 == 0) 
+					Main.drawGame();
+			
+				b1.takeDamage(enemyList);
+				removeEnemies(enemyList);
+				
+				if(b1.getHealth() < 0) {
+					
+					
+					
+					timer.stop();
+	    			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
+	    			for (int i = 0; i < enemyList.size(); i++  )
+	    				enemyList.get(i).pause();
+	    			ArrayList<Timeline> missleList = Missles.getTimelineList();
+	    			for (int i = 0; i < missleList.size(); i++)
+	    				missleList.get(i).pause();
+					
+				}
+				
+				
+				
+				framecount++;
+			}
+		};
+		
+		
+		
+		
+		
+		
 		
 		
 //		spawnEnemies(reference, 1, enemyList); 
@@ -298,11 +345,11 @@ public class GridVersionGame extends Application{
 	}
 	
     public static void spawnBase() {
-    	Rectangle base = new Rectangle(50, 50, Color.BLUE);
-    	GridPane.setConstraints(base, 24, 5);
+    	//Rectangle base = new Rectangle(50, 50, Color.BLUE);
+    	//GridPane.setConstraints(base, 24, 5);
     	textgame.setBase(5, 24, "B");
-    	gridpane.getChildren().add(base);
-    	GridVersionGame.base = base;
+    	//gridpane.getChildren().add(base);
+    	//GridVersionGame.base = base;
     }
     
     public static Button placeTower(ArrayList<Tower> towerList) 
