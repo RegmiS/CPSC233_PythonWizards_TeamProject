@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Missles extends Application {
-	private Rectangle missle =  new Rectangle(1,2,Color.BLACK);
+	private Rectangle missle =  new Rectangle(5,5,Color.BLACK);
 	private int dmg;
 	private Pane pane;
 	private static ArrayList<Timeline> timelineList = new ArrayList<Timeline>();
@@ -62,7 +62,7 @@ public class Missles extends Application {
     			new KeyValue(this.missle.translateXProperty(), x*50+26),//center on the tower square
                 new KeyValue(this.missle.translateYProperty(), y*50));
     	//Finishes at enemy 
-    	KeyFrame Final = new KeyFrame (new Duration(1000), //takes 1 second to get to enemy
+    	KeyFrame Final = new KeyFrame (new Duration(100), //takes half a second to get to enemy
     			new KeyValue(this.missle.translateXProperty(), enemy.getCircle().getTranslateX()),
                 new KeyValue(this.missle.translateYProperty(), enemy.getCircle().getTranslateY()));
     			
