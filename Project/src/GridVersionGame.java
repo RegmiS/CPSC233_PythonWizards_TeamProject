@@ -65,13 +65,13 @@ public class GridVersionGame extends Application{
 			@Override
 			public void handle(long arg0) {
 				// TODO Auto-generated method stub
-				
-				//towerList.forEach(Tower -> Tower.checkInRange(enemyList));
-				
+				if (framecount % 10 == 0) {
+					towerList.forEach(Tower -> Tower.checkInRange(enemyList));
+				}
 				if (framecount % 40 == 0) {
 					spawnEnemies(reference, 1, enemyList, timeline);
 					textgame.addEnemies();
-					towerList.forEach(Tower -> Tower.checkInRange(enemyList));
+					//towerList.forEach(Tower -> Tower.checkInRange(enemyList));
 				}
 				if (framecount % 100 == 0) 
 					Main.drawGame();

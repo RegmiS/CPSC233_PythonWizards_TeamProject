@@ -110,7 +110,7 @@ public class Enemy extends Application {
     	{
     		size = Math.max(Math.abs(list.get(i)[1][0] - list.get(i)[0][0]),
     				Math.abs(list.get(i)[1][1] - list.get(i)[0][1] ));
-    		dur += size * 500;
+    		dur += size * 2000;
     		KeyValue moveY = new KeyValue(this.circle.translateYProperty(), list.get(i)[0][1] *TILE_SIZE);
     		KeyValue moveX = new KeyValue(this.circle.translateXProperty(), list.get(i)[0][0] * TILE_SIZE + TILE_ADJ);
     		
