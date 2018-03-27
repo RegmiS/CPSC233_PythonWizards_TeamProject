@@ -6,8 +6,22 @@ public class Agent {
 	
 	
 	
-	private char mark;
+	private char mark;				  //Either x or o
+	private int[] bmove = new int[1]; //best move for computer to make
+	private Game game;
 	
+	public Queue<int[]> moveList = new LinkedList<>();
+	
+	
+	public void addMoveList(int[] move) {
+		this.moveList.add(move);	
+	}
+	
+	public void setBMove(int[] move) {
+		this.bmove = move;
+	}
+	
+	public int[] getBMove() {return this.bmove;}
 	
 	
 	public char getMark() {
@@ -24,33 +38,34 @@ public class Agent {
 
 	
 	
-	public void maxvalue(Game game, Agent player, Agent opponent) {
-		
+public int[] maxvalue(Game game, Agent player, Agent opponent) {
+		this.game = new Game(game);
+
 		ArrayList<int[]> moves = new ArrayList<>();
-		moves = game.moves(game.getBoard());
+		moves = this.game.moves(game.getBoard());
 		Queue<int[]> moveQ = new LinkedList<>();
 		Queue<Integer> score = new LinkedList<>();
 		
 		
-		
-		
 		for(int i = 0; i < moves.size(); i++) {
 			
-			System.out.println(moves.get(i));
 			moveQ.add(moves.get(i));
 		}
 		
 		
-		
+		Game newGame = new Game(this.game);
+		int bestscore = -100;
 		while(!moveQ.isEmpty()) {
-			Game newGame = new Game(game);
-			System.out.println("test");
+			
 			int[] move = moveQ.remove();
-			newGame.neighbour(move,this.mark);
-			if(newGame.utility(newGame.getBoard(), this.mark, opponent.getMark() ) == 100) {
+			newGame = this.game.neighbour(move,this.mark);
+			if(newGame.utility(newGame.getBoard(), this.mark, opponent.getMark() ) == null) {
 				minvalue(newGame,opponent, player);
 			}else {
-				score.add(newGame.utility(newGame.getBoard(), this.mark, opponent.getMark()));  //will be 10 for win 0 for tie, -10 for loss
+				if(newGame.utility(newGame.getBoard(), this.mark, opponent.getMark()) > bestscore){
+					bestscore = newGame.utility(newGame.getBoard(), this.mark, opponent.getMark());
+					setBMove(move);
+				}
 			}
 			
 			
@@ -59,14 +74,26 @@ public class Agent {
 		}
 		
 		
+		return getBMove();
 		
 	}
 	
 	
-	public void minvalue(Game game, Agent player, Agent opponent) {
+	
+	
+	
+	
+	
+	
+	
+	public Game minvalue(Game game, Agent player, Agent opponent) {
+		
+
+		
+	this.game = new Game(game);
 		
 		ArrayList<int[]> moves = new ArrayList<>();
-		moves = game.moves(game.getBoard());
+		moves = this.game.moves(game.getBoard());
 		Queue<int[]> moveQ = new LinkedList<>();
 		Queue<Integer> score = new LinkedList<>();
 		
@@ -75,20 +102,26 @@ public class Agent {
 		
 		for(int i = 0; i < moves.size(); i++) {
 			
-			System.out.println(moves.get(i));
 			moveQ.add(moves.get(i));
 		}
 		
 		
-		
+		Game newGame = new Game(this.game);
+		int bestscore = -100;
 		while(!moveQ.isEmpty()) {
-			Game newGame = new Game(game);
+			//Game newGame = new Game(game);
+			
 			int[] move = moveQ.remove();
-			newGame.neighbour(move,this.mark);
-			if(newGame.utility(newGame.getBoard(), this.mark, opponent.getMark() ) == 100) {
-				maxvalue(newGame,opponent, player);
+			newGame = this.game.neighbour(move,this.mark);
+			
+			
+			if(newGame.utility(newGame.getBoard(), this.mark, opponent.getMark() ) == null) {
+				minvalue(newGame,opponent, player);
 			}else {
-				score.add(newGame.utility(newGame.getBoard(), this.mark, opponent.getMark()));  //will be 10 for win 0 for tie, -10 for loss
+				if(newGame.utility(newGame.getBoard(), this.mark, opponent.getMark()) > bestscore){
+					bestscore = newGame.utility(newGame.getBoard(), this.mark, opponent.getMark());
+					setBMove(move);
+				}
 			}
 			
 			
@@ -96,6 +129,10 @@ public class Agent {
 			
 		}
 		
+		this.game.updateBoard(this.bmove, this.game.getBoard(), this.mark);
+		
+		
+		return this.game;
 		
 	}
 	

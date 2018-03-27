@@ -24,11 +24,33 @@ public class Maze {
 	public Queue<int[]> getQ(){return this.q;}
 	public Stack<int[]> getParents(){return this.parents;}
 	
+	
+	
+	
+	
+	
+	/**Initializes a constructor, 
+	 * 
+	 * @param grid - a maze
+	 * @param loc - location of the agent
+	 */
+	
 	public Maze(String[] grid, int[] loc) {
 		setGrid(grid);
 		setLoc(loc);
 	}
 
+	
+	
+	
+	
+	
+	/**Finds a list(Queue) of moves that the agent can move, and returns the list.
+	 * 
+	 * 
+	 * @param loc-the location of the agent 
+	 * @return returns a list of possible moves the agent can make, no back tracking
+	 */
 	
 	public Queue<int[]> moves(int[] loc){
 	
@@ -68,21 +90,21 @@ public class Maze {
 		}
 	}
 	
-	private ArrayList<int[]> path(int[] loc){
-		ArrayList<int[]> p = new ArrayList<>();
-		
-		
-		return p;
-	}
-	//sets the position to star, basically a boolean for explored or not
+	
+	
+	
+	
+	/**Changes the agents position to a '*', basically a boolean for vistied or not
+	 * 
+	 * 
+	 * @param loc - agents current position
+	 */
 	public void neighbor(int[] loc) {
 		setLoc(loc);
 		
 		String line = this.grid[loc[0]];
 		String newline = line.substring(0,loc[1]) + '*'+line.substring(loc[1]+1); //* means visited
 		this.grid[loc[0]] = newline;
-	
-		
 		
 	}
 	

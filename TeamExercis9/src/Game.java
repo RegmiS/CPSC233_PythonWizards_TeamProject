@@ -16,7 +16,7 @@ public class Game {
 	}
 
 	public Game(Game g) {
-		setBoard(g.getBoard());
+		this.board = g.getBoard().clone();
 	}
 	
 	
@@ -29,11 +29,19 @@ public class Game {
 		}
 	}
 	
+	/**
+	 * Finds the score for the move
+	 * 
+	 * 
+	 * @param b board
+	 * @param player MaxPlayer
+	 * @param oppenent MinPlayer
+	 * @return 10 for a win, 0 for a tie, -10 for a loss, and null if no of those
+	 */
+	
+	
 	public Integer utility(char[][] b, char player, char oppenent) {
 		
-		
-		//Return the minimax utility value of this game:
-        //1 = X win, -1 = O win, 0 = tie, None = not over yet."""
 		
 		if(checkWin(b,player)) {
 			return 10;
@@ -43,15 +51,15 @@ public class Game {
 			return 0;
 		}
 		
-		return 100;
+		return null;
 	}
 
 	
 	
-	/**
+	/**takes the board state and return thes possible moves
 	 * 
-	 * @param b
-	 * @return
+	 * @param b board
+	 * @return a list of possible moves
 	 */
 	
 	
@@ -77,6 +85,14 @@ public class Game {
 		
 	}
 	
+	
+	/**
+	 * checks if all the spaces on the board are full, 
+	 * 
+	 * @param b board 
+	 * @return a boolean, true if it is a tie, flase if not
+	 */
+	
 	public boolean checkTie(char[][] b) {
 		boolean tie = true;
 		
@@ -94,7 +110,14 @@ public class Game {
 	}
 	
 	
-	
+	/**Checks all possible win conditions in tictactoe, returns if someone won
+	 * 
+	 * 
+	 * 
+	 * @param b board
+	 * @param player - char either x or o
+	 * @return boolean, false if no one has won, true if player has one
+	 */
 	
 	public boolean checkWin(char[][] b, char player ) {
 		boolean winner = false;
@@ -124,19 +147,31 @@ public class Game {
 		
 		return winner;
 	}
+	/**
+	 * 
+	 * This doesnt work, fix it
+	 * 
+	 * @param move - where the player is moving
+	 * @param mark - x or o
+	 * @return a new game board
+	 */
 	
 	
-	
-	public char[][] neighbour(int[] move, char mark) {
+	public Game neighbour(int[] move, char mark) {
+		char[][] board = updateBoard(move, this.board, mark);
 		
-		char[][] nGrid = getBoard();
-		nGrid[move[0]][move[1]] = mark;
+		Game game =  new Game(board);
 		
-		return nGrid;
+		return game;
 
 	}
 	
-	
+	public char[][] updateBoard(int[] move, char[][] board, char mark){
+		char[][] nboard = board.clone();
+		nboard[move[0]][move[1]] = mark;
+		return nboard;
+		
+	}
 	
 	
 	

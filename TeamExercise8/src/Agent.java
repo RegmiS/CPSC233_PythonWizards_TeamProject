@@ -9,26 +9,40 @@ public class Agent {
 	private int[] goal;
 	private String[] grid;
 	
+	
+	/**Constructor, doesn't do anything
+	 * 
+	 */
 	public Agent() {
 		
 	}
 	
+	
+	/**Uses BFS to find the shortest path, and returns the path
+	 * 
+	 * 
+	 * 
+	 * @param  Maze object start where the agent starts
+	 * @param Maze object goal where the agent wants to end up
+	 * @return The shortest path found through BFS
+	 */
+	
 	public ArrayList<int[]> bfs(Maze start, Maze goal) {
 		
-		this.move = start.getLoc();
-		this.goal = goal.getLoc();
-		this.grid = start.getGrid();
-		int[] loc =  new int[1];
+		this.move = start.getLoc(); //move updates throughout, starts at the starting position
+		this.goal = goal.getLoc(); // position where the agent wants to find
+		this.grid = start.getGrid(); // original grid
+		int[] loc =  new int[1];     //int array, used to get coordinates when the agent moves
 		
 		
 		
 		//Queue<Maze> q = new LinkedList<>();
-		Queue<int[]> q = new LinkedList<>();
-		Queue<int[]> ph = new LinkedList<>();
+		Queue<int[]> q = new LinkedList<>(); //a queue of moves that the agent can make
+		Queue<int[]> ph = new LinkedList<>(); // placeholder queue, used to take a list of moves and transfer them to a new queue
 		
 		
-		ArrayList<int[]> path = new ArrayList<>();
-		Queue<ArrayList<int[]>> pathQ = new LinkedList<ArrayList<int[]>>();
+		ArrayList<int[]> path = new ArrayList<>();                         //a list of coordinates the agent has moved from the start
+		Queue<ArrayList<int[]>> pathQ = new LinkedList<ArrayList<int[]>>(); // a queue of the list of moves the agent has moved
 		//Maze maze = new Maze();
 		
 		
@@ -40,15 +54,13 @@ public class Agent {
 		q.add(this.move);
 		
 		
-		int count = 0;
+		
 		while(!q.isEmpty() ){
-			//this.move = moveq.remove(); 
+			 
 			loc = q.remove();
 			path = pathQ.remove();
 			start.neighbor(loc);
-			/*for(int i = 0; i < path.size(); i ++){
-				System.out.println(Arrays.toString(path.get(i)));
-			}*/
+	
 			
 			//if the spot is at the end of the maze exits while loop
 			if(loc[0] == this.goal[0] && loc[1] == this.goal[1]) {
@@ -58,6 +70,7 @@ public class Agent {
 				return path;
 			}
 			
+			//gets a list of moves the agent can move from his current position
 			ph = start.moves(loc);
 			while(!ph.isEmpty()) {
 				int[] moves = ph.remove();
@@ -68,14 +81,10 @@ public class Agent {
 				pathPH.add(moves);//adds child to path
 				
 				pathQ.add(pathPH);// adds new path to queue
-				q.add(moves);//adds new postions to queue
+				q.add(moves);//adds new positions to queue
 			}
 			
 			
-			
-			//start.display();
-			//System.out.println("*******************");
-			count++;
 		}
 		
 		

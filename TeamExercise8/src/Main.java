@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class Main {
 
 	public static void main(String[] args) throws InterruptedException {
-		// TODO Auto-generated method stub
+		
 
 		
 		String[] grid  = {"XXXXXXXXXXXXXXXXXXXX",
@@ -39,27 +39,23 @@ public class Main {
 		Maze nmaze = new Maze(grid, start);
 		Maze maze = new Maze(grid, start);	//1,1 is start location
 		Maze goal = new Maze(grid, end);	//19,18 exit
-		int[] move = new int[1];
 		
 		Agent agent = new Agent();
+	
 		
-		//agent.bfs(maze, goal);
-		//Maze nmaze = new Maze(grid, start);
+		//Finds the shortest path through the maze, BFS
 		ArrayList<int[]> path = agent.bfs(maze, goal);
-		//System.out.println(path.toString());
-		System.out.println(path.size());
+		
+		
+		//loops through the found path, displaying every new move after a short delay
 		for(int i = 0; i < path.size(); i ++){
 			System.out.println(Arrays.toString(path.get(i)));
 			nmaze.neighbor(path.get(i));
 			nmaze.display();
 			Thread.sleep(500);
 		}
+		
+		System.out.println();
+		System.out.println("The agent has left the maze!!");
 }
-	
-	
-	
-	
-	
-	
-
 }

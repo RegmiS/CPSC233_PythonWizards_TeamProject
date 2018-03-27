@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		char[][] grid = {{'-','-','-'}, {'-','-','-'}, {'-','-','-'}};
+		char[][] grid = {{'-','X','O'}, {'O','X','-'}, {'-','O','-'}};
 		ArrayList<int[]> moves = new ArrayList<>();
 		
 		Game game = new Game(grid);
@@ -22,14 +22,6 @@ public class Main {
 		Agent maxplayer = new Agent('O');
 		Agent minplayer = new Agent('X');
 		
-		
-	
-		
-	/*	for(int i = 0; i < moves.size(); i ++){
-			System.out.println(Arrays.toString(moves.get(i)));
-			
-			
-		}	*/
 			
 			//plays the game
 		int count = 0;	
@@ -48,21 +40,15 @@ public class Main {
 			}
 			else {
 				
-			maxplayer.maxvalue(game, maxplayer, minplayer);
-			
-			
-			
-			
+			game.updateBoard(maxplayer.maxvalue(game, maxplayer, minplayer), game.getBoard(), maxplayer.getMark());
 			
 			
 			}
 			
 			
 			
-			
-			
-			
-			
+			System.out.println();
+			game.display();
 			count++;	
 		}
 		
