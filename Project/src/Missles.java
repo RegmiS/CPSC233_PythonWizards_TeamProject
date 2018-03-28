@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Missles extends Application {
-	private Rectangle missle =  new Rectangle(5,5,Color.BLACK);
+	private Rectangle missle =  new Rectangle(4,8,Color.BLACK);
 	private int dmg;
 	private Pane pane;
 	private static ArrayList<Timeline> timelineList = new ArrayList<Timeline>();

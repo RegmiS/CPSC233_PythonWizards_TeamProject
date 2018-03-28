@@ -17,13 +17,15 @@ import javafx.scene.image.ImageView;
 //import javafx.scene.layout.BackgroundSize;
 //import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class GameMenuGrid extends Application {
 	
 	
-	private static int WIDTH = 1280, HEIGHT = 720; //Set window dimensions
+	private static int WIDTH = 1480, HEIGHT = 720; //Set window dimensions
 
 	public static int getWidth() {
 		return WIDTH;
@@ -38,13 +40,13 @@ public class GameMenuGrid extends Application {
 		
 // Buttons, labels, text, etc., with event handlers & coordinates -- Try to see if this can be put into its own method
 		
-		
+			Pane background = new Pane();
 			GridPane canvas = new GridPane();
 			canvas.setMinSize(WIDTH, HEIGHT);
 			canvas.setPadding(new Insets(10, 10, 10, 10));
 			canvas.setVgap(50);
 			canvas.setVgap(50);
-			canvas.setAlignment(Pos.CENTER_RIGHT);
+			canvas.setAlignment(Pos.CENTER);
 			//canvas.setGridLinesVisible(true);
 			//canvas.getColumnConstraints().add(new ColumnConstraints(50));
 			
@@ -54,17 +56,19 @@ public class GameMenuGrid extends Application {
 				
 			Label title = new Label("Tower Defence Game");
 			title.setFont(new Font("Arial", 65));
+			title.setTextFill(Color.YELLOW);
 			GridPane.setHalignment(title, HPos.CENTER);
 			GridPane.setHalignment(playButton, HPos.CENTER);
 			GridPane.setHalignment(helpButton, HPos.CENTER);
 			GridPane.setHalignment(exitButton, HPos.CENTER);
-			//canvas.add(backgroundImage("grass.jpg"), 0, 0);			
+			background.getChildren().add(backgroundImage("castle.jpg"));		
+			background.getChildren().add(canvas);
 			canvas.add(title, 0, 0);
-			canvas.add(playButton, 1, 1);
-			canvas.add(helpButton, 1, 2);
-			canvas.add(exitButton, 1, 3);
+			canvas.add(playButton, 0, 1);
+			canvas.add(helpButton, 0, 2);
+			canvas.add(exitButton, 0, 3);
 			
-			Scene scene = new Scene(canvas);
+			Scene scene = new Scene(background);
 			
 			primaryStage.setTitle("The Python Wizards");
 			primaryStage.setScene(scene);
@@ -81,7 +85,7 @@ public class GameMenuGrid extends Application {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					GridVersionGame game = new GridVersionGame(canvas, scene);
+					GridVersionGame game = new GridVersionGame(canvas, canvas, scene);
 					try {
 						System.out.println("Loading...");	
 						game.start(primaryStage);
