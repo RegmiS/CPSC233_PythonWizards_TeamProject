@@ -7,13 +7,19 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -21,13 +27,14 @@ import javafx.stage.Stage;
 
 public class GridVersionGame extends Application{
 	
-	private static final int WIDTH = 1280;
+	private static final int WIDTH = 1480;
 	private static final int HEIGHT = 720;
 	private static final int TILE_SIZE = 50;
 //	private static final int TILE_ADJ = TILE_SIZE / 2;
 
 	private static Rectangle base;
 	private static GridPane gridpane;
+	private static GridPane storegrid;
 	private static Scene scene;
 	private static Main textgame;
 	private static Timeline timeline;
@@ -44,10 +51,11 @@ public class GridVersionGame extends Application{
 	private ArrayList<Tower> towerList;
 	
 	
-	public GridVersionGame(GridPane gridpane, Scene scene1) {
+	public GridVersionGame(GridPane gridpane, GridPane storegrid, Scene scene1) {
 		GridVersionGame.gridpane = gridpane;
+		GridVersionGame.storegrid = storegrid;
 		scene = scene1;
-		textgame = new Main(HEIGHT, WIDTH, TILE_SIZE);
+		textgame = new Main(HEIGHT-50, WIDTH-200, TILE_SIZE);
 		reference = new Enemy();
 		
 	}
@@ -56,14 +64,21 @@ public class GridVersionGame extends Application{
 	@Override 
 	public void start(Stage stage) throws Exception {
 		gridpane = new GridPane();
+		storegrid = new GridPane();
+		storegrid.setVgap(10);
+		storegrid.setHgap(10);
+		storegrid.setPadding(new Insets(10, 10, 10, 10));
+		
 		GridVersionGame.enemyList = new ArrayList<Enemy>();
-		towerList = new ArrayList<Tower>();
 		GridVersionGame.timeline = new Timeline();
-		
-		//Base b1 = new Base(gridpane);
-		
-		
-		/*timer = new AnimationTimer() {
+		towerList = new ArrayList<Tower>();
+				
+
+		Enemy.setPane(gridpane);
+		drawGrid();
+		spawnBase(); // does text base
+		Base b1 = new Base(gridpane);		
+		timer = new AnimationTimer() {
 			
 			@Override
 			public void handle(long arg0) {
@@ -83,23 +98,18 @@ public class GridVersionGame extends Application{
 				removeEnemies(enemyList);
 				framecount++;
 			}
-		};*/
+		};
 		
 		
 		
 		//gridpane.setPadding(new Insets(10, 10, 10, 10));
 		//gridpane.setGridLinesVisible(true);
-
-		Enemy.setPane(gridpane);
-		drawGrid();
-		spawnBase(); // does text base
-		Base b1 = new Base(gridpane);		
 		
-		Button twr = placeTower(towerList);
-        GridPane.setConstraints(twr, 0, 0);
-        GridPane.setColumnSpan(twr, 2);
+		//Button twr = placeTower(towerList);
+        //GridPane.setConstraints(twr, 0, 0);
+        //GridPane.setColumnSpan(twr, 2);
         Button start = startButton();
-        GridPane.setConstraints(start, 2, 0);
+        GridPane.setConstraints(start, 21, 0);
         GridPane.setColumnSpan(start, 2);
         Button pause = pauseButton(timeline);
         GridPane.setConstraints(pause, 24, 0);
@@ -109,7 +119,7 @@ public class GridVersionGame extends Application{
         GridPane.setColumnSpan(play, 1);
         
         
-        gridpane.getChildren().addAll(twr, start, pause, play);
+        gridpane.getChildren().addAll(start, pause, play);
 		
 		
 		//Enemy path
@@ -125,16 +135,8 @@ public class GridVersionGame extends Application{
 		Main.drawGame();
 		//
 		
-		//Side menu - WIP
-		/*
-		BorderPane borderpane = new BorderPane();
-		VBox menubar = new VBox(10);
-		menubar.getChildren().addAll(new Button("Test1"), new Button("Test2"), new Button("Test3"));
-		borderpane.setRight(menubar);
-		GridPane.setRowIndex(borderpane, 0);
-		GridPane.setColumnIndex(borderpane, 24);
-		gridpane.getChildren().addAll(borderpane);
-		*/
+
+		
 		
 		timer = new AnimationTimer() {
 			
@@ -155,7 +157,7 @@ public class GridVersionGame extends Application{
 				b1.takeDamage(enemyList);
 				removeEnemies(enemyList);
 				
-				if(b1.getHealth() < 0) {
+				if(b1.getHealth() <= 0) {
 					
 					
 					
@@ -176,11 +178,54 @@ public class GridVersionGame extends Application{
 		};
 		
 		
+		//			(NAME, TEXTURE IMAGE, POSITION, PRICE, HP, DMG, ROF, RANGE)
+
+		addStoreItem("Tower 1", "temp.jpg", 1, 1000, 500, 1, 5, 100);
+		addStoreItem("Tower 2", "temp.jpg", 2, 750, 250, 7, 4, 50);
+		addStoreItem("Tower 3", "temp.jpg", 3, 1500, 750, 25, 1, 250);
+		addStoreItem("Tower 4", "temp.jpg", 4, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 5", "temp.jpg", 5, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 6", "temp.jpg", 6, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 7", "temp.jpg", 7, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 8", "temp.jpg", 8, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 9", "temp.jpg", 9, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 10", "temp.jpg", 10, 0, 0, 0, 0, 0);
+		
+		ScrollPane shoppane = new ScrollPane();
+		shoppane.setContent(storegrid);
+		shoppane.setFitToWidth(true);
+		GridPane.setConstraints(shoppane, 25, 0, 5, 15);
+		gridpane.getChildren().addAll(shoppane);
+		
+		//---
+		
+		//Info Bar - WIP
+		
+		//String currentHPstr = Integer.toString(Main.getHealth());	
 		
 		
+		HBox infobar = new HBox();
+		infobar.setPadding(new Insets(10, 10, 10, 10));
+		infobar.setSpacing(250);
+		infobar.setStyle("-fx-background-color: #ff5d00");
 		
+		Label currentHealth= new Label();
+		currentHealth.textProperty().bind(Main.getHealthStr());
 		
+		Label currentMoney = new Label();
+		currentMoney.textProperty().bind(Main.getMoneyStr());
 		
+		Label currentLevel= new Label();
+		currentLevel.textProperty().bind(Main.getLevelStr());
+		
+		ScrollPane infopane = new ScrollPane();
+		infopane.setContent(infobar);
+		infopane.setFitToWidth(true);
+		infobar.getChildren().addAll(currentHealth, currentMoney, currentLevel);
+		GridPane.setConstraints(infopane, 0, 13, 25, 1);
+		gridpane.getChildren().add(infopane);
+		
+		//---
 		
 //		spawnEnemies(reference, 1, enemyList); 
 		
@@ -242,7 +287,7 @@ public class GridVersionGame extends Application{
     	
 	
 	public void drawGrid() throws FileNotFoundException {
-		//Grid builder - Creates a grid of Rectangles, each rectangle is a StackPane node with its own texture 	
+		//Grid builder - Creates a grid of Rectangles, each rectangle is a node with its own texture 	
 		for (int col = 0; col < ((WIDTH)/ TILE_SIZE); col++) {
 			for (int row = 0; row < ((HEIGHT)/ TILE_SIZE); row++) {
 				Rectangle rec = new Rectangle(TILE_SIZE, TILE_SIZE);
@@ -256,6 +301,35 @@ public class GridVersionGame extends Application{
 				gridpane.getChildren().addAll(rec);
 			}
 		}
+	}
+	
+	
+	public void addStoreItem(String name, String image, int position, int price, int HP_val, int DMG_val, int ROF_val, int Range_val) throws FileNotFoundException {
+		int pos = (((position * 3) +1) - 3);
+		Rectangle item = new Rectangle(TILE_SIZE * 2, TILE_SIZE * 2);
+		ImagePattern texture = new ImagePattern(backgroundImage(image));
+		item.setFill(texture);
+		item.setStroke(Color.BLACK);
+		GridPane.setConstraints(item, 0, pos-1, 2, 2);
+		
+		Label NAME = new Label(name);
+		GridPane.setConstraints(NAME, 2, pos-1, 1, 1, HPos.CENTER, VPos.CENTER);
+
+		Label HP = new Label("HP: " + HP_val);
+		GridPane.setConstraints(HP, 2, pos, 1, 1, HPos.CENTER, VPos.TOP);
+		
+		Label DMG = new Label("DMG: " + DMG_val);
+		GridPane.setConstraints(DMG, 2, pos, 1, 1, HPos.CENTER, VPos.CENTER);
+		
+		Label ROF = new Label("ROF: " + ROF_val);
+		GridPane.setConstraints(ROF, 2, pos, 1, 1, HPos.CENTER, VPos.BOTTOM);
+		
+		//Button BUY = new Button("$" + price + " Buy");
+		Button BUY = placeTower(price, HP_val, DMG_val, ROF_val, Range_val, towerList);
+		GridPane.setConstraints(BUY, 0, pos+1, 1, 1, HPos.CENTER, VPos.CENTER);
+		
+		storegrid.getChildren().addAll(item, NAME, HP, DMG, ROF, BUY);
+		//storegrid.setGridLinesVisible(true);
 	}
 	
 	/*
@@ -352,38 +426,51 @@ public class GridVersionGame extends Application{
     	//GridVersionGame.base = base;
     }
     
-    public static Button placeTower(ArrayList<Tower> towerList) 
+    public static Button placeTower(int price, int hp, int dmg, int rof, int range, ArrayList<Tower> towerList) 
     {
-    	Button twr = new Button("Place Tower");
+    	Button twr = new Button("Buy");
         twr.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
             public void handle(ActionEvent event) {
-//            	gridpane.setOnMousePressed(new EventHandler<MouseEvent>()
-  //      		{
-            		
-            		gridpane.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {  //From https://stackoverflow.com/questions/28320110/javafx-how-to-get-column-and-row-index-in-gridpane
+                    	
+            		gridpane.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  //From https://stackoverflow.com/questions/28320110/javafx-how-to-get-column-and-row-index-in-gridpane
                         @Override
                         public void handle(MouseEvent e) {
                         	
                             for(Node node: gridpane.getChildren()) {
                                 if(node instanceof Rectangle) {
                                 	
-                                    if(node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY())) {
-                                        System.out.println( "Node: at " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
-                                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), Color.RED, gridpane);
-                                    	textgame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
-                                    	Main.drawGame();
-                                    	towerList.add(t1);
-                                    	
-                                    }
+                                	 if(node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY()) 
+                                     		&& e.getSceneX() <= 1250 
+                                     		&& e.getSceneY() <= 650 
+                                     		&& ((textgame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "X") 
+                                     		&& (textgame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != " ") 
+                                     		&& (textgame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "B" ))) {
+                                		 if ((Main.getMoney() - price) >= 0){
+						                    	System.out.println(Double.toString(node.getLayoutX()) + "/" + Double.toString(node.getLayoutY()));
+						                        System.out.println( "Tower at:  " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
+						                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, hp, dmg, rof, range, Color.PURPLE, gridpane);
+						                    	textgame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
+						                    	System.out.println("HERE" + textgame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)));
+						                    	Main.drawGame();
+						                    	towerList.add(t1);
+						                    	gridpane.removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
+						                    	Main.setHealth(100); //For testing 
+						                    	Main.setMoney(Main.getMoney()-price);
+						                    	Main.setLevel(5); //For Testing
+            								}
+                                		 else {
+                                			 System.out.println("Insufficient Funds");
+                                			 gridpane.removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
+                                		 }
+            
+                                    	}
                                 }
                             }
                         }
                     });
             }
         });
-        
+
         return twr;
     }
     

@@ -13,15 +13,20 @@ import javafx.stage.Stage;
 public class Tower extends Application {
 	
 	private Rectangle rectangle;
-	//private int rateOfFire = 1;
-	private int damage = 5;
-	//private int health = 10;
+	private int ID;
+	private int rateOfFire;
+	private int damage;
+	private int health;
+	private int price;
 	private int xCoord;
 	private int yCoord;
-	private int range = 50;
+	private int range;
 	private Pane pane;
 	
-	public int getDmg() {return this.damage;}
+	public int getROF() {return this.rateOfFire;}
+	public int getDMG() {return this.damage;}
+	public int getHP() {return this.health;}
+	public int getPrice() {return price;}
 	public int getX() {return this.xCoord;}
 	public int getY() {return this.yCoord;}
 	
@@ -29,6 +34,13 @@ public class Tower extends Application {
 	private void setPane(Pane pane) {
 		this.pane = pane;
 	}
+	
+	/*
+	private void setID(int id) {
+		this.ID = id;
+	}
+	*/
+
 	private void setXCoord(int x) {
 		this.xCoord = x;
 	}
@@ -37,10 +49,37 @@ public class Tower extends Application {
 		this.yCoord = y;
 	}
 	
-	public Tower(int xc, int yc,Color color, Pane canvas)  {
+	private void setPrice(int price) {
+		this.price = price;
+	}
+	
+	private void setHP(int hp) {
+		this.health = hp;
+	}
+	
+	private void setDMG(int dmg) {
+		this.damage = dmg;
+	}
+	
+	private void setROF(int rof) {
+		this.rateOfFire = rof;
+	}
+	
+	private void setRange(int range) {
+		this.range = range;
+	}
+	
+	
+	public Tower(int xc, int yc, int price, int hp, int dmg, int rof, int range, Color color, Pane canvas)  {
 		
+		//setID(id);
 		setXCoord(xc);
 		setYCoord(yc);
+		setPrice(price);
+		setHP(hp);
+		setDMG(dmg);
+		setROF(rof);
+		setRange(range);
 		setPane(canvas);
 		
 		Platform.runLater(new Runnable() {
@@ -66,7 +105,7 @@ public class Tower extends Application {
 		while(iter.hasNext()) {
 			Enemy enemy = (Enemy)iter.next();
 			
-			if(distanceFrom(enemy) < 100) {
+			if(distanceFrom(enemy) < range) {
 				Missles m1 = new Missles(this.pane, enemy, getX(),getY(), this.damage);
 				enemy.setHealth(this.damage);
 				return;

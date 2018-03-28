@@ -1,29 +1,14 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javafx.animation.AnimationTimer;
-import javafx.animation.Timeline;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 
 
 public class Base {
 
-	private int health = 50;
+	private int health = Main.getHealth();
 	private int Xcoord = 24;
 	private int Ycoord = 5;
 	
@@ -32,7 +17,12 @@ public class Base {
 	public int getY() {return this.Ycoord;}
 	
 	
-	public void setHealth(int dmg) { this.health = this.health-dmg;}
+	public void setHealth(int dmg) { 
+		if (this.health - dmg >= 0) {
+			this.health = this.health-dmg;
+			Main.setHealth(Main.getHealth()-dmg);
+			}
+		}
 	public void setX(int x) { this.Xcoord = x;}
 	public void setY(int y) { this.Ycoord = y;}
 	

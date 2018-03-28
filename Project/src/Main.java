@@ -1,9 +1,13 @@
 import java.util.ArrayList;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 public class Main {
 	
 	// all the static variables that are used throughout the game itself
-    public static int HEALTH = 0;
+    public static int HEALTH = 100;
+    public static int MONEY = 2500;
     public static int LEVEL = 0;
     public static int ENEMIES = 0;
     private static int HEIGHT;
@@ -12,15 +16,50 @@ public class Main {
     private static int NUM_ROWS;
     private static int NUM_COLOUMS;
     
+    private static StringProperty HEALTHstr = new SimpleStringProperty("Health: " + Integer.toString(HEALTH));
+    private static StringProperty MONEYstr = new SimpleStringProperty("Money: " + Integer.toString(MONEY));
+    private static StringProperty LEVELstr = new SimpleStringProperty("Level: " + Integer.toString(LEVEL));
+    
     // public arraylist that hosts all of the grid game
     public static ArrayList< ArrayList<String>> textgame;
     
     // all the getters and setters for the game
-    public void setHealth(int healthval) {
+    
+   public static StringProperty getHealthStr() {
+	   return HEALTHstr;
+   }
+   
+   public static StringProperty getMoneyStr() {
+	   return MONEYstr;
+   }
+   
+   public static StringProperty getLevelStr() {
+	   return LEVELstr;
+   }
+   
+   public static int getHealth() {
+	   return HEALTH;
+   }
+   
+   public static int getMoney() {
+	   return MONEY;
+   }
+   
+   public static int getLevel() {
+	   return LEVEL;
+   }
+    
+    public static void setHealth(int healthval) {
         Main.HEALTH = healthval;
+        Main.HEALTHstr.set("HP: " + Integer.toString(healthval));
     }
-    public void setLevel(int levelVal) {
+    public static void setMoney(int moneyVal) {
+        Main.MONEY = moneyVal;
+        Main.MONEYstr.set("Money: " + Integer.toString(moneyVal));
+    }
+    public static void setLevel(int levelVal) {
         Main.LEVEL = levelVal;
+        Main.LEVELstr.set("Level: " + Integer.toString(levelVal));
     }
     public void addEnemies() {
     	Main.ENEMIES += 1;
