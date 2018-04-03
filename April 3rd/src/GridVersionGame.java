@@ -128,6 +128,19 @@ public class GridVersionGame extends Application{
 				if (framecount % 100 == 0) 
 					Main.drawGame();
 			
+				if(Base.getHealth() <= 0) {
+				
+				timer.stop();
+    			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
+    			for (int i = 0; i < enemyList.size(); i++  )
+    				enemyList.get(i).pause();
+    			ArrayList<Timeline> missleList = Missles.getTimelineList();
+    			for (int i = 0; i < missleList.size(); i++)
+    				missleList.get(i).pause();
+				
+			}
+			
+			
 				removeEnemies(enemyList);
 				
 				framecount++;
