@@ -61,7 +61,7 @@ public class GameMenuGrid extends Application {
 			GridPane.setHalignment(playButton, HPos.CENTER);
 			GridPane.setHalignment(helpButton, HPos.CENTER);
 			GridPane.setHalignment(exitButton, HPos.CENTER);
-//			background.getChildren().add(backgroundImage("castle.jpg"));		
+			background.getChildren().add(backgroundImage("castle.jpg"));		
 			background.getChildren().add(canvas);
 			canvas.add(title, 0, 0);
 			canvas.add(playButton, 0, 1);
