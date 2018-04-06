@@ -1,8 +1,9 @@
-import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import javafx.scene.paint.Color;
 
 public class Leveling {
     public double normal = 1.00;

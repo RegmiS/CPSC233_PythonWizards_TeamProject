@@ -11,11 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-//import javafx.scene.layout.BackgroundImage;
-//import javafx.scene.layout.BackgroundPosition;
-//import javafx.scene.layout.BackgroundRepeat;
-//import javafx.scene.layout.BackgroundSize;
-//import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -85,7 +80,7 @@ public class GameMenuGrid extends Application {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					GridVersionGame game = new GridVersionGame(canvas, canvas, scene);
+					Game game = new Game(canvas, canvas, scene);
 					try {
 						System.out.println("Loading...");	
 						game.start(primaryStage);

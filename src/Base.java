@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Iterator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;

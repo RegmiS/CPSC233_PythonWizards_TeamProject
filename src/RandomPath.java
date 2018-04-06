@@ -70,7 +70,7 @@ public class RandomPath {
 //			System.out.println("Count: " + count + "2nd last" + " Current Row: " + currentRow + " Current Col: " + currentCol);
 			
 			//Finish path from column 21 to 24(base column poition
-			GridVersionGame.enemyPath(right, currentRow, currentCol, (baseCol-currentCol), GridVersionGame.getReference());
+			Game.enemyPath(right, currentRow, currentCol, (baseCol-currentCol), Game.getReference());
 
 //			System.out.println("Count: " + count + " Moving right (Final)" + " Current Row: " + currentRow + " Current Col: " + currentCol);
 //			System.out.println("done");
@@ -79,20 +79,20 @@ public class RandomPath {
 }
 			
 			public void moveUp(int row, int col, int length) {
-				GridVersionGame.enemyPath("up", row, col, length, GridVersionGame.getReference());
+				Game.enemyPath("up", row, col, length, Game.getReference());
 				RandomPath.setCurrentRow(RandomPath.getCurrentRow() - (length));
 				
 			}
 			public void moveDown(int row, int col, int length) {
-				GridVersionGame.enemyPath("down", row, col, length, GridVersionGame.getReference());
+				Game.enemyPath("down", row, col, length, Game.getReference());
 				RandomPath.setCurrentRow(RandomPath.getCurrentRow() + (length));
 			}
 			public void moveLeft(int row, int col, int length) {
-				GridVersionGame.enemyPath("left", row, col, length, GridVersionGame.getReference());
+				Game.enemyPath("left", row, col, length, Game.getReference());
 				RandomPath.setCurrentCol(RandomPath.getCurrentCol() - (length));
 			}
 			public void moveRight(int row, int col, int length) {
-				GridVersionGame.enemyPath("right", row, col, length, GridVersionGame.getReference());
+				Game.enemyPath("right", row, col, length, Game.getReference());
 				RandomPath.setCurrentCol(RandomPath.getCurrentCol() + (length));
 			}
 		

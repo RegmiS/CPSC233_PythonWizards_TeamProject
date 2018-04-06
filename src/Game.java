@@ -26,7 +26,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class GridVersionGame extends Application{
+public class Game extends Application{
 	
 	private static final int WIDTH = 1480;
 	private static final int HEIGHT = 720;
@@ -50,9 +50,9 @@ public class GridVersionGame extends Application{
 	private static Leveling scalingAlgo = new Leveling("normal", 20);
 	
 	
-	public GridVersionGame(GridPane gridpane, GridPane storegrid, Scene scene1) {
-		GridVersionGame.gridpane = gridpane;
-		GridVersionGame.storegrid = storegrid;
+	public Game(GridPane gridpane, GridPane storegrid, Scene scene1) {
+		Game.gridpane = gridpane;
+		Game.storegrid = storegrid;
 		scene = scene1;
 		textgame = new Main(HEIGHT-50, WIDTH-200, TILE_SIZE);
 		reference = new Enemy();
@@ -68,8 +68,8 @@ public class GridVersionGame extends Application{
 		storegrid.setHgap(10);
 		storegrid.setPadding(new Insets(10, 10, 10, 10));
 		
-		GridVersionGame.enemyList = new ArrayList<Enemy>();
-		GridVersionGame.timeline = new Timeline();
+		Game.enemyList = new ArrayList<Enemy>();
+		Game.timeline = new Timeline();
 		towerList = new ArrayList<Tower>();
 				
 
@@ -215,7 +215,7 @@ public class GridVersionGame extends Application{
 		
 	}
 	
-	public static ArrayList<Enemy> getEnemyList() { return GridVersionGame.enemyList; }
+	public static ArrayList<Enemy> getEnemyList() { return Game.enemyList; }
 	
 	
 	public void removeEnemies (ArrayList<Enemy> enemyList) throws ConcurrentModificationException {
@@ -478,9 +478,9 @@ public class GridVersionGame extends Application{
 		return pause;
     }
 
-	public static void main(String[] args) {
-		launch(args);
-	}
+//	public static void main(String[] args) {
+//		launch(args);
+//	}
 
 
 	public static Enemy getReference() {
