@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class GameMenuGrid extends Application {
+public class MainMenu extends Application {
 	
 	
 	private static int WIDTH = 1480, HEIGHT = 720; //Set window dimensions
