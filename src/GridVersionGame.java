@@ -2,7 +2,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
+
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -95,13 +95,14 @@ public class GridVersionGame extends Application{
 		
 		
 		//Enemy path
-		enemyPath("right", 2, 0, 5, reference);
-		enemyPath("down", 2, 5, 5, reference);
-		enemyPath("left", 7, 5, 3, reference);
-		enemyPath("down", 7, 2, 3, reference);
-		enemyPath("right", 10, 2, 10, reference);
-		enemyPath("up", 10, 12, 5, reference);
-		enemyPath("right", 5, 12, 12, reference);
+        new RandomPath();
+//		enemyPath("right", 2, 0, 5, reference);
+//		enemyPath("down", 2, 5, 5, reference);
+//		enemyPath("left", 7, 5, 3, reference);
+//		enemyPath("down", 7, 2, 3, reference);
+//		enemyPath("right", 10, 2, 10, reference);
+//		enemyPath("up", 10, 12, 5, reference);
+//		enemyPath("right", 5, 12, 12, reference);
 		
 		//
 		Main.drawGame();
@@ -279,7 +280,7 @@ public class GridVersionGame extends Application{
 	/*
 	 * Creates a horizontal/vertical path for enemies to move on
 	 */
-	public void enemyPath(String direction, int row, int col, int length, Enemy e1) {
+	public static void enemyPath(String direction, int row, int col, int length, Enemy e1) {
 
 		if (direction == "right") {
 			int[] start = {col, row};
@@ -479,6 +480,11 @@ public class GridVersionGame extends Application{
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+
+	public static Enemy getReference() {
+		return reference;
 	}
 	
 }
