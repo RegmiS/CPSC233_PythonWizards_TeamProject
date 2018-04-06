@@ -35,7 +35,7 @@ public class Game extends Application{
 	private static GridPane gridpane;
 	private static GridPane storegrid;
 	private static Scene scene;
-	private static Main textgame;
+	private static TextGame textgame;
 	private static Timeline timeline;
 	private static Enemy reference;
 	private static AnimationTimer timer;
@@ -54,7 +54,7 @@ public class Game extends Application{
 		Game.gridpane = gridpane;
 		Game.storegrid = storegrid;
 		scene = scene1;
-		textgame = new Main(HEIGHT-50, WIDTH-200, TILE_SIZE);
+		textgame = new TextGame(HEIGHT-50, WIDTH-200, TILE_SIZE);
 		reference = new Enemy();
 		
 	}
@@ -105,7 +105,7 @@ public class Game extends Application{
 //		enemyPath("right", 5, 12, 12, reference);
 		
 		//
-		Main.drawGame();
+		TextGame.drawGame();
 		//
 		
 		
@@ -129,7 +129,7 @@ public class Game extends Application{
 					timer.stop();
 				}
 				if (framecount % 100 == 0) 
-					Main.drawGame();
+					TextGame.drawGame();
 			
 				
 				if(Base.getHealth() <= 0) {
@@ -183,13 +183,13 @@ public class Game extends Application{
 		infobar.setStyle("-fx-background-color: #ff5d00");
 		
 		Label currentHealth= new Label();
-		currentHealth.textProperty().bind(Main.getHealthStr());
+		currentHealth.textProperty().bind(TextGame.getHealthStr());
 		
 		Label currentMoney = new Label();
-		currentMoney.textProperty().bind(Main.getMoneyStr());
+		currentMoney.textProperty().bind(TextGame.getMoneyStr());
 		
 		Label currentLevel= new Label();
-		currentLevel.textProperty().bind(Main.getLevelStr());
+		currentLevel.textProperty().bind(TextGame.getLevelStr());
 		
 		ScrollPane infopane = new ScrollPane();
 		infopane.setContent(infobar);
@@ -222,7 +222,7 @@ public class Game extends Application{
 		for (int i = 0; i < enemyList.size(); i++)
 		{
 			if(enemyList.get(i).getHealth() <= 0) {
-				Main.removeEnemies();
+				TextGame.removeEnemies();
 				enemyList.get(i).removeEnemy(false);
 			}
 			
@@ -390,17 +390,17 @@ public class Game extends Application{
                                      		&& ((textgame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "X") 
                                      		&& (textgame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != " ") 
                                      		&& (textgame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "B" ))) {
-                                		 if ((Main.getMoney() - price) >= 0){
+                                		 if ((TextGame.getMoney() - price) >= 0){
 						                    	System.out.println(Double.toString(node.getLayoutX()) + "/" + Double.toString(node.getLayoutY()));
 						                        System.out.println( "Tower at:  " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
 						                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, hp, dmg, rof, range, image, gridpane);
 						                    	textgame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
 						                    	System.out.println("HERE" + textgame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)));
-						                    	Main.drawGame();
+						                    	TextGame.drawGame();
 						                    	towerList.add(t1);
 						                    	gridpane.removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
-						                    	Main.setHealth(Base.getHealth()); //For testing 
-						                    	Main.setMoney(Main.getMoney()-price);
+						                    	TextGame.setHealth(Base.getHealth()); //For testing 
+						                    	TextGame.setMoney(TextGame.getMoney()-price);
             								}
                                 		 else {
                                 			 System.out.println("Insufficient Funds");

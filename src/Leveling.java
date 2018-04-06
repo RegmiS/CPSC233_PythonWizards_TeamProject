@@ -42,7 +42,7 @@ public class Leveling {
         setTieredBosses();
         addTieredEnemies();
         populateColorList();
-        Main.setHealth(baseHealth);
+        TextGame.setHealth(baseHealth);
 
     }
     
@@ -204,7 +204,7 @@ public class Leveling {
     }
     public static void increaseCurrentLevel() {
     	currentLevel +=1;
-    	Main.setLevel();
+    	TextGame.setLevel();
     }
     
 //    public void printRoundMechanic() {

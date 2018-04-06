@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Main {
+public class TextGame {
 	
 	// all the static variables that are used throughout the game itself
     public static int HEALTH = 100;
@@ -53,19 +53,19 @@ public class Main {
    }
     
     public static void setHealth(int healthval) {
-        Main.HEALTH = healthval;
-        Main.HEALTHstr.set("HP: " + Integer.toString(healthval));
+        TextGame.HEALTH = healthval;
+        TextGame.HEALTHstr.set("HP: " + Integer.toString(healthval));
     }
     public static void setMoney(int moneyVal) {
-        Main.MONEY = moneyVal;
-        Main.MONEYstr.set("Money: " + Integer.toString(moneyVal));
+        TextGame.MONEY = moneyVal;
+        TextGame.MONEYstr.set("Money: " + Integer.toString(moneyVal));
     }
     public static void setLevel() {
-        Main.LEVEL += 1;
-        Main.LEVELstr.set("Level: " + Integer.toString(Main.LEVEL));
+        TextGame.LEVEL += 1;
+        TextGame.LEVELstr.set("Level: " + Integer.toString(TextGame.LEVEL));
     }
     public static void addEnemies() {
-    	Main.ENEMIES += 1;
+    	TextGame.ENEMIES += 1;
     	
     }
     
@@ -76,12 +76,12 @@ public class Main {
     
    
     // constructor for the class( used in the grid game to create an object of this class)
-    public Main(int height, int width, int tile_size) {
-    	Main.HEIGHT = height;
-    	Main.WIDTH = width;
-    	Main.TILE_SIZE = tile_size;
-    	Main.NUM_ROWS = Main.HEIGHT/Main.TILE_SIZE;
-    	Main.NUM_COLOUMS = Main.WIDTH / Main.TILE_SIZE;
+    public TextGame(int height, int width, int tile_size) {
+    	TextGame.HEIGHT = height;
+    	TextGame.WIDTH = width;
+    	TextGame.TILE_SIZE = tile_size;
+    	TextGame.NUM_ROWS = TextGame.HEIGHT/TextGame.TILE_SIZE;
+    	TextGame.NUM_COLOUMS = TextGame.WIDTH / TextGame.TILE_SIZE;
         
         textgame = new ArrayList<ArrayList<String>>();
         createArrayList();
@@ -91,7 +91,7 @@ public class Main {
     //returns the game in case it needs to be edited or changed
     public ArrayList<ArrayList<String>> getTextgame()
     {
-    	return Main.textgame;
+    	return TextGame.textgame;
     }
 
     // creates the arraylist to use for the game in the constructor

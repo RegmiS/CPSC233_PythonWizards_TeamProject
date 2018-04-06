@@ -64,7 +64,7 @@ public class Enemy {
 		}
 		
 		else
-			Main.setMoney(Main.getMoney() + this.points);
+			TextGame.setMoney(TextGame.getMoney() + this.points);
 		Enemy.pane.getChildren().remove(this.circle);
 		Enemy.timelineList.remove(this.animation);
 		this.animation.stop();
@@ -116,7 +116,7 @@ public class Enemy {
     	
     	animation.play();
     	Game.getEnemyList().add(this);
-    	Main.addEnemies();
+    	TextGame.addEnemies();
 	}
 	
 	public Timeline enemyAnimation(double TILE_SIZE)

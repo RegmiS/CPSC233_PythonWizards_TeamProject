@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Base {
 
-	private static int health = Main.getHealth();
+	private static int health = TextGame.getHealth();
 	private int Xcoord = 24;
 	private int Ycoord = 5;
 	
@@ -18,7 +18,7 @@ public class Base {
 	public static void setHealth(int dmg) { 
 		if (health - dmg >= 0) {
 			health = health-dmg;
-			Main.setHealth(Main.getHealth()-dmg);
+			TextGame.setHealth(TextGame.getHealth()-dmg);
 			}
 		}
 	public void setX(int x) { this.Xcoord = x;}
