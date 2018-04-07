@@ -7,8 +7,8 @@ import javafx.scene.shape.Rectangle;
 public class Base {
 
 	private static int health = TextGame.getHealth();
-	private int Xcoord = 24;
-	private int Ycoord = 5;
+	private int Xcoord = TextGame.getBaseCol();;
+	private int Ycoord = TextGame.getBaseRow();;
 	
 	public static int getHealth() {return health;}
 	public int getX() {return this.Xcoord;}
