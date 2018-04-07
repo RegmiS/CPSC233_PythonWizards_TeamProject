@@ -58,7 +58,7 @@ public class Game extends Application{
 
 		Enemy.setPane(getGridpane());
 		drawGrid();
-		spawnBase(); // does text base
+		spawnBase(5, 24); // does text base
 		Base b1 = new Base(getGridpane());
 
         Button start = Buttons.startButton();
@@ -197,8 +197,8 @@ public class Game extends Application{
 		}
 	}
 	
-    public static void spawnBase() {
-    	textgame.setBase(5, 24, "B");
+    public static void spawnBase(int row, int col) {
+    	textgame.setBase(row, col, "B");
     }
 
 
