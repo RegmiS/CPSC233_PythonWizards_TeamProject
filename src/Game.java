@@ -1,27 +1,16 @@
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -135,7 +124,7 @@ public class Game extends Application{
 		});
 		
 		
-//						  (NAME, TEXTURE IMAGE, POSITION, PRICE, HP, DMG, ROF, RANGE)
+//						  (NAME, TEXTURE IMAGE, POSITION, PRICE, HP, DMG, RANGE)
 
 		Store.addStoreItem("Tower 1", "tank1.png", 1, 1000, 500, 500, 100);
 		Store.addStoreItem("Tower 2", "tank2.png", 2, 750, 250, 700, 50);

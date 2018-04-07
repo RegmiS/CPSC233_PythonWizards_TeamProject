@@ -217,6 +217,7 @@ public class Tower{
 		TextGame.editGridTower(getY(),getX(),"#"); //removes tower from text version
 
 		this.pane.getChildren().remove(this.rectangle); //removes tower from veiw
+		towerList.remove(this);
 	}
 	
 	
