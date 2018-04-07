@@ -16,7 +16,6 @@ public class Tower{
 	
 	private Rectangle rectangle;
 	private int ID;
-	private int rateOfFire;
 	private int damage;
 	private int health;
 	private int price;
@@ -25,7 +24,6 @@ public class Tower{
 	private int range;
 	private Pane pane;
 	
-	public int getROF() {return this.rateOfFire;}
 	public int getDMG() {return this.damage;}
 	public int getHP() {return this.health;}
 	public int getPrice() {return price;}
@@ -63,16 +61,12 @@ public class Tower{
 		this.damage = dmg;
 	}
 	
-	private void setROF(int rof) {
-		this.rateOfFire = rof;
-	}
-	
 	private void setRange(int range) {
 		this.range = range;
 	}
 	
 	
-	public Tower(int xc, int yc, int price, int hp, int dmg, int rof, int range, String filename, Pane canvas)  {
+	public Tower(int xc, int yc, int price, int hp, int dmg, int range, String filename, Pane canvas)  {
 		
 		//setID(id);
 		setXCoord(xc);
@@ -80,7 +74,6 @@ public class Tower{
 		setPrice(price);
 		setHP(hp);
 		setDMG(dmg);
-		setROF(rof);
 		setRange(range);
 		setPane(canvas);
 		

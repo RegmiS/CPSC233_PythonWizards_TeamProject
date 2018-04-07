@@ -121,10 +121,10 @@ public class Game extends Application{
 		
 //						  (NAME, TEXTURE IMAGE, POSITION, PRICE, HP, DMG, ROF, RANGE)
 
-		Store.addStoreItem("Tower 1", "tank1.png", 1, 1000, 500, 500, 5, 100);
-		Store.addStoreItem("Tower 2", "tank2.png", 2, 750, 250, 700, 4, 50);
-		Store.addStoreItem("Tower 3", "tank3.png", 3, 1500, 750, 2500, 1, 250);
-		Store.addStoreItem("Tower 4", "tank4.png", 4, 0, 0, 0, 0, 0);
+		Store.addStoreItem("Tower 1", "tank1.png", 1, 1000, 500, 500, 100);
+		Store.addStoreItem("Tower 2", "tank2.png", 2, 750, 250, 700, 50);
+		Store.addStoreItem("Tower 3", "tank3.png", 3, 1500, 750, 2500, 250);
+		Store.addStoreItem("Tower 4", "tank4.png", 4, 0, 0, 0, 0);
 		
 		ScrollPane shoppane = new ScrollPane();
 		shoppane.setContent(getStoregrid());
