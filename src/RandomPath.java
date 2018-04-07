@@ -5,9 +5,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class RandomPath {
-	private static int baseRow = 5;
-	private static int baseCol = 24;
+	private static int baseRow = TextGame.getBaseRow();;
+	private static int baseCol = TextGame.getBaseCol();;
 	private static int finalCol = baseCol - 4;
+	private static int startingRow;
 	private static int currentCol = 0;
 	private static int currentRow;
 	private static String[] moveV = {"up", "down"};;
@@ -21,10 +22,14 @@ public class RandomPath {
 
 		public RandomPath() {
 			
+//			baseRow = TextGame.getBaseRow();
+//			baseCol = TextGame.getBaseCol();
+			
 			//Draws the first part of the path
 			//Always starts at (randRow, 0) and moves right 
-			currentRow = rand.nextInt((11+1)-1)+1; //Pick a random starting row between 1 and 11
-			moveRight(currentRow, currentCol, randomLength(right)); //First right move
+			startingRow = rand.nextInt((11+1)-1)+1; //Pick a random starting row between 1 and 11
+			currentRow = startingRow;
+			moveRight(startingRow, currentCol, randomLength(right)); //First right move
 			
 //			count++;
 //			System.out.println("Count: " + count + " Current Row: " + currentRow + " Current Col: " + currentCol);

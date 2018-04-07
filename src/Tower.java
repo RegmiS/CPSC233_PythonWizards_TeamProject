@@ -66,7 +66,7 @@ public class Tower{
 	}
 	
 	
-	public Tower(int xc, int yc, int price, int hp, int dmg, int range, String filename, Pane canvas)  {
+	public Tower(int xc, int yc, int price, int hp, int dmg, int range, String filename, GridPane canvas)  {
 		
 		//setID(id);
 		setXCoord(xc);

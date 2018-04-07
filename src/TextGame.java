@@ -16,6 +16,9 @@ public class TextGame {
     private static int NUM_ROWS;
     private static int NUM_COLOUMS;
     
+    private static int baseRow;
+    private static int baseCol;
+    
     private static StringProperty HEALTHstr = new SimpleStringProperty("Health: " + Integer.toString(HEALTH));
     private static StringProperty MONEYstr = new SimpleStringProperty("Money: " + Integer.toString(MONEY));
     private static StringProperty LEVELstr = new SimpleStringProperty("Level: " + Integer.toString(LEVEL));
@@ -138,11 +141,29 @@ public class TextGame {
     
     public void setBase(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
+    	setBaseRow(xcord);
+    	setBaseCol(ycord);
     }
     
     public void updateEnemy(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
     }
+
+	public static int getBaseCol() {
+		return baseCol;
+	}
+
+	public static void setBaseCol(int baseCol) {
+		TextGame.baseCol = baseCol;
+	}
+
+	public static int getBaseRow() {
+		return baseRow;
+	}
+
+	public static void setBaseRow(int baseRow) {
+		TextGame.baseRow = baseRow;
+	}
 }
 
 
