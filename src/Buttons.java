@@ -71,7 +71,7 @@ public class Buttons {
     }
 
 	
-	 public static Button placeTower(int price, int hp, int dmg, int range, ArrayList<Tower> towerList, String image) 
+	  public static Button placeTower(int price, int hp, int dmg, int range, ArrayList<Tower> towerList, String image) 
 	    {
 	    	Button twr = new Button("Buy");
 	        twr.setOnAction(new EventHandler<ActionEvent>() {
@@ -93,8 +93,8 @@ public class Buttons {
 	                                		 if ((TextGame.getMoney() - price) >= 0){
 							                    	System.out.println(Double.toString(node.getLayoutX()) + "/" + Double.toString(node.getLayoutY()));
 							                        System.out.println( "Tower at:  " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
-							                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, hp, dmg, range, image, Game.getGridpane());
-							                    	Game.getTextgame().editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
+							                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, hp, dmg, range, image, Game.getGridpane(),towerList);
+							                    	TextGame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
 							                    	System.out.println("HERE" + Game.getTextgame().getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)));
 							                    	TextGame.drawGame();
 							                    	towerList.add(t1);

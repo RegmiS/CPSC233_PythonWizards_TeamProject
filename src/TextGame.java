@@ -7,7 +7,7 @@ public class TextGame {
 	
 	// all the static variables that are used throughout the game itself
     public static int HEALTH = 100;
-    public static int MONEY = 250000;
+    public static int MONEY = 300000;
     public static int LEVEL = 0;
     public static int ENEMIES = 0;
     private static int HEIGHT;
@@ -130,7 +130,7 @@ public class TextGame {
     }
     
     //editing the game, enemies and paths
-    public void editGridTower(int xcord, int ycord, String val) {
+    public static void editGridTower(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
     	
     }
