@@ -1,9 +1,14 @@
 import java.util.Random;
 
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
 public class RandomPath {
-	private static int baseRow = 5;
-	private static int baseCol = 24;
+	private static int baseRow = TextGame.getBaseRow();;
+	private static int baseCol = TextGame.getBaseCol();;
 	private static int finalCol = baseCol - 4;
+	private static int startingRow;
 	private static int currentCol = 0;
 	private static int currentRow;
 	private static String[] moveV = {"up", "down"};;
@@ -17,10 +22,14 @@ public class RandomPath {
 
 		public RandomPath() {
 			
+//			baseRow = TextGame.getBaseRow();
+//			baseCol = TextGame.getBaseCol();
+			
 			//Draws the first part of the path
 			//Always starts at (randRow, 0) and moves right 
-			currentRow = rand.nextInt((11+1)-1)+1; //Pick a random starting row between 1 and 11
-			moveRight(currentRow, currentCol, randomLength(right)); //First right move
+			startingRow = rand.nextInt((11+1)-1)+1; //Pick a random starting row between 1 and 11
+			currentRow = startingRow;
+			moveRight(startingRow, currentCol, randomLength(right)); //First right move
 			
 //			count++;
 //			System.out.println("Count: " + count + " Current Row: " + currentRow + " Current Col: " + currentCol);
@@ -70,7 +79,7 @@ public class RandomPath {
 //			System.out.println("Count: " + count + "2nd last" + " Current Row: " + currentRow + " Current Col: " + currentCol);
 			
 			//Finish path from column 21 to 24(base column poition
-			GridVersionGame.enemyPath(right, currentRow, currentCol, (baseCol-currentCol), GridVersionGame.getReference());
+			enemyPath(right, currentRow, currentCol, (baseCol-currentCol), Game.getReference());
 
 //			System.out.println("Count: " + count + " Moving right (Final)" + " Current Row: " + currentRow + " Current Col: " + currentCol);
 //			System.out.println("done");
@@ -79,20 +88,20 @@ public class RandomPath {
 }
 			
 			public void moveUp(int row, int col, int length) {
-				GridVersionGame.enemyPath("up", row, col, length, GridVersionGame.getReference());
+				enemyPath("up", row, col, length, Game.getReference());
 				RandomPath.setCurrentRow(RandomPath.getCurrentRow() - (length));
 				
 			}
 			public void moveDown(int row, int col, int length) {
-				GridVersionGame.enemyPath("down", row, col, length, GridVersionGame.getReference());
+				enemyPath("down", row, col, length, Game.getReference());
 				RandomPath.setCurrentRow(RandomPath.getCurrentRow() + (length));
 			}
 			public void moveLeft(int row, int col, int length) {
-				GridVersionGame.enemyPath("left", row, col, length, GridVersionGame.getReference());
+				enemyPath("left", row, col, length, Game.getReference());
 				RandomPath.setCurrentCol(RandomPath.getCurrentCol() - (length));
 			}
 			public void moveRight(int row, int col, int length) {
-				GridVersionGame.enemyPath("right", row, col, length, GridVersionGame.getReference());
+				enemyPath("right", row, col, length, Game.getReference());
 				RandomPath.setCurrentCol(RandomPath.getCurrentCol() + (length));
 			}
 		
@@ -112,6 +121,75 @@ public class RandomPath {
 					return 0;
 				}
 			}
+			
+			public static void enemyPath(String direction, int row, int col, int length, Enemy e1) {
+
+				if (direction == "right") {
+					int[] start = {col, row};
+					int[] end = {col + length, row};
+					int[][] temp = new int[][] {start, end};
+					e1.addList(temp);
+					
+					for (int i = col; i < (length + col); i++) {
+						Rectangle enemypath = new Rectangle(Game.getTileSize(), Game.getTileSize());
+						enemypath.setFill(Color.BROWN);
+						GridPane.setRowIndex(enemypath, row);
+						GridPane.setColumnIndex(enemypath, i);
+						Game.getGridpane().getChildren().addAll(enemypath);
+						Game.getTextgame().editGridPath(row, i, " ");
+					}
+				}
+				if (direction == "left") {
+					
+					int[] start = {col, row};
+					int[] end = {col - length, row};
+					int[][] temp = new int[][] {start, end};
+					e1.addList(temp);
+					
+					for (int i = col; i > (col - length); i--) {
+						Rectangle enemypath = new Rectangle(Game.getTileSize(), Game.getTileSize());
+						enemypath.setFill(Color.BROWN);
+						GridPane.setRowIndex(enemypath, row);
+						GridPane.setColumnIndex(enemypath, i);
+						Game.getGridpane().getChildren().addAll(enemypath);
+						Game.getTextgame().editGridPath(row, i, " ");
+					}
+				}
+				if (direction == "up") {
+					
+					int[] start = {col, row};
+					int[] end = {col, row - length};
+					int[][] temp = new int[][] {start, end};
+					e1.addList(temp);
+					
+					for (int i = row; i > (row - length); i--) {
+						Rectangle enemypath = new Rectangle(Game.getTileSize(), Game.getTileSize());
+						enemypath.setFill(Color.BROWN);
+						GridPane.setRowIndex(enemypath, i);
+						GridPane.setColumnIndex(enemypath, col);
+						Game.getGridpane().getChildren().addAll(enemypath);
+						Game.getTextgame().editGridPath(i, col, " ");
+
+					}
+				}
+				
+				if (direction == "down") {
+					
+					int[] start = {col, row};
+					int[] end = {col, row + length};
+					int[][] temp = new int[][] {start, end};
+					e1.addList(temp);
+					
+					for (int i = row; i < (length + row); i++) {
+						Rectangle enemypath = new Rectangle(Game.getTileSize(), Game.getTileSize());
+						enemypath.setFill(Color.BROWN);
+						GridPane.setRowIndex(enemypath, i);
+						GridPane.setColumnIndex(enemypath, col);
+						Game.getGridpane().getChildren().addAll(enemypath);
+						Game.getTextgame().editGridPath(i, col, " ");
+					}
+				}
+			}
 
 			public static int getCurrentCol() {
 				return currentCol;
@@ -129,3 +207,13 @@ public class RandomPath {
 				RandomPath.currentRow = currentRow;
 			}
 	}
+
+
+//Ignore
+//enemyPath("right", 2, 0, 5, reference);
+//enemyPath("down", 2, 5, 5, reference);
+//enemyPath("left", 7, 5, 3, reference);
+//enemyPath("down", 7, 2, 3, reference);
+//enemyPath("right", 10, 2, 10, reference);
+//enemyPath("up", 10, 12, 5, reference);
+//enemyPath("right", 5, 12, 12, reference);

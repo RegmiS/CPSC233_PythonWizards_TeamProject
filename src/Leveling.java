@@ -1,8 +1,9 @@
-import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import javafx.scene.paint.Color;
 
 public class Leveling {
     public double normal = 1.00;
@@ -41,7 +42,7 @@ public class Leveling {
         setTieredBosses();
         addTieredEnemies();
         populateColorList();
-        Main.setHealth(baseHealth);
+        TextGame.setHealth(baseHealth);
 
     }
     
@@ -203,7 +204,7 @@ public class Leveling {
     }
     public static void increaseCurrentLevel() {
     	currentLevel +=1;
-    	Main.setLevel();
+    	TextGame.setLevel();
     }
     
 //    public void printRoundMechanic() {

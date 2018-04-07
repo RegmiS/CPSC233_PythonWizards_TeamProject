@@ -3,11 +3,11 @@ import java.util.ArrayList;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-public class Main {
+public class TextGame {
 	
 	// all the static variables that are used throughout the game itself
     public static int HEALTH = 100;
-    public static int MONEY = 250000;
+    public static int MONEY = 300000;
     public static int LEVEL = 0;
     public static int ENEMIES = 0;
     private static int HEIGHT;
@@ -15,6 +15,9 @@ public class Main {
     private static int TILE_SIZE;
     private static int NUM_ROWS;
     private static int NUM_COLOUMS;
+    
+    private static int baseRow;
+    private static int baseCol;
     
     private static StringProperty HEALTHstr = new SimpleStringProperty("Health: " + Integer.toString(HEALTH));
     private static StringProperty MONEYstr = new SimpleStringProperty("Money: " + Integer.toString(MONEY));
@@ -53,19 +56,19 @@ public class Main {
    }
     
     public static void setHealth(int healthval) {
-        Main.HEALTH = healthval;
-        Main.HEALTHstr.set("HP: " + Integer.toString(healthval));
+        TextGame.HEALTH = healthval;
+        TextGame.HEALTHstr.set("HP: " + Integer.toString(healthval));
     }
     public static void setMoney(int moneyVal) {
-        Main.MONEY = moneyVal;
-        Main.MONEYstr.set("Money: " + Integer.toString(moneyVal));
+        TextGame.MONEY = moneyVal;
+        TextGame.MONEYstr.set("Money: " + Integer.toString(moneyVal));
     }
     public static void setLevel() {
-        Main.LEVEL += 1;
-        Main.LEVELstr.set("Level: " + Integer.toString(Main.LEVEL));
+        TextGame.LEVEL += 1;
+        TextGame.LEVELstr.set("Level: " + Integer.toString(TextGame.LEVEL));
     }
     public static void addEnemies() {
-    	Main.ENEMIES += 1;
+    	TextGame.ENEMIES += 1;
     	
     }
     
@@ -76,12 +79,12 @@ public class Main {
     
    
     // constructor for the class( used in the grid game to create an object of this class)
-    public Main(int height, int width, int tile_size) {
-    	Main.HEIGHT = height;
-    	Main.WIDTH = width;
-    	Main.TILE_SIZE = tile_size;
-    	Main.NUM_ROWS = Main.HEIGHT/Main.TILE_SIZE;
-    	Main.NUM_COLOUMS = Main.WIDTH / Main.TILE_SIZE;
+    public TextGame(int height, int width, int tile_size) {
+    	TextGame.HEIGHT = height;
+    	TextGame.WIDTH = width;
+    	TextGame.TILE_SIZE = tile_size;
+    	TextGame.NUM_ROWS = TextGame.HEIGHT/TextGame.TILE_SIZE;
+    	TextGame.NUM_COLOUMS = TextGame.WIDTH / TextGame.TILE_SIZE;
         
         textgame = new ArrayList<ArrayList<String>>();
         createArrayList();
@@ -91,7 +94,7 @@ public class Main {
     //returns the game in case it needs to be edited or changed
     public ArrayList<ArrayList<String>> getTextgame()
     {
-    	return Main.textgame;
+    	return TextGame.textgame;
     }
 
     // creates the arraylist to use for the game in the constructor
@@ -127,7 +130,7 @@ public class Main {
     }
     
     //editing the game, enemies and paths
-    public void editGridTower(int xcord, int ycord, String val) {
+    public static void editGridTower(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
     	
     }
@@ -138,11 +141,29 @@ public class Main {
     
     public void setBase(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
+    	setBaseRow(xcord);
+    	setBaseCol(ycord);
     }
     
     public void updateEnemy(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
     }
+
+	public static int getBaseCol() {
+		return baseCol;
+	}
+
+	public static void setBaseCol(int baseCol) {
+		TextGame.baseCol = baseCol;
+	}
+
+	public static int getBaseRow() {
+		return baseRow;
+	}
+
+	public static void setBaseRow(int baseRow) {
+		TextGame.baseRow = baseRow;
+	}
 }
 
 

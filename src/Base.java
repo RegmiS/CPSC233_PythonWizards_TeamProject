@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.Iterator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -8,9 +6,9 @@ import javafx.scene.shape.Rectangle;
 
 public class Base {
 
-	private static int health = Main.getHealth();
-	private int Xcoord = 24;
-	private int Ycoord = 5;
+	private static int health = TextGame.getHealth();
+	private int Xcoord = TextGame.getBaseCol();;
+	private int Ycoord = TextGame.getBaseRow();;
 	
 	public static int getHealth() {return health;}
 	public int getX() {return this.Xcoord;}
@@ -20,7 +18,7 @@ public class Base {
 	public static void setHealth(int dmg) { 
 		if (health - dmg >= 0) {
 			health = health-dmg;
-			Main.setHealth(Main.getHealth()-dmg);
+			TextGame.setHealth(TextGame.getHealth()-dmg);
 			}
 		}
 	public void setX(int x) { this.Xcoord = x;}
