@@ -219,7 +219,7 @@ public class Tower{
 		
 		Main.setMoney(Main.getMoney()+getCost()/2); //Adds have the cost of the tower to money
 
-		Main.editGridTower(getX(),getY(),"#"); //removes tower from text version
+		Main.editGridTower(getY(),getX(),"#"); //removes tower from text version
 
 		this.pane.getChildren().remove(this.rectangle); //removes tower from veiw
 	}
