@@ -215,7 +215,7 @@ public class GridVersionGame extends Application{
 	}
 	
 	public static ArrayList<Enemy> getEnemyList() { return GridVersionGame.enemyList; }
-	
+	public static ArrayList<Tower> getTowerList() { return GridVersionGame.towerList; }
 	
 	public void removeEnemies (ArrayList<Enemy> enemyList) throws ConcurrentModificationException {
 		for (int i = 0; i < enemyList.size(); i++)
@@ -259,7 +259,7 @@ public class GridVersionGame extends Application{
 		Label NAME = new Label(name);
 		GridPane.setConstraints(NAME, 2, pos-1, 1, 1, HPos.CENTER, VPos.CENTER);
 
-		Label HP = new Label("HP: " + HP_val);
+		Label HP = new Label("RANGE: " + Range_val);
 		GridPane.setConstraints(HP, 2, pos, 1, 1, HPos.CENTER, VPos.TOP);
 		
 		Label DMG = new Label("DMG: " + DMG_val);
@@ -392,7 +392,7 @@ public class GridVersionGame extends Application{
                                 		 if ((Main.getMoney() - price) >= 0){
 						                    	System.out.println(Double.toString(node.getLayoutX()) + "/" + Double.toString(node.getLayoutY()));
 						                        System.out.println( "Tower at:  " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
-						                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, hp, dmg, rof, range, image, gridpane);
+						                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, hp, dmg, rof, range, image, gridpane,towerList);
 						                    	textgame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
 						                    	System.out.println("HERE" + textgame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)));
 						                    	Main.drawGame();

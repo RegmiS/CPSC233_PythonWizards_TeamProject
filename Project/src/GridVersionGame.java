@@ -180,16 +180,16 @@ public class GridVersionGame extends Application{
 		
 		//			(NAME, TEXTURE IMAGE, POSITION, PRICE, HP, DMG, ROF, RANGE)
 
-		addStoreItem("Tower 1", "temp.jpg", 1, 1000, 500, 1, 5, 100);
-		addStoreItem("Tower 2", "temp.jpg", 2, 750, 250, 7, 4, 50);
-		addStoreItem("Tower 3", "temp.jpg", 3, 1500, 750, 25, 1, 250);
-		addStoreItem("Tower 4", "temp.jpg", 4, 0, 0, 0, 0, 0);
-		addStoreItem("Tower 5", "temp.jpg", 5, 0, 0, 0, 0, 0);
-		addStoreItem("Tower 6", "temp.jpg", 6, 0, 0, 0, 0, 0);
-		addStoreItem("Tower 7", "temp.jpg", 7, 0, 0, 0, 0, 0);
-		addStoreItem("Tower 8", "temp.jpg", 8, 0, 0, 0, 0, 0);
-		addStoreItem("Tower 9", "temp.jpg", 9, 0, 0, 0, 0, 0);
-		addStoreItem("Tower 10", "temp.jpg", 10, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 1", "enemypath.jpg", 1, 1000, 500, 1, 5, 100);
+		addStoreItem("Tower 2", "enemypath.jpg", 2, 750, 250, 7, 4, 50);
+		addStoreItem("Tower 3", "enemypath.jpg", 3, 1500, 750, 25, 1, 250);
+		addStoreItem("Tower 4", "enemypath.jpg", 4, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 5", "enemypath.jpg", 5, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 6", "enemypath.jpg", 6, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 7", "enemypath.jpg", 7, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 8", "enemypath.jpg", 8, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 9", "enemypath.jpg", 9, 0, 0, 0, 0, 0);
+		addStoreItem("Tower 10", "enemypath.jpg", 10, 0, 0, 0, 0, 0);
 		
 		ScrollPane shoppane = new ScrollPane();
 		shoppane.setContent(storegrid);
