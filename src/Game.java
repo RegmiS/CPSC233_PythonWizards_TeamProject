@@ -42,9 +42,9 @@ public class Game extends Application{
 	private static ArrayList<Tower> towerList;
 	private static ArrayList<Enemy> queueList;
 	
-	private static String difficulty;
-	private static int numRounds;
-	private static Leveling scalingAlgo = new Leveling(difficulty, numRounds);
+	private static String difficulty = "Normal";
+	private static int numRounds = 20;
+	private static Leveling scalingAlgo;
 	
 	
 	public Game(GridPane gridpane, GridPane storegrid, Scene Gamescene) {
@@ -59,6 +59,8 @@ public class Game extends Application{
 	
 	@Override 
 	public void start(Stage stage) throws Exception {
+		System.out.println(difficulty + " " + numRounds);
+		scalingAlgo = new Leveling(difficulty, numRounds);
 		setGridpane(new GridPane());
 		setStoregrid(new GridPane());
 		getStoregrid().setVgap(10);
