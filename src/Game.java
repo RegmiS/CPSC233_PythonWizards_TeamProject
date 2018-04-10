@@ -171,7 +171,7 @@ public class Game extends Application{
 	
 		HBox infobar = new HBox();
 		infobar.setPadding(new Insets(10, 10, 10, 10));
-		infobar.setSpacing(250);
+		infobar.setSpacing(150);
 		infobar.setStyle("-fx-border-color: black");
 		infobar.setStyle("-fx-background-color: orange");
 		
@@ -187,11 +187,18 @@ public class Game extends Application{
 		currentLevel.setFont(new Font("Arial", 20));
 		currentLevel.textProperty().bind(TextGame.getLevelStr());
 		
+		Label currentDifficulty = new Label("Difficulty: " + DifficultyMenu.getDifficulty());
+		currentDifficulty.setFont(new Font("Arial", 20));
+		
+		Label currentMaxRounds = new Label();
+		currentMaxRounds.setFont(new Font("Arial", 20));
+		currentMaxRounds.textProperty().bind(DifficultyMenu.getNumRoundsStr());
+				
 		ScrollPane infopane = new ScrollPane();
 		infopane.setContent(infobar);
 //		infopane.setPadding(new Insets(0, 10, 10, 10));
 		infopane.setFitToWidth(true);
-		infobar.getChildren().addAll(currentHealth, currentMoney, currentLevel);
+		infobar.getChildren().addAll(currentHealth, currentMoney, currentLevel, currentDifficulty, currentMaxRounds);
 		GridPane.setConstraints(infopane, 0, 14, 29, 1);
 		getGridpane().getChildren().add(infopane);
 		

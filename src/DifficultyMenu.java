@@ -25,11 +25,12 @@ public class DifficultyMenu extends MainMenu{
 	private static Pane background;
 	private static GridPane menu;
 	private static Scene scene;
-	private static String difficulty = "Extreme";
-	private static int roundNum = 20;
+	private static String difficulty = "Normal";
+	private static int numRounds = 20;
+	private static String endlessRounds = "Endless";
 	private static String endlessMode = "Disabled"; 
 	private static StringProperty DIFFICULTYstr = new SimpleStringProperty("Difficulty: " + difficulty);
-	private static StringProperty ROUNDSstr = new SimpleStringProperty("Number of rounds: " + Integer.toString(roundNum));
+	private static StringProperty ROUNDSstr = new SimpleStringProperty("Number of rounds: " + Integer.toString(numRounds));
 	private static StringProperty ENDLESSstr = new SimpleStringProperty("Endless mode: " + endlessMode);
 		
 	public DifficultyMenu(Pane background, GridPane menu, Scene menuScene) {
@@ -96,7 +97,7 @@ public class DifficultyMenu extends MainMenu{
 			GridPane.setConstraints(endlessMode, 0, 3);
 			GridPane.setConstraints(start, 1, 3);
 			GridPane.setConstraints(currentDifficulty, 0, 4, 2, 1);
-//			GridPane.setConstraints(currentRounds, 0, 5);
+			GridPane.setConstraints(currentRounds, 0, 5);
 			GridPane.setConstraints(isEndlessMode, 2, 4, 3, 1);
 			
 			menu.getChildren().addAll(
@@ -112,7 +113,7 @@ public class DifficultyMenu extends MainMenu{
 //					currentRounds, 
 					isEndlessMode);
 			
-//			canvas.setGridLinesVisible(true);
+//			menu.setGridLinesVisible(true);
 			
 			background.getChildren().add(menu);
 			
@@ -151,11 +152,12 @@ public class DifficultyMenu extends MainMenu{
 				public void handle(ActionEvent event) {
 					if (getEndlessMode().equals("Disabled")) {
 						roundsInput.clear();
-						setNumRounds(9999);
 						setEndlessMode("Enabled");
-						Game.setNumRounds(9999);
+						setNumRounds(999);
+						Game.setNumRounds(999);
 					}else {
 						setEndlessMode("Disabled");
+						setNumRounds(20);
 						Game.setNumRounds(20);
 					}
 				}	
@@ -201,18 +203,38 @@ public class DifficultyMenu extends MainMenu{
 			
 	}
 	
+	public static StringProperty getDifficultyStr() {
+		return DIFFICULTYstr;
+	}
+	
     public static void setDifficulty(String difficultyVal) {
         difficulty = difficultyVal;
         DIFFICULTYstr.set("Difficulty: " + difficultyVal);
     }
+    
+    public static int getNumRounds() {
+		return numRounds;
+	}
+    
+    public static StringProperty getNumRoundsStr() {
+		return ROUNDSstr;
+	}
+    
     public static void setNumRounds(int NumRoundsVal) {
-        roundNum = NumRoundsVal;
-        ROUNDSstr.set("Number of rounds: " + Integer.toString(NumRoundsVal));
+    	if (getEndlessMode().equals("Disabled")) {
+    		numRounds = NumRoundsVal;
+    		ROUNDSstr.set("Number of rounds: " + Integer.toString(NumRoundsVal));
+    	}else {
+    		numRounds = NumRoundsVal;
+    		ROUNDSstr.set("Number of rounds: " + endlessRounds);
+    	}
     }
+    
     public static void setEndlessMode(String isEndlessModeVal) {
         endlessMode = isEndlessModeVal;
         ENDLESSstr.set("Endless mode: " + isEndlessModeVal);
     }  
+    
     public static String getEndlessMode() {
     	return endlessMode;
     }
@@ -239,5 +261,17 @@ public class DifficultyMenu extends MainMenu{
 
 	public static void setScene(Scene scene) {
 		DifficultyMenu.scene = scene;
+	}
+
+	public static String getEndlessRounds() {
+		return endlessRounds;
+	}
+
+	public static void setEndlessRounds(String endlessRounds) {
+		DifficultyMenu.endlessRounds = endlessRounds;
+	}
+
+	public static String getDifficulty() {
+		return difficulty;
 	}
 }
