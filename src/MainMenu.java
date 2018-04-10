@@ -62,7 +62,7 @@ public class MainMenu extends Application {
 			canvas.getChildren().addAll(title, playButton, helpButton, exitButton);
 			Scene scene = new Scene(background);
 			
-			canvas.setGridLinesVisible(true);
+//			canvas.setGridLinesVisible(true);
 			
 			primaryStage.setTitle("The Python Wizards");
 			primaryStage.setScene(scene);
