@@ -1,24 +1,30 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class Game extends Application{
 	
-	private static final int WIDTH = 1480;
-	private static final int HEIGHT = 720;
+	private static final int WIDTH = 1460;
+	private static final int HEIGHT = 750;
 	private static final int TILE_SIZE = 50;
 
 	private static GridPane gridpane;
@@ -36,13 +42,15 @@ public class Game extends Application{
 	private static ArrayList<Tower> towerList;
 	private static ArrayList<Enemy> queueList;
 	
-	private static Leveling scalingAlgo = new Leveling("normal", 20);
+	private static String difficulty;
+	private static int numRounds;
+	private static Leveling scalingAlgo = new Leveling(difficulty, numRounds);
 	
 	
-	public Game(GridPane gridpane, GridPane storegrid, Scene scene1) {
+	public Game(GridPane gridpane, GridPane storegrid, Scene Gamescene) {
 		Game.setGridpane(gridpane);
 		Game.setStoregrid(storegrid);
-		scene = scene1;
+		scene = Gamescene;
 		textgame = new TextGame(HEIGHT-50, WIDTH-200, TILE_SIZE);
 		reference = new Enemy();
 		
@@ -55,7 +63,7 @@ public class Game extends Application{
 		setStoregrid(new GridPane());
 		getStoregrid().setVgap(10);
 		getStoregrid().setHgap(10);
-		getStoregrid().setPadding(new Insets(10, 10, 10, 10));
+		getStoregrid().setPadding(new Insets(15, 0, 15, 10));
 		
 		Game.enemyList = new ArrayList<Enemy>();
 		Game.timeline = new Timeline();
@@ -63,19 +71,34 @@ public class Game extends Application{
 
 		Enemy.setPane(getGridpane());
 		drawGrid();
-		spawnBase(5, 24); // does text base
+		spawnBase(7, 24); // does text base
 		Base b1 = new Base(getGridpane());
 
+		
+		VBox buttonBar = new VBox();
+		HBox playPause = new HBox();
+		buttonBar.setStyle("-fx-border-color: black");
+		buttonBar.setStyle("-fx-background-color: navy");
+		buttonBar.setAlignment(Pos.CENTER);
+		buttonBar.setSpacing(50);
+//		buttonBar.setPadding(new Insets(10, 10, 10, 10));
+		playPause.setSpacing(50);
+		playPause.setAlignment(Pos.CENTER);
+		//playPause.setPadding(new Insets(10, 10, 10, 10));
+		
         Button start = Buttons.startButton();
-        GridPane.setConstraints(start, 21, 0);
-        GridPane.setColumnSpan(start, 2);
+//        GridPane.setConstraints(start, 25, 0, 1, 1, HPos.CENTER, VPos.CENTER);
+//        GridPane.setColumnSpan(start, 2);
         Button pause = Buttons.pauseButton(timeline);
-        GridPane.setConstraints(pause, 24, 0);
-        GridPane.setColumnSpan(pause, 1);
+//        GridPane.setConstraints(pause, 27, 0, 1, 1, HPos.CENTER, VPos.CENTER);
+//        GridPane.setColumnSpan(pause, 1);
         Button play = Buttons.playButton(timeline);
-        GridPane.setConstraints(play, 23, 0);
-        GridPane.setColumnSpan(play, 1);
-        getGridpane().getChildren().addAll(start, pause, play);
+//        GridPane.setConstraints(play, 28, 0, 1, 1, HPos.CENTER, VPos.CENTER);
+//        GridPane.setColumnSpan(play, 1);
+        playPause.getChildren().addAll(play, pause);
+        buttonBar.getChildren().addAll(start, playPause);
+        GridPane.setConstraints(buttonBar, 25, 0, 4, 2, HPos.CENTER, VPos.CENTER);
+        getGridpane().getChildren().addAll(buttonBar);
 		
 		
 		//Enemy path
@@ -126,15 +149,18 @@ public class Game extends Application{
 		
 //						  (NAME, TEXTURE IMAGE, POSITION, PRICE, HP, DMG, RANGE)
 
-		Store.addStoreItem("Tower 1", "tank1.png", 1, 1000, 500, 500, 100);
-		Store.addStoreItem("Tower 2", "tank2.png", 2, 750, 250, 700, 50);
-		Store.addStoreItem("Tower 3", "tank3.png", 3, 1500, 750, 2500, 250);
-		Store.addStoreItem("Tower 4", "tank4.png", 4, 0, 0, 0, 0);
+		Store.newTower("Tower 1", "tank1.png", 1, 1000, 500, 500, 100);
+		Store.newTower("Tower 2", "tank2.png", 2, 750, 250, 700, 50);
+		Store.newTower("Tower 3", "tank3.png", 3, 1500, 750, 2500, 250);
+		Store.newTower("Tower 4", "tank4.png", 4, 0, 0, 0, 0);
+	//	Store.newTower("Tower 4", "tank4.png", 5, 0, 0, 0, 0);
 		
 		ScrollPane shoppane = new ScrollPane();
+		shoppane.setStyle("-fx-border-color: black");
+		shoppane.setStyle("-fx-background-color: black"); //Not working
 		shoppane.setContent(getStoregrid());
 		shoppane.setFitToWidth(true);
-		GridPane.setConstraints(shoppane, 25, 0, 5, 15);
+		GridPane.setConstraints(shoppane, 25, 2, 5, 12);
 		getGridpane().getChildren().addAll(shoppane);
 		
 //
@@ -144,22 +170,27 @@ public class Game extends Application{
 		HBox infobar = new HBox();
 		infobar.setPadding(new Insets(10, 10, 10, 10));
 		infobar.setSpacing(250);
-		infobar.setStyle("-fx-background-color: #ff5d00");
+		infobar.setStyle("-fx-border-color: black");
+		infobar.setStyle("-fx-background-color: orange");
 		
 		Label currentHealth= new Label();
+		currentHealth.setFont(new Font("Arial", 20));
 		currentHealth.textProperty().bind(TextGame.getHealthStr());
 		
 		Label currentMoney = new Label();
+		currentMoney.setFont(new Font("Arial", 20));
 		currentMoney.textProperty().bind(TextGame.getMoneyStr());
 		
 		Label currentLevel= new Label();
+		currentLevel.setFont(new Font("Arial", 20));
 		currentLevel.textProperty().bind(TextGame.getLevelStr());
 		
 		ScrollPane infopane = new ScrollPane();
 		infopane.setContent(infobar);
+//		infopane.setPadding(new Insets(0, 10, 10, 10));
 		infopane.setFitToWidth(true);
 		infobar.getChildren().addAll(currentHealth, currentMoney, currentLevel);
-		GridPane.setConstraints(infopane, 0, 13, 25, 1);
+		GridPane.setConstraints(infopane, 0, 14, 29, 1);
 		getGridpane().getChildren().add(infopane);
 		
 		//
@@ -279,6 +310,26 @@ public class Game extends Application{
 
 	public static void setStoregrid(GridPane storegrid) {
 		Game.storegrid = storegrid;
+	}
+
+
+	public static String getDifficulty() {
+		return difficulty;
+	}
+
+
+	public static void setDifficulty(String difficulty) {
+		Game.difficulty = difficulty;
+	}
+
+
+	public static int getNumRounds() {
+		return numRounds;
+	}
+
+
+	public static void setNumRounds(int numRounds) {
+		Game.numRounds= numRounds;
 	}
 	
 }
