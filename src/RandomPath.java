@@ -114,7 +114,7 @@ public class RandomPath {
 					return rand.nextInt((4+1)-2)+2;
 				}
 				else if (direction.equals("up") || direction.equals("down")) {
-					return rand.nextInt((3+1)-2)+2;
+					return rand.nextInt((7+1)-2)+2;
 				}
 				else {
 					System.out.println("Invalid direction");
