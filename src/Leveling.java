@@ -52,12 +52,12 @@ public class Leveling {
     // adds 6, removes 3 of the first tier, if not then remove from the one after it, add to the one after it.
 
     public void setDifficulty(String difficulty){
-        if(difficulty == "normal")
+        if(difficulty == "Normal")
             this.difficulty = this.normal;
-        else if(difficulty == "hard"){
+        else if(difficulty == "Hard"){
             this.difficulty = this.hard;
         }
-        else if(difficulty == "extereme")
+        else if(difficulty == "Extreme")
             this.difficulty = this.extereme;
     }
     

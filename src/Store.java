@@ -11,7 +11,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Store {
 	
-	public static void addStoreItem(String name, String image, int position, int price, int HP_val, int DMG_val, int Range_val) throws FileNotFoundException {
+	public static void newTower(String name, String image, int position, int price, int HP_val, int DMG_val, int Range_val) throws FileNotFoundException {
 		int pos = (((position * 3) +1) - 3);
 		Rectangle item = new Rectangle(Game.getTileSize() * 2, Game.getTileSize() * 2);
 		ImagePattern texture = new ImagePattern(ImageLoader.backgroundImage(image));
@@ -34,6 +34,6 @@ public class Store {
 		Button BUY = Buttons.placeTower(price, HP_val, DMG_val, Range_val, Game.getTowerList(), image);
 		GridPane.setConstraints(BUY, 0, pos+1, 1, 1, HPos.CENTER, VPos.CENTER);
 		Game.getStoregrid().getChildren().addAll(item, NAME, HP, DMG, ROF, BUY);
-		//storegrid.setGridLinesVisible(true);
+		//Game.getStoregrid().setGridLinesVisible(true);
 	}
 }

@@ -4,10 +4,12 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -16,7 +18,7 @@ import javafx.stage.Stage;
 public class MainMenu extends Application {
 	
 	
-	private static int WIDTH = 1480, HEIGHT = 720; //Set window dimensions
+	private static int WIDTH = 1460, HEIGHT = 720; //Set window dimensions
 
 	public static int getWidth() {
 		return WIDTH;
@@ -44,7 +46,6 @@ public class MainMenu extends Application {
 			Button playButton = new Button("Play");
 			Button helpButton = new Button("Help");
 			Button exitButton = new Button("Exit");
-				
 			Label title = new Label("Tower Defence Game");
 			title.setFont(new Font("Arial", 65));
 			title.setTextFill(Color.YELLOW);
@@ -52,14 +53,16 @@ public class MainMenu extends Application {
 			GridPane.setHalignment(playButton, HPos.CENTER);
 			GridPane.setHalignment(helpButton, HPos.CENTER);
 			GridPane.setHalignment(exitButton, HPos.CENTER);
+			GridPane.setConstraints(title, 0, 0);
+			GridPane.setConstraints(playButton, 0, 1);
+			GridPane.setConstraints(helpButton, 0, 2);
+			GridPane.setConstraints(exitButton, 0, 3);
 			background.getChildren().add(ImageLoader.menuBackgroundImage("castle.jpg"));		
 			background.getChildren().add(canvas);
-			canvas.add(title, 0, 0);
-			canvas.add(playButton, 0, 1);
-			canvas.add(helpButton, 0, 2);
-			canvas.add(exitButton, 0, 3);
-			
+			canvas.getChildren().addAll(title, playButton, helpButton, exitButton);
 			Scene scene = new Scene(background);
+			
+			canvas.setGridLinesVisible(true);
 			
 			primaryStage.setTitle("The Python Wizards");
 			primaryStage.setScene(scene);
@@ -69,10 +72,10 @@ public class MainMenu extends Application {
 				//Play button Event handler, will call next Game state when pressed
 				@Override
 				public void handle(ActionEvent event){
-					Game game = new Game(canvas, canvas, scene);
+					DifficultyMenu difficultyMenu = new DifficultyMenu(canvas, canvas, scene);
 					try {
 						System.out.println("Loading...");	
-						game.start(primaryStage);
+						difficultyMenu.start(primaryStage);
 						System.out.println("Done");
 					} catch (Exception e) {
 					e.printStackTrace();
