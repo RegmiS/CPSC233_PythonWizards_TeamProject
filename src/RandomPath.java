@@ -79,7 +79,7 @@ public class RandomPath {
 //			System.out.println("Count: " + count + "2nd last" + " Current Row: " + currentRow + " Current Col: " + currentCol);
 			
 			//Finish path from column 21 to 24(base column poition
-			enemyPath(right, currentRow, currentCol, (baseCol-currentCol), Game.getReference());
+			enemyPath(right, currentRow, currentCol, (baseCol-currentCol));
 
 //			System.out.println("Count: " + count + " Moving right (Final)" + " Current Row: " + currentRow + " Current Col: " + currentCol);
 //			System.out.println("done");
@@ -88,20 +88,20 @@ public class RandomPath {
 }
 			
 			public void moveUp(int row, int col, int length) {
-				enemyPath("up", row, col, length, Game.getReference());
+				enemyPath("up", row, col, length);
 				RandomPath.setCurrentRow(RandomPath.getCurrentRow() - (length));
 				
 			}
 			public void moveDown(int row, int col, int length) {
-				enemyPath("down", row, col, length, Game.getReference());
+				enemyPath("down", row, col, length);
 				RandomPath.setCurrentRow(RandomPath.getCurrentRow() + (length));
 			}
 			public void moveLeft(int row, int col, int length) {
-				enemyPath("left", row, col, length, Game.getReference());
+				enemyPath("left", row, col, length);
 				RandomPath.setCurrentCol(RandomPath.getCurrentCol() - (length));
 			}
 			public void moveRight(int row, int col, int length) {
-				enemyPath("right", row, col, length, Game.getReference());
+				enemyPath("right", row, col, length);
 				RandomPath.setCurrentCol(RandomPath.getCurrentCol() + (length));
 			}
 		
@@ -122,13 +122,13 @@ public class RandomPath {
 				}
 			}
 			
-			public static void enemyPath(String direction, int row, int col, int length, Enemy e1) {
+			public static void enemyPath(String direction, int row, int col, int length) {
 
 				if (direction == "right") {
 					int[] start = {col, row};
 					int[] end = {col + length, row};
 					int[][] temp = new int[][] {start, end};
-					e1.addList(temp);
+					Enemy.addToList(temp);
 					
 					for (int i = col; i < (length + col); i++) {
 						Rectangle enemypath = new Rectangle(Game.getTileSize(), Game.getTileSize());
@@ -144,7 +144,7 @@ public class RandomPath {
 					int[] start = {col, row};
 					int[] end = {col - length, row};
 					int[][] temp = new int[][] {start, end};
-					e1.addList(temp);
+					Enemy.addToList(temp);
 					
 					for (int i = col; i > (col - length); i--) {
 						Rectangle enemypath = new Rectangle(Game.getTileSize(), Game.getTileSize());
@@ -160,7 +160,7 @@ public class RandomPath {
 					int[] start = {col, row};
 					int[] end = {col, row - length};
 					int[][] temp = new int[][] {start, end};
-					e1.addList(temp);
+					Enemy.addToList(temp);
 					
 					for (int i = row; i > (row - length); i--) {
 						Rectangle enemypath = new Rectangle(Game.getTileSize(), Game.getTileSize());
@@ -178,7 +178,7 @@ public class RandomPath {
 					int[] start = {col, row};
 					int[] end = {col, row + length};
 					int[][] temp = new int[][] {start, end};
-					e1.addList(temp);
+					Enemy.addToList(temp);
 					
 					for (int i = row; i < (length + row); i++) {
 						Rectangle enemypath = new Rectangle(Game.getTileSize(), Game.getTileSize());

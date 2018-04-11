@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -25,7 +26,8 @@ public class Leveling {
 
     public HashMap<Integer, HashMap<String, Integer>> num_EnemiesList = new HashMap<Integer, HashMap<String, Integer>>();
     ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
-    ArrayList<Color> list_colors = new ArrayList<Color>();
+    ArrayList<String> list_colors_e = new ArrayList<String>();
+    ArrayList<String> list_colors_b = new ArrayList<String>();
 
     // what needs to done done
     // 1. a way to decide how many enemies get spawned for each level and difficulty
@@ -148,17 +150,13 @@ public class Leveling {
     }
     
     public void populateColorList() {
-    	for(int a = 0; a < this.num_enemyTiers; a++) {
-    		Random r = new Random();
-        	int firstnum = r.nextInt((255-0) + 0);
-        	int secondnum = r.nextInt((255-0) + 0);
-        	int thirdnum = r.nextInt((255-0) + 0);
-        	
-        	Color newcolor = Color.rgb(firstnum, secondnum, thirdnum);
-        	list_colors.add(newcolor);
+    	Collections.addAll(list_colors_e, "alien1W.png", "alien1B.png", "alien1G.png", "alien1O.png",
+    			"alien1P.png", "alien1R.png", "alien1Y.png");
+    	Collections.addAll(list_colors_b, "alien2B.png", "alien2G.png", "alien2P.png");
+    	
     	}
     	
-    }
+    
     
     public ArrayList<Enemy> returnEnemyList(int round) {
     	ArrayList<Enemy> list_enemies = new ArrayList<Enemy>();
@@ -172,13 +170,13 @@ public class Leveling {
 			String tier = iterate.getKey();
 			int numEnemies = iterate.getValue();
 			int tier_num = Integer.valueOf(tier);
-			Color tier_color = list_colors.get(tier_num);
+			String filename = list_colors_e.get(tier_num);
 			int health = this.enemyBaseHealth + ((this.enemyBaseHealth * tier_num)/2);
 			int damage = this.enemyBaseDamage + ((this.enemyBaseDamage * tier_num)/2);
 			int radius = this.enemyBaseRadius; 
 			for(int a = 0; a < numEnemies; a++) {
 				//  Enemy(int TILE_SIZE, int heath, Color color, int damage, int radius)
-				Enemy newenemy = new Enemy(this.TILE_SIZE, health, tier_color, damage, radius );
+				Enemy newenemy = new Enemy(this.TILE_SIZE, health, filename, damage, radius );
 				list_enemies.add(newenemy);
 			}
 		}

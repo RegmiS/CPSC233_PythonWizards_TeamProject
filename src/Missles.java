@@ -41,18 +41,13 @@ public class Missles{
 	}
 	
 	public Missles(Pane pane, Enemy enemy, int x, int y, int dmg) {
-		FileInputStream inputStream;
-		try {
-			inputStream = new FileInputStream("res/images/ball.png");
-			Image image = new Image(inputStream);
-			ImagePattern img = new ImagePattern(image);
-			missle.setFill(img);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+		ImageLoader.setImage("ball.png", this.missle);
 		//this.missle =  new Rectangle(1,2,Color.BLACK);
 		this.pane = pane;
-		
+		missle.setTranslateX(x*50+26);
+		missle.setTranslateY(y*50);
+    	this.pane.getChildren().add(this.missle);
+
 		setDmg(dmg);
 		//setRectangle();
 		//setPane(pane); 
@@ -76,7 +71,7 @@ public class Missles{
     			
     			
     	
-    	this.pane.getChildren().add(this.missle);
+//    	this.pane.getChildren().add(this.missle);
     	animation.getKeyFrames().addAll(initial, Final);
     	
     	this.animation = animation;

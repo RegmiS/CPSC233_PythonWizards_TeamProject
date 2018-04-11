@@ -107,20 +107,12 @@ public class Tower{
 		
 		Platform.runLater(new Runnable() {
 			@Override 
-			public void run() { //From https://stackoverflow.com/a/17395191/8645685
+			public void run() {
 				rectangle = new Rectangle(35, 35);
 				//rectangle.addEventFilter(MouseEvent.MOUSE_CLICKED, openStats);
 				GridPane.setConstraints(rectangle, xc, yc);
 				GridPane.setHalignment(rectangle, HPos.CENTER);
-				FileInputStream inputStream;
-				try {
-					inputStream = new FileInputStream("res/images/" + filename);
-					Image image = new Image(inputStream);
-					ImagePattern img = new ImagePattern(image);
-					rectangle.setFill(img);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
+				ImageLoader.setImage(filename, rectangle);
 				canvas.getChildren().add(rectangle);
 				
 				Label label = new Label();
