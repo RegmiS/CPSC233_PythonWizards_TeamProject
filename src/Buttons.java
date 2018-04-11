@@ -100,7 +100,7 @@ public class Buttons {
     
     // experimenting with a pause button
     public static Button pauseButton(Timeline timeline) {
-    	Button pause = new Button("||");
+    	Button pause = new Button("Pause");
     	pause.setOnAction(new EventHandler<ActionEvent>() 
     	{
     		

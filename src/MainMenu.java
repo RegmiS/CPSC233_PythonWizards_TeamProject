@@ -6,10 +6,12 @@ import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -22,7 +24,11 @@ import javafx.scene.media.*;
 public class MainMenu extends Application {
 	
 	
+<<<<<<< HEAD
 	private static int WIDTH = 1250, HEIGHT = 700; //Set window dimensions
+=======
+	private static int WIDTH = 1460, HEIGHT = 720; //Set window dimensions
+>>>>>>> 08045504c986bbba7888e0e9e03851ccb7133a28
 
 	public static int getWidth() {
 		return WIDTH;
@@ -52,6 +58,7 @@ public class MainMenu extends Application {
 			//canvas.getColumnConstraints().add(new ColumnConstraints(50));
 			
 			Button playButton = new Button("Play");
+<<<<<<< HEAD
 			Button loadButton = Buttons.loadButton();
 			Button exitButton = Buttons.exitButton(primaryStage);
 			
@@ -69,6 +76,10 @@ public class MainMenu extends Application {
 			ship.setLayoutX(175);
 			ship.setLayoutY(100);
 				
+=======
+			Button helpButton = new Button("Help");
+			Button exitButton = new Button("Exit");
+>>>>>>> 08045504c986bbba7888e0e9e03851ccb7133a28
 			Label title = new Label("Tower Defence Game");
 			title.setFont(new Font("Arial", 65));
 			title.setTextFill(Color.BLACK);
@@ -77,6 +88,7 @@ public class MainMenu extends Application {
 			GridPane.setHalignment(playButton, HPos.CENTER);
 			GridPane.setHalignment(loadButton, HPos.CENTER);
 			GridPane.setHalignment(exitButton, HPos.CENTER);
+<<<<<<< HEAD
 			background.getChildren().add(ImageLoader.menuBackgroundImage("background.jpg"));
 			canvas.add(playButton, 0, 8);
 			canvas.add(loadButton, 1, 8);
@@ -87,7 +99,18 @@ public class MainMenu extends Application {
 			
 			
 			
+=======
+			GridPane.setConstraints(title, 0, 0);
+			GridPane.setConstraints(playButton, 0, 1);
+			GridPane.setConstraints(helpButton, 0, 2);
+			GridPane.setConstraints(exitButton, 0, 3);
+			background.getChildren().add(ImageLoader.menuBackgroundImage("castle.jpg"));		
+			background.getChildren().add(canvas);
+			canvas.getChildren().addAll(title, playButton, helpButton, exitButton);
+>>>>>>> 08045504c986bbba7888e0e9e03851ccb7133a28
 			Scene scene = new Scene(background);
+			
+//			canvas.setGridLinesVisible(true);
 			
 			primaryStage.setTitle("The Python Wizards");
 			primaryStage.setScene(scene);
@@ -100,12 +123,20 @@ public class MainMenu extends Application {
 				//Play button Event handler, will call next Game state when pressed
 				@Override
 				public void handle(ActionEvent event){
+<<<<<<< HEAD
 					Game game = new Game(scene);
 					try {
 						System.out.println("Loading...");	
 						game.start(primaryStage);
 						player.stop();
 						
+=======
+					DifficultyMenu difficultyMenu = new DifficultyMenu(canvas, canvas, scene);
+					try {
+						System.out.println("Loading...");	
+						difficultyMenu.start(primaryStage);
+						System.out.println("Done");
+>>>>>>> 08045504c986bbba7888e0e9e03851ccb7133a28
 					} catch (Exception e) {
 					e.printStackTrace();
 					}

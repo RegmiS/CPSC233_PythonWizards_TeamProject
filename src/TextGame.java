@@ -21,7 +21,7 @@ public class TextGame {
     
     private static StringProperty HEALTHstr = new SimpleStringProperty("Health: " + Integer.toString(HEALTH));
     private static StringProperty MONEYstr = new SimpleStringProperty("Money: " + Integer.toString(MONEY));
-    private static StringProperty LEVELstr = new SimpleStringProperty("Level: " + Integer.toString(LEVEL));
+    private static StringProperty LEVELstr = new SimpleStringProperty("Round: " + Integer.toString(LEVEL));
     
    
     
@@ -57,7 +57,7 @@ public class TextGame {
     
     public static void setHealth(int healthval) {
         TextGame.HEALTH = healthval;
-        TextGame.HEALTHstr.set("HP: " + Integer.toString(healthval));
+        TextGame.HEALTHstr.set(" Health: " + Integer.toString(healthval));
     }
     public static void setMoney(int moneyVal) {
         TextGame.MONEY = moneyVal;
@@ -65,7 +65,7 @@ public class TextGame {
     }
     public static void setLevel() {
         TextGame.LEVEL += 1;
-        TextGame.LEVELstr.set("Level: " + Integer.toString(TextGame.LEVEL));
+        TextGame.LEVELstr.set("Round: " + Integer.toString(TextGame.LEVEL));
     }
     public static void addEnemies() {
     	TextGame.ENEMIES += 1;
