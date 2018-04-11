@@ -23,7 +23,7 @@ public class TextGame {
     private static StringProperty MONEYstr = new SimpleStringProperty("Money: " + Integer.toString(MONEY));
     private static StringProperty LEVELstr = new SimpleStringProperty("Round: " + Integer.toString(LEVEL));
     
-   
+   //
     
     // public arraylist that hosts all of the grid game
     public static ArrayList< ArrayList<String>> textgame;
