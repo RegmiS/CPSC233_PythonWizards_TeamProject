@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-
+import javafx.scene.Scene;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,8 +8,36 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
 
 public class Buttons {
+	
+
+	public static Button loadButton()
+	{
+		Button loadButton = new Button("Load");
+		loadButton.setOnAction(new EventHandler<ActionEvent>() {
+			//Placeholder button		
+			@Override
+			public void handle(ActionEvent event) {	
+				
+			}	
+		});
+		return loadButton;
+	}
+	
+	public static Button exitButton(Stage stage) {
+		Button exitButton = new Button("Exit");
+		exitButton.setOnAction(new EventHandler<ActionEvent>() {
+			//Exit scene when pressed
+			@Override
+			public void handle(ActionEvent event) {
+				stage.close();
+			}
+		});
+		return exitButton;
+	}
 	
     public static Button startButton()
 {
@@ -18,6 +46,7 @@ public class Buttons {
 
         @Override
         public void handle(ActionEvent event) {
+        	Game.setState(true);
         	Leveling.increaseCurrentLevel();
         	Game.setQueueList(new ArrayList<Enemy>(Game.getScalingAlgo().returnEnemyList(Leveling.returnCurrentLevel())));
         	System.out.println(Game.getQueueList());
@@ -30,25 +59,25 @@ public class Buttons {
 	});
 	return start;
 }
-
-    public static Button playButton(Timeline timeline)
-    {
-    	Button play = new Button("Play");
-    	play.setOnAction(new EventHandler<ActionEvent>() {
-    		@Override
-    		public void handle(ActionEvent event) {
-    			Game.getTimer().start();
-    			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
-    			for (int i = 0; i < enemyList.size(); i++  )
-    				enemyList.get(i).play();
-    			ArrayList<Timeline> missleList = Missles.getTimelineList();
-    			for (int i = 0; i < missleList.size(); i++)
-    				missleList.get(i).play();
-    		}
-    	});
-		return play;
-    	
-    }
+//
+//    public static Button playButton(Timeline timeline)
+//    {
+//    	Button play = new Button("Play");
+//    	play.setOnAction(new EventHandler<ActionEvent>() {
+//    		@Override
+//    		public void handle(ActionEvent event) {
+//    			Game.getTimer().start();
+//    			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
+//    			for (int i = 0; i < enemyList.size(); i++  )
+//    				enemyList.get(i).play();
+//    			ArrayList<Timeline> missleList = Missles.getTimelineList();
+//    			for (int i = 0; i < missleList.size(); i++)
+//    				missleList.get(i).play();
+//    		}
+//    	});
+//		return play;
+//    	
+//    }
     
     // experimenting with a pause button
     public static Button pauseButton(Timeline timeline) {
@@ -59,6 +88,8 @@ public class Buttons {
     		@Override
     		public void handle(ActionEvent event) {
     			
+    			if (Game.getState() == 1)
+    			{
     			Game.getTimer().stop();
     			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
     			for (int i = 0; i < enemyList.size(); i++  )
@@ -66,9 +97,26 @@ public class Buttons {
     			ArrayList<Timeline> missleList = Missles.getTimelineList();
     			for (int i = 0; i < missleList.size(); i++)
     				missleList.get(i).pause();
-    	}});
+    			Game.setState(false);
+    			}
+    			else if (Game.getState() == 0 && !Game.getEnemyList().isEmpty())
+    			{
+    				Game.getTimer().start();
+    				ArrayList<Timeline> enemyList = Enemy.getTimelineList();
+    				for (int i = 0; i < enemyList.size(); i++  )
+    					enemyList.get(i).play();
+    				ArrayList<Timeline> missleList = Missles.getTimelineList();
+    				for (int i = 0; i < missleList.size(); i++)
+    					missleList.get(i).play();
+    				Game.setState(true);
+    			}
+    		}});
 		return pause;
     }
+    	
+    			
+
+
 
 	
 	  public static Button placeTower(int price, int hp, int dmg, int range, ArrayList<Tower> towerList, String image) 
@@ -77,25 +125,25 @@ public class Buttons {
 	        twr.setOnAction(new EventHandler<ActionEvent>() {
 	            public void handle(ActionEvent event) {
 	                    	
-	            		Game.getGridpane().addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  //From https://stackoverflow.com/questions/28320110/javafx-how-to-get-column-and-row-index-in-gridpane
+	            		Game.getGridpane().addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  
 	                        @Override
 	                        public void handle(MouseEvent e) {
 	                        	
 	                            for(Node node: Game.getGridpane().getChildren()) {
 	                                if(node instanceof Rectangle) {
-	                                	
-	                                	 if(node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY()) 
-	                                     		&& e.getSceneX() <= 1250 
+	                                		if(node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY()) 
+	                                     		&& e.getSceneX() <= 1050 
 	                                     		&& e.getSceneY() <= 650 
-	                                     		&& ((Game.getTextgame().getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "X") 
-	                                     		&& (Game.getTextgame().getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != " ") 
-	                                     		&& (Game.getTextgame().getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "B" ))) {
+	                                     		
+	                                     		&& ((TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "X")
+	                                     		&& (TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != " ") 
+	                                     		&& (TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "B" ))) {
 	                                		 if ((TextGame.getMoney() - price) >= 0){
 							                    	System.out.println(Double.toString(node.getLayoutX()) + "/" + Double.toString(node.getLayoutY()));
 							                        System.out.println( "Tower at:  " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
 							                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, hp, dmg, range, image, Game.getGridpane(),towerList);
 							                    	TextGame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
-							                    	System.out.println("HERE" + Game.getTextgame().getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)));
+//							                    	System.out.println("HERE" + TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)));
 							                    	TextGame.drawGame();
 							                    	towerList.add(t1);
 							                    	Game.getGridpane().removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
@@ -108,7 +156,9 @@ public class Buttons {
 	                                		 }
 	            
 	                                    	}
+	                              
 	                                }
+	                                
 	                            }
 	                        }
 	                    });

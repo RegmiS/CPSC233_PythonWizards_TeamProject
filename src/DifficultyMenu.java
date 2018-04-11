@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public class DifficultyMenu extends MainMenu{
 	
 
-	private static int WIDTH = 1460, HEIGHT = 720; //Set window dimensions
+	private static int WIDTH = 1250, HEIGHT = 700; //Set window dimensions
 	
 	
 	private static Pane background;
@@ -169,7 +169,7 @@ public class DifficultyMenu extends MainMenu{
 					if (getEndlessMode().equals("Disabled") && !roundsInput.getText().isEmpty()) {
 						setNumRounds(Integer.parseInt(roundsInput.getText()));
 						Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
-						Game game = new Game(menu, menu, scene);
+						Game game = new Game(scene);
 						try {
 							System.out.println("Loading...");	
 							game.start(primaryStage);
@@ -178,7 +178,7 @@ public class DifficultyMenu extends MainMenu{
 						e.printStackTrace();
 						}
 					}else if (getEndlessMode().equals("Enabled")){
-						Game game = new Game(menu, menu, scene);
+						Game game = new Game(scene);
 						try {
 							System.out.println("Loading...");	
 							game.start(primaryStage);
@@ -189,7 +189,7 @@ public class DifficultyMenu extends MainMenu{
 					}else {
 						setNumRounds(20);
 						Game.setNumRounds(20);
-						Game game = new Game(menu, menu, scene);
+						Game game = new Game(scene);
 						try {
 							System.out.println("Loading...");	
 							game.start(primaryStage);

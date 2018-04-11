@@ -28,7 +28,8 @@ public class Base {
 	
 	
 	public Base(GridPane gridpane) {
-		Rectangle base = new Rectangle(50, 50, Color.BLUE);
+		Rectangle base = new Rectangle(50, 50);
+		ImageLoader.setImage("uofclogo.png", base);
 		GridPane.setConstraints(base, Xcoord, Ycoord);
 		gridpane.getChildren().add(base);
 		//GridVersionGame.base = base;

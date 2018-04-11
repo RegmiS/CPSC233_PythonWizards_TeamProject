@@ -11,7 +11,7 @@ import javafx.scene.shape.Rectangle;
 
 public class Store {
 	
-	public static void newTower(String name, String image, int position, int price, int HP_val, int DMG_val, int Range_val) throws FileNotFoundException {
+	public static void newTower(String name, String image, int position, int price, int DMG_val, int Range_val) throws FileNotFoundException {
 		int pos = (((position * 3) +1) - 3);
 		Rectangle item = new Rectangle(Game.getTileSize() * 2, Game.getTileSize() * 2);
 		ImagePattern texture = new ImagePattern(ImageLoader.backgroundImage(image));
@@ -22,8 +22,8 @@ public class Store {
 		Label NAME = new Label(name);
 		GridPane.setConstraints(NAME, 2, pos-1, 1, 1, HPos.CENTER, VPos.CENTER);
 
-		Label HP = new Label("HP: " + HP_val);
-		GridPane.setConstraints(HP, 2, pos, 1, 1, HPos.CENTER, VPos.TOP);
+		Label RANGE = new Label("RANGE: " + Range_val);
+		GridPane.setConstraints(RANGE, 2, pos, 1, 1, HPos.CENTER, VPos.TOP);
 		
 		Label DMG = new Label("DMG: " + DMG_val);
 		GridPane.setConstraints(DMG, 2, pos, 1, 1, HPos.CENTER, VPos.CENTER);
@@ -31,9 +31,9 @@ public class Store {
 		Label ROF = new Label("COST: " + price);
 		GridPane.setConstraints(ROF, 2, pos, 1, 1, HPos.CENTER, VPos.BOTTOM);
 		
-		Button BUY = Buttons.placeTower(price, HP_val, DMG_val, Range_val, Game.getTowerList(), image);
+		Button BUY = Buttons.placeTower(price, position, DMG_val, Range_val, Game.getTowerList(), image);
 		GridPane.setConstraints(BUY, 0, pos+1, 1, 1, HPos.CENTER, VPos.CENTER);
-		Game.getStoregrid().getChildren().addAll(item, NAME, HP, DMG, ROF, BUY);
-		//Game.getStoregrid().setGridLinesVisible(true);
+		Game.getStoregrid().getChildren().addAll(item, NAME, RANGE, DMG, ROF, BUY);
+		//storegrid.setGridLinesVisible(true);
 	}
 }

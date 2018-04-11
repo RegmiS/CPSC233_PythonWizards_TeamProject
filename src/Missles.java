@@ -1,13 +1,8 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
@@ -41,18 +36,13 @@ public class Missles{
 	}
 	
 	public Missles(Pane pane, Enemy enemy, int x, int y, int dmg) {
-		FileInputStream inputStream;
-		try {
-			inputStream = new FileInputStream("res/images/ball.png");
-			Image image = new Image(inputStream);
-			ImagePattern img = new ImagePattern(image);
-			missle.setFill(img);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
+		ImageLoader.setImage("ball.png", this.missle);
 		//this.missle =  new Rectangle(1,2,Color.BLACK);
 		this.pane = pane;
-		
+		missle.setTranslateX(x*50+26);
+		missle.setTranslateY(y*50);
+    	this.pane.getChildren().add(this.missle);
+
 		setDmg(dmg);
 		//setRectangle();
 		//setPane(pane); 
@@ -62,13 +52,13 @@ public class Missles{
 
     	//this.pane.getChildren().add(this.missle);
     	animation.setAutoReverse(false);
-    	animation.setOnFinished(e -> this.removeMissle());
+    	animation.setOnFinished(e -> this.removeMissle(enemy));
     	//Starts at tower
     	KeyFrame initial = new KeyFrame (Duration.ZERO, 
     			new KeyValue(this.missle.translateXProperty(), x*50+26),//center on the tower square
                 new KeyValue(this.missle.translateYProperty(), y*50));
     	//Finishes at enemy 
-    	KeyFrame Final = new KeyFrame (new Duration(200), //takes half a second to get to enemy
+    	KeyFrame Final = new KeyFrame (new Duration(150), //takes half a second to get to enemy
     			new KeyValue(this.missle.translateXProperty(), enemy.getCircle().getTranslateX()),
                 new KeyValue(this.missle.translateYProperty(), enemy.getCircle().getTranslateY()));
     			
@@ -76,7 +66,7 @@ public class Missles{
     			
     			
     	
-    	this.pane.getChildren().add(this.missle);
+//    	this.pane.getChildren().add(this.missle);
     	animation.getKeyFrames().addAll(initial, Final);
     	
     	this.animation = animation;
@@ -84,8 +74,10 @@ public class Missles{
     	animation.play();
 	}
 	
-	public void removeMissle() 
+	
+	public void removeMissle(Enemy enemy) 
 	{	
+		enemy.setHealth(this.dmg);
 		this.pane.getChildren().remove(this.missle);
 		Missles.timelineList.remove(this.animation);
 	}

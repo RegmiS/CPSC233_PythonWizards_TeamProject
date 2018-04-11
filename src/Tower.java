@@ -105,22 +105,16 @@ public class Tower{
 		setUPrice(getPrice() *2);
 		setCost(price);
 		
+		System.out.println(hp);
+		
 		Platform.runLater(new Runnable() {
 			@Override 
-			public void run() { //From https://stackoverflow.com/a/17395191/8645685
+			public void run() {
 				rectangle = new Rectangle(35, 35);
 				//rectangle.addEventFilter(MouseEvent.MOUSE_CLICKED, openStats);
 				GridPane.setConstraints(rectangle, xc, yc);
 				GridPane.setHalignment(rectangle, HPos.CENTER);
-				FileInputStream inputStream;
-				try {
-					inputStream = new FileInputStream("res/images/" + filename);
-					Image image = new Image(inputStream);
-					ImagePattern img = new ImagePattern(image);
-					rectangle.setFill(img);
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				}
+				ImageLoader.setImage(filename, rectangle);
 				canvas.getChildren().add(rectangle);
 				
 				Label label = new Label();
@@ -188,6 +182,19 @@ public class Tower{
 	public void upgrade() {
 	
 		setLevel();
+		String filename = null;
+		if (getLevel() == 3) {
+			if (health == 1) {
+				filename = "tank1up.png";
+			}else if (health == 2) {
+				filename = "tank2up.png";
+			}else if (health == 3) {
+				filename = "tank3up.png";
+			}else if (health == 4) {
+				filename = "tank4up.png";
+			}
+			ImageLoader.setImage(filename, this.rectangle);
+		}
 		
 		TextGame.setMoney(TextGame.getMoney()-getUPrice());// cost money to upgrade
 		setCost(getUPrice()); //updates total cost of tower
@@ -233,7 +240,6 @@ public class Tower{
 			
 			if(distanceFrom(enemy) < range) {
 				Missles m1 = new Missles(this.pane, enemy, getX(),getY(), this.damage);
-				enemy.setHealth(this.damage);
 				return;
 			}
 			

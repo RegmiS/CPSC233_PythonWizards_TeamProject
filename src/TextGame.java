@@ -76,6 +76,9 @@ public class TextGame {
     	ENEMIES--;
     	}
     
+    public static int getNumCols() { return NUM_COLOUMS; }
+    public static int getNumRows() { return NUM_ROWS; }
+    
     
    
     // constructor for the class( used in the grid game to create an object of this class)
@@ -92,7 +95,7 @@ public class TextGame {
     }
     
     //returns the game in case it needs to be edited or changed
-    public ArrayList<ArrayList<String>> getTextgame()
+    public static ArrayList<ArrayList<String>> getTextgame()
     {
     	return TextGame.textgame;
     }
@@ -144,6 +147,11 @@ public class TextGame {
     	setBaseRow(xcord);
     	setBaseCol(ycord);
     }
+    
+    public void setShip(int xcord, int ycord, String val) { 
+    	textgame.get(xcord).set(ycord,  val);
+    }
+    
     
     public void updateEnemy(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
