@@ -65,13 +65,8 @@ public class HighScore {
 	 * @param output
 	 */
 	public static void readFile(String output) {
-		Scanner scan = null;
-		try { scan = new Scanner(new FileReader(output));}
-		catch(IOException e) {
-			System.out.println("cannot open file to read");
-			scan.close();
-		}
-		
+		Scanner scan;
+		try { scan = new Scanner(new FileReader(output));
 		while (scan.hasNextLine()) {
             String nextline = scan.nextLine();
             List<String> lst = Arrays.asList(nextline.split(" "));
@@ -79,8 +74,13 @@ public class HighScore {
             BigInteger number = new BigInteger(score);
             String name = lst.get(0) + " " + lst.get(1);
             scores.put(name, number);
-            
 		}
+		scan.close();
+		}
+		catch(IOException e) {
+			System.out.println("cannot open file to read");
+		}
+		
 	}
 	
 	/**
@@ -90,7 +90,6 @@ public class HighScore {
 		List<BigInteger> values = new ArrayList<BigInteger>();
 		
 		for (Entry<String, BigInteger> iterate : scores.entrySet()) {
-			String name = iterate.getKey();		
 			BigInteger Score = iterate.getValue();
 			values.add(Score);		
 		}
