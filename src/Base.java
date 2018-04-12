@@ -79,7 +79,7 @@ public class Base {
 		win.setLayoutX(0);
 		win.setLayoutY(200);
 		win.setAlignment(Pos.CENTER);
-		
+		 
 		Leveling.increaseCurrentLevel();
 		
 		Label round = getRound();
@@ -105,7 +105,7 @@ public class Base {
 	
 	public static Label getHighscore()
 	{
-		Label highscore = new Label("Highscore: "); // for future use
+		Label highscore = new Label("Highscore: " + HighScore.returnHighScore(TextGame.getMoney()));
 		highscore.setFont(new Font("Arial", 40));
 		highscore.setTextFill(Color.WHITE);
 		highscore.setLayoutX(0);
