@@ -13,15 +13,24 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class HighScore {
-	public String fileToWriteOnto;
-	public HashMap<String, BigInteger> scores = new HashMap<String, BigInteger>();
-	public String highscorestring;
+	public static String fileToWriteOnto = "output.txt";
+	public static HashMap<String, BigInteger> scores = new HashMap<String, BigInteger>();
+	public static String name;
+	public static String highscorestring;
+	
+	public static String getName() {
+		return name;
+	}
+	
+	public static void setName(String s) {
+		name = s;
+	}
 	
 	public HighScore() {
 		fileToWriteOnto = "output.txt";
 	}
-		
-	public void writeFile(String output, String newScore) {
+	
+	public static void writeFile(String output, String newScore) {
 		File outputFile = new File(output);
 		PrintWriter pw = null;
 		try { pw = new PrintWriter(new FileWriter(outputFile, true)); } 
@@ -45,7 +54,7 @@ public class HighScore {
 		pw.close();
 	}
 	
-	public void readFile(String output) {
+	public static void readFile(String output) {
 		Scanner scan = null;
 		try { scan = new Scanner(new FileReader(output));}
 		catch(IOException e) {
@@ -59,15 +68,15 @@ public class HighScore {
             String score = lst.get(lst.size() - 2);
             BigInteger number = new BigInteger(score);
             String name = lst.get(0) + " " + lst.get(1);
-            this.scores.put(name, number);
+            scores.put(name, number);
             
 		}
 	}
 	
-	public void sortValues() {
+	public static void sortValues() {
 		List<BigInteger> values = new ArrayList<BigInteger>();
 		
-		for (Entry<String, BigInteger> iterate : this.scores.entrySet()) {
+		for (Entry<String, BigInteger> iterate : scores.entrySet()) {
 			String name = iterate.getKey();		
 			BigInteger Score = iterate.getValue();
 			values.add(Score);		
@@ -82,8 +91,8 @@ public class HighScore {
 			BigInteger sortedScores = values.get(a);
 			//System.out.println(sortedScores);
 
-			for( String nameInScore : this.scores.keySet()) {
-				if(this.scores.get(nameInScore).equals(sortedScores)) {
+			for( String nameInScore : scores.keySet()) {
+				if(scores.get(nameInScore).equals(sortedScores)) {
 					//newScores.put(nameInScore, sortedScores);
 					//testing.put(nameInScore, sortedScores);
 					testingsorting.add(nameInScore);
@@ -93,20 +102,20 @@ public class HighScore {
 		}
 		HashMap<String, Integer> newsortedHashMap = new HashMap<String, Integer>();
 		String testingname = testingsorting.get(0);
-		BigInteger scoretoreturn = this.scores.get(testingname);
-		this.highscorestring = testingname + " " + scoretoreturn + " pts";
+		BigInteger scoretoreturn = scores.get(testingname);
+		highscorestring = testingname + " " + scoretoreturn + " pts";
 }
 	
 	public void printHashMap() {
 		System.out.println(scores.toString());
 	}
 	
-	public String returnHighScore(String name, int points) {
+	public static String returnHighScore(int points) {
 		String nametowrite = name + " " + points + " pts";
-		writeFile(this.fileToWriteOnto, nametowrite);
-		readFile(this.fileToWriteOnto);
+		writeFile(fileToWriteOnto, nametowrite);
+		readFile(fileToWriteOnto);
 		sortValues();
-		return this.highscorestring;
+		return highscorestring;
 	}
 
 }

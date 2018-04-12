@@ -51,7 +51,7 @@ public class DifficultyMenu extends MainMenu{
 			difficultyButtons.setSpacing(100);
 			
 			
-			Button start = new Button("Start Game");
+			Button start = new Button("  Start Game  ");
 			Button normal = new Button("Normal");
 			Button hard = new Button("Hard");
 			Button extreme = new Button("Extreme");
@@ -63,6 +63,11 @@ public class DifficultyMenu extends MainMenu{
 			Label difficulty = new Label("Choose Difficulty: ");
 			difficulty.setFont(new Font("Arial", 30));
 			difficulty.setTextFill(Color.WHITE);
+			
+			Label name = new Label("Enter your name: ");
+			name.setFont(new Font("Arial", 19));
+			name.setTextFill(Color.WHITE);
+			TextField nameInput = new TextField();
 			
 			Label rounds = new Label("Enter number of rounds (default 20): ");
 			TextField roundsInput = new TextField(); //Textbox to set custom number of rounds
@@ -95,6 +100,8 @@ public class DifficultyMenu extends MainMenu{
 			GridPane.setConstraints(currentDifficulty, 2, 4, 2, 1);
 			GridPane.setConstraints(currentRounds, 0, 5);
 			GridPane.setConstraints(isEndlessMode, 2, 3, 3, 1);
+			GridPane.setConstraints(name, 0, 5, 2, 1);
+			GridPane.setConstraints(nameInput, 2, 5, 2, 1);
 			
 			//Add button/labels to menu gridpane
 			menu.getChildren().addAll(
@@ -108,7 +115,9 @@ public class DifficultyMenu extends MainMenu{
 					start,
 					currentDifficulty, 
 //					currentRounds, 
-					isEndlessMode);
+					isEndlessMode,
+					name,
+					nameInput);
 			
 //			menu.setGridLinesVisible(true);
 			
@@ -171,21 +180,32 @@ public class DifficultyMenu extends MainMenu{
 				@Override
 				public void handle(ActionEvent event) {
 					
-				
-					
-					
-					
 					if (getEndlessMode().equals("Disabled") && !roundsInput.getText().isEmpty()) {
 						//Start game with custom number of rounds
-						setNumRounds(Integer.parseInt(roundsInput.getText()));
-						Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
-						if(Integer.parseInt(roundsInput.getText()) <= 0) {
-							setNumRounds(20);
-							Game.setNumRounds(20);
-						} else if(Integer.parseInt(roundsInput.getText()) > 999) {
-							setNumRounds(999);
-							Game.setNumRounds(999);
+						if (!nameInput.getText().isEmpty()) {
+							setNumRounds(Integer.parseInt(roundsInput.getText()));
+							Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
+							HighScore.setName(nameInput.getText());
+							if(Integer.parseInt(roundsInput.getText()) <= 0) {
+								setNumRounds(20);
+								Game.setNumRounds(20);
+							} else if(Integer.parseInt(roundsInput.getText()) > 999) {
+								setNumRounds(999);
+								Game.setNumRounds(999);
+							}
+						}else {
+							setNumRounds(Integer.parseInt(roundsInput.getText()));
+							Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
+							HighScore.setName("Generic Name");
+							if(Integer.parseInt(roundsInput.getText()) <= 0) {
+								setNumRounds(20);
+								Game.setNumRounds(20);
+							} else if(Integer.parseInt(roundsInput.getText()) > 999) {
+								setNumRounds(999);
+								Game.setNumRounds(999);
+							}
 						}
+						
 						
 						
 						

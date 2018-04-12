@@ -143,6 +143,7 @@ public class Game extends Application{
     				missleList.get(i).pause();
     			
     			Pane endPane = Base.gameOver();
+//    			HighScore.returnHighScore(TextGame.getMoney());
     			gridpane.getChildren().add(endPane);
 				
 				}
@@ -158,6 +159,7 @@ public class Game extends Application{
 					start.setVisible(false);
 					Pane winPane = Base.winGame();
 					gridpane.getChildren().add(winPane);
+//					HighScore.returnHighScore(TextGame.getMoney());
 				}
 				
 				removeEnemies(enemyList);
