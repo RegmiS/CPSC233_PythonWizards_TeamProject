@@ -59,8 +59,8 @@ public class ImageLoader {
 		File source = new File(path);
 	 	Media media = new Media(source.toURI().toString()); 
 	 	MediaPlayer player = new MediaPlayer(media);
-		player.setCycleCount(MediaPlayer.INDEFINITE);
-	 	player.setAutoPlay(true);
+//		player.setCycleCount(MediaPlayer.INDEFINITE);
+//	 	player.play();
 	 	return player; 
 	}
 }

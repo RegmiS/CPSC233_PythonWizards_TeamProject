@@ -31,8 +31,8 @@ public class MainMenu extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-			MediaPlayer player = ImageLoader.getPlayer("res/sound/menu.wav");
-		 
+			
+			
 			Pane background = new Pane(); //Pane for background image 
 			GridPane mainMenu = new GridPane(); //Gridpane for all menu buttons & labels
 			mainMenu.setMinSize(WIDTH, HEIGHT); //Set gridpane dimensions to window dimensions

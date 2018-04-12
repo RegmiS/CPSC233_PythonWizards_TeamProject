@@ -18,9 +18,9 @@ public class Leveling {
     public String message = "";
     public int num_enemyTiers;
     public int num_bossTiers;
-    public int baseHealth = 100000;
-    public int enemyBaseHealth = 1000;
-    public int enemyBaseDamage = 100 ;
+    public int baseHealth = 1000;
+    public int enemyBaseHealth = 2000;
+    public int enemyBaseDamage = 10;
     public int enemyBaseRadius = 15;
     public int TILE_SIZE = 50;
 
@@ -188,8 +188,8 @@ public class Leveling {
 			this.current_boss_tier += 1;
 			for(int a = 0; a < this.current_boss_tier +1; a++) {
 
-				int boss_health = this.enemyBaseHealth + (this.current_boss_tier * 10);
-				int boss_damage = this.enemyBaseDamage + (this.current_boss_tier * 10);
+				int boss_health = this.enemyBaseHealth *  4 + ((this.current_boss_tier + 1) * 2000);
+				int boss_damage = this.enemyBaseDamage * 25 + ((this.current_boss_tier + 1) * 100);
 				String bosstier = list_colors_b.get(a);
 				int bossradius = this.enemyBaseRadius;
 				// set color/ sprite for the bosses here, according to current_boss_tier

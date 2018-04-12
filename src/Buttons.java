@@ -86,6 +86,7 @@ public class Buttons {
 //        	System.out.println(Game.getEnemyList());
         	Game.getTimer().start();
         	startRound.setVisible(false);  
+        	
         	}
     	});
     	return startRound;
