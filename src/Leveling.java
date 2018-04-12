@@ -12,7 +12,7 @@ public class Leveling {
     private double hard = 1.33;
     private double extereme = 1.66;
     private static int totalLevels;
-    private static int currentLevel = 0;
+    private static int currentLevel = 5;
     // round 10: 11950
     // round 5: 4300
     private int points = 0;

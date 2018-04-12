@@ -59,6 +59,7 @@ public class Game extends Application{
 	@Override 
 	public void start(Stage stage) throws Exception {
 		
+		TextGame.setLevel(Leveling.returnCurrentLevel());
 		
 		System.out.println(difficulty + " " + numRounds);
 		scalingAlgo = new Leveling(difficulty, numRounds);

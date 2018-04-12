@@ -67,6 +67,12 @@ public class TextGame {
         TextGame.LEVEL += 1;
         TextGame.LEVELstr.set("Round: " + Integer.toString(TextGame.LEVEL));
     }
+    
+    public static void setLevel(int num)
+    {
+    	TextGame.LEVEL = num;
+    }
+    
     /**
      * increases enemies by 1
      */
