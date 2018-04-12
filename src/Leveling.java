@@ -23,19 +23,17 @@ public class Leveling {
     public int enemyBaseDamage = 100 ;
     public int enemyBaseRadius = 15;
     public int TILE_SIZE = 50;
+    
+    //boss remainder determiner, set every four levels right now
+    public int boss_rounds = 4;// makes it so that bosses spawn every 4 rounds
+    public int current_boss_tier = 0;
+    // bosses
 
     public HashMap<Integer, HashMap<String, Integer>> num_EnemiesList = new HashMap<Integer, HashMap<String, Integer>>();
     ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
     ArrayList<String> list_colors_e = new ArrayList<String>();
     ArrayList<String> list_colors_b = new ArrayList<String>();
 
-    // what needs to done done
-    // 1. a way to decide how many enemies get spawned for each level and difficulty
-    // the points assigned to them depending on the level
-    // enemies need: health, color(type), points rewarded
-    // the message returned that gets called everytime an enemy dies to update the stats.
-    // function to be called when an enemy dies, a function to be called when enemy reaches base
-    // function to check health everytime an enemy reaches base
 
     public Leveling(String difficulty, int levels){
         totalLevels = levels;
@@ -53,10 +51,6 @@ public class Leveling {
     	return totalLevels;
     }
     
-    // theres a list of 7 tiered enemies, 3 bosses
-    // added randomly
-    // first boss round, boss gets spawned in 
-    // adds 6, removes 3 of the first tier, if not then remove from the one after it, add to the one after it.
 
     public void setDifficulty(String difficulty){
         if(difficulty == "Normal")
@@ -185,14 +179,44 @@ public class Leveling {
 				list_enemies.add(newenemy);
 			}
 		}
-//		System.out.println(list_enemies);
-		return list_enemies;
-    	
-    }
 
-//    public void setEnemyHealth(int health) {
-//    	
-//    }
+		//boss stuff
+		int bossSpawnRound = arraylistnum%this.boss_rounds;
+		int maxlevel = this.totalLevels -1;
+		if((bossSpawnRound == 2 && arraylistnum>this.num_enemyTiers)|| arraylistnum == maxlevel) {
+			this.current_boss_tier += 1;
+			for(int a = 0; a < this.current_boss_tier +1; a++) {
+				
+				int boss_health = this.enemyBaseHealth + (this.current_boss_tier * 10);
+				int boss_damage = this.enemyBaseDamage + (this.current_boss_tier * 10);
+				String bosstier = list_colors_b.get(a);
+				int bossradius = this.enemyBaseRadius;
+				// set color/ sprite for the bosses here, according to current_boss_tier
+				System.out.println("boss works right now" + arraylistnum + bosstier + " " + this.current_boss_tier);
+				Enemy bossenemy = new Enemy(this.TILE_SIZE, boss_health, bosstier, boss_damage, bossradius );
+				list_enemies.add(bossenemy);
+			}
+			if(this.current_boss_tier < this.num_bossTiers) {
+				this.current_boss_tier += 1;
+			}
+		}
+		//System.out.println(list_enemies);
+		ArrayList<Enemy> shuffledList = new ArrayList<Enemy>(returnShuffledEnemyList(list_enemies));
+		return shuffledList;  	
+    }
+    
+    public ArrayList<Enemy> returnShuffledEnemyList(ArrayList<Enemy> list_enemies){
+    	Random rand = new Random();
+    	ArrayList<Enemy> shuffledList = new ArrayList<Enemy>();
+    	while(list_enemies.size() > 0) {
+    		int  n = rand.nextInt(list_enemies.size()) + 0;
+    		shuffledList.add(list_enemies.get(n));
+    		list_enemies.remove(n);
+    		
+    	}
+    	return shuffledList;
+    }
+    
 
     public boolean checkTowerPlacement(int towerpoints){
         boolean possibleTower = false;
