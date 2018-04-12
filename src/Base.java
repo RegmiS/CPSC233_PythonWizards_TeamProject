@@ -11,12 +11,12 @@ import javafx.scene.text.Font;
 public class Base {
 
 	private static int health = TextGame.getHealth(); //Health of base
-	private int Xcoord = TextGame.getBaseCol();; // coordinates of base
-	private int Ycoord = TextGame.getBaseRow();;
+	private static int Xcoord = TextGame.getBaseCol(); // coordinates of base
+	private static int Ycoord = TextGame.getBaseRow();
 	
 	public static int getHealth() {return health;}
-	public int getX() {return this.Xcoord;}
-	public int getY() {return this.Ycoord;}
+	public static int getX() {return Xcoord;}
+	public static int getY() {return Ycoord;}
 	
 	/**When an enemy hits the base, the enemies damage is subtracted from the total health
 	 * 
