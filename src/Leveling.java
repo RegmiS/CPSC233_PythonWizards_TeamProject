@@ -8,33 +8,33 @@ import javafx.scene.paint.Color;
 
 public class Leveling {
   // all the variables used in leveling for the various programs
-    public double normal = 1.00;
-    public double hard = 1.33;
-    public double extereme = 1.66;
-    public double difficulty = 1.00;
-    public static int totalLevels;
-    public static int currentLevel = 0;
-    public int points = 0;
-    public String message = "";
-    public int num_enemyTiers;
-    public int num_bossTiers;
-    public int baseHealth = 100000;
-    public int enemyBaseHealth = 1000;
-    public int enemyBaseDamage = 100 ;
-    public int enemyBaseRadius = 15;
-    public int TILE_SIZE = 50;
+    private double normal = 1.00;
+    private double hard = 1.33;
+    private double extereme = 1.66;
+    private double difficulty = 1.00;
+    private static int totalLevels;
+    private static int currentLevel = 0;
+    private int points = 0;
+    private String message = "";
+    private int num_enemyTiers;
+    private int num_bossTiers;
+    private int baseHealth = 100000;
+    private int enemyBaseHealth = 1000;
+    private int enemyBaseDamage = 100 ;
+    private int enemyBaseRadius = 15;
+    private int TILE_SIZE = 50;
 
     //boss remainder determiner, set every four levels right now
-    public int boss_rounds = 4;// makes it so that bosses spawn every 4 rounds
-    public int current_boss_tier = 0;
+    private int boss_rounds = 4;// makes it so that bosses spawn every 4 rounds
+    private int current_boss_tier = 0;
     // bosses
 
     // the list of enemies, basically has all the stats for how enemies are spawned
     // also includes the list of sprites for enemies and sprites for bosses
-    public HashMap<Integer, HashMap<String, Integer>> num_EnemiesList = new HashMap<Integer, HashMap<String, Integer>>();
-    ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
-    ArrayList<String> list_colors_e = new ArrayList<String>();
-    ArrayList<String> list_colors_b = new ArrayList<String>();
+    private HashMap<Integer, HashMap<String, Integer>> num_EnemiesList = new HashMap<Integer, HashMap<String, Integer>>();
+    private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+    private ArrayList<String> list_colors_e = new ArrayList<String>();
+    private ArrayList<String> list_colors_b = new ArrayList<String>();
 
 
     public Leveling(String difficulty, int levels){
