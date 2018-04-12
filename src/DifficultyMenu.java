@@ -170,10 +170,27 @@ public class DifficultyMenu extends MainMenu{
 			start.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
+					
+				
+					
+					
+					
 					if (getEndlessMode().equals("Disabled") && !roundsInput.getText().isEmpty()) {
 						//Start game with custom number of rounds
 						setNumRounds(Integer.parseInt(roundsInput.getText()));
-						Game.setNumRounds(Integer.parseInt(roundsInput.getText())); //Display max number of rounds in Game
+						Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
+						if(Integer.parseInt(roundsInput.getText()) <= 0) {
+							setNumRounds(20);
+							Game.setNumRounds(20);
+						} else if(Integer.parseInt(roundsInput.getText()) > 999) {
+							setNumRounds(999);
+							Game.setNumRounds(999);
+						}
+						
+						
+						
+						/*setNumRounds(Integer.parseInt(roundsInput.getText()));
+						Game.setNumRounds(Integer.parseInt(roundsInput.getText()));*/ //Display max number of rounds in Game
 						//Game construtor
 						Game game = new Game(scene);
 						try {

@@ -105,33 +105,41 @@ public class Game extends Application{
 		//Enemy path
         new RandomPath();
 
-		//
-		TextGame.drawGame();
-		//
 		
+		TextGame.drawGame();
+		
+		//game Timer
 		setTimer(new AnimationTimer() {
 			
 			@Override
 			public void handle(long arg0) {
-				
+				//Towers Shooting
 				if (framecount % 30 == 0) {
 					getTowerList().forEach(Tower -> Tower.checkInRange(enemyList));
 				}
+				
+				//SpawnEnemys
 				if (framecount % 40 == 0 && !getQueueList().isEmpty() ) {
 					
 					queueList.get(0).displayEnemy();
 					queueList.remove(getQueueList().get(0));
 
 				}
+				
+				//if enemy list is empty makes new list
 				else if (framecount % 40 == 0 && enemyList.isEmpty())
 				{
 					setState(false);
 					start.setVisible(true);
 					timer.stop();
 				}
+				
+				/*
 				if (framecount % 100 == 0) 
 					TextGame.drawGame();
+				*/
 				
+				//checks if base still has hp, pauses the game if it doesnt
 				if(Base.getHealth() <= 0) {
 				
 				timer.stop();
@@ -145,7 +153,11 @@ public class Game extends Application{
     			Pane endPane = Base.gameOver();
     			gridpane.getChildren().add(endPane);
 				
-			}
+				}
+				
+				
+				
+				// If you beat all the Rounds ends the game with win screen
 				if (Leveling.returnCurrentLevel() == Leveling.getTotalLevels() 
 						&& enemyList.isEmpty() && getQueueList().isEmpty()
 						&& Base.getHealth() > 0)
@@ -162,7 +174,7 @@ public class Game extends Application{
 		});
 		
 		
-//						  (NAME, TEXTURE IMAGE, StorePOSITION, PRICE, DMG, RANGE)
+//		Store Menu				  (NAME, TEXTURE IMAGE, StorePOSITION, PRICE, DMG, RANGE)
 
 		Store.newTower("Tower 1", "tank1.png", 1, 1000, 500, 100);
 		Store.newTower("Tower 2", "tank2.png", 2, 750, 700, 50);
@@ -224,7 +236,14 @@ public class Game extends Application{
 	
 	public static ArrayList<Enemy> getEnemyList() { return Game.enemyList; }
 	
-	public void removeEnemies (ArrayList<Enemy> enemyList) throws ConcurrentModificationException {
+	
+	
+	/**If an enemy dies, remove it from the enemy list
+	 * 
+	 * @param enemyList, list of enemies on screen
+	 * @throws ConcurrentModificationException
+	 */
+	public void removeEnemies (ArrayList<Enemy> enemyList) { //throws ConcurrentModificationException {
 		for (int i = 0; i < enemyList.size(); i++)
 		{
 			if(enemyList.get(i).getHealth() <= 0) {
@@ -246,7 +265,10 @@ public class Game extends Application{
 			STATE = 0;
 	}
 	
-
+	/**Draws the grid the game is played on
+	 * 
+	 * @throws FileNotFoundException, image files
+	 */
 	public void drawGrid() throws FileNotFoundException {
 		//Grid builder - Creates a grid of Rectangles, each rectangle is a node with its own texture 	
 		for (int col = 0; col < ((WIDTH)/ getTileSize()); col++) {
@@ -259,6 +281,14 @@ public class Game extends Application{
 			}
 		}
 	}
+	
+	/**Draws the Random path on the grid
+	 * 
+	 * 
+	 * 
+	 * @param textgame, 
+	 * @throws FileNotFoundException
+	 */
 	
 	public void drawPath(ArrayList<ArrayList<String>> textgame) throws FileNotFoundException
 	{
