@@ -23,10 +23,10 @@ public class DifficultyMenu extends MainMenu{
 
 	private static int WIDTH = 1250, HEIGHT = 700; //Set window dimensions
 	
-	private static String deafaultDifficulty = "Normal";
-	private static String difficulty = deafaultDifficulty;
-	private static int deafaultNumRounds = 20;
-	private static int numRounds = deafaultNumRounds;
+	private static String defaultDifficulty = "Normal";
+	private static String difficulty = defaultDifficulty;
+	private static int defaultNumRounds = 20;
+	private static int numRounds = defaultNumRounds;
 	private static String endlessMode = "Disabled"; //Default setting 
 	
 	//String properties for updating UI
@@ -83,7 +83,7 @@ public class DifficultyMenu extends MainMenu{
 			isEndlessMode.setTextFill(Color.WHITE);
 			isEndlessMode.textProperty().bind(ENDLESSstr); //Binds Endless mode string property to label 
 		
-			//Set positon of all button/labels
+			//Set position of all button/labels
 			GridPane.setConstraints(difficulty, 0, 0, 3, 1);
 			GridPane.setConstraints(normal, 3, 0);
 			GridPane.setConstraints(hard, 4, 0);
@@ -161,8 +161,8 @@ public class DifficultyMenu extends MainMenu{
 					}else { //Resets number of rounds to default
 						setEndlessMode("Disabled");
 						isEndlessMode.setTextFill(Color.WHITE);
-						setNumRounds(deafaultNumRounds);
-						Game.setNumRounds(deafaultNumRounds);
+						setNumRounds(defaultNumRounds);
+						Game.setNumRounds(defaultNumRounds);
 					}
 				}	
 			});
@@ -170,10 +170,27 @@ public class DifficultyMenu extends MainMenu{
 			start.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
+					
+				
+					
+					
+					
 					if (getEndlessMode().equals("Disabled") && !roundsInput.getText().isEmpty()) {
 						//Start game with custom number of rounds
 						setNumRounds(Integer.parseInt(roundsInput.getText()));
-						Game.setNumRounds(Integer.parseInt(roundsInput.getText())); //Display max number of rounds in Game
+						Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
+						if(Integer.parseInt(roundsInput.getText()) <= 0) {
+							setNumRounds(20);
+							Game.setNumRounds(20);
+						} else if(Integer.parseInt(roundsInput.getText()) > 999) {
+							setNumRounds(999);
+							Game.setNumRounds(999);
+						}
+						
+						
+						
+						/*setNumRounds(Integer.parseInt(roundsInput.getText()));
+						Game.setNumRounds(Integer.parseInt(roundsInput.getText()));*/ //Display max number of rounds in Game
 						//Game construtor
 						Game game = new Game(scene);
 						try {
@@ -195,8 +212,8 @@ public class DifficultyMenu extends MainMenu{
 						}
 					}else {
 						//Start game with deafult number of rounds
-						setNumRounds(deafaultNumRounds);
-						Game.setNumRounds(deafaultNumRounds);
+						setNumRounds(defaultNumRounds);
+						Game.setNumRounds(defaultNumRounds);
 						Game game = new Game(scene);
 						try {
 							System.out.println("Loading...");	
@@ -224,6 +241,10 @@ public class DifficultyMenu extends MainMenu{
 			
 	}
 	
+	public static String getDefaultDifficulty() {
+		return defaultDifficulty;
+	}
+	
 	public static StringProperty getDifficultyStr() {
 		return DIFFICULTYstr;
 	}
@@ -232,6 +253,10 @@ public class DifficultyMenu extends MainMenu{
         difficulty = difficultyVal;
         DIFFICULTYstr.set("Difficulty: " + difficultyVal);
     }
+    
+    public static int getDefaultNumRounds() {
+		return defaultNumRounds;
+	}
     
     public static int getNumRounds() {
 		return numRounds;

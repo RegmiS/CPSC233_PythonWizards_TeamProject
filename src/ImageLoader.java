@@ -29,7 +29,7 @@ public class ImageLoader {
 		
 	}
 	
-	/**Fills shape object with image from filename
+	/** Fills shape object with image from filename
 	 *
 	 * @param filename Name of image
 	 * @param s Shape object to be filled
@@ -37,7 +37,7 @@ public class ImageLoader {
 	public static void setImage(String filename, Shape s) 
 	{
 		FileInputStream inputStream;
-		ImagePattern img = null;
+		ImagePattern img = null; 
 		try {
 			inputStream = new FileInputStream("res/images/" + filename);
 			Image image = new Image(inputStream);
@@ -50,7 +50,7 @@ public class ImageLoader {
 		
 	}
 	/**
-	 * 
+	 * creates a mediaPlayer with the song file from the specified path
 	 * @param path Sound file path
 	 * @return MediaPlayer object
 	 */
