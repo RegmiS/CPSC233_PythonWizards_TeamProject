@@ -60,9 +60,6 @@ public class Game extends Application{
 	@Override 
 	public void start(Stage stage) throws Exception {
 		
-		MediaPlayer player = ImageLoader.getPlayer("res/sound/game.mp3");
-		player.play();
-		player.setCycleCount(MediaPlayer.INDEFINITE);
 		
 		System.out.println(difficulty + " " + numRounds);
 		scalingAlgo = new Leveling(difficulty, numRounds);

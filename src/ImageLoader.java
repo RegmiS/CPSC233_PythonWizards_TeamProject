@@ -1,7 +1,6 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
@@ -10,7 +9,11 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Shape;
 
 
+
+
 public class ImageLoader {
+	
+	private static MediaPlayer music;
 	
 	/**Takes image filename from "res/images/" directory and sets it as window background
 	 * 
@@ -54,13 +57,12 @@ public class ImageLoader {
 	 * @param path Sound file path
 	 * @return MediaPlayer object
 	 */
-	public static MediaPlayer getPlayer(String path)
+	public static void playMusic(String path)
 	{
 		File source = new File(path);
 	 	Media media = new Media(source.toURI().toString()); 
-	 	MediaPlayer player = new MediaPlayer(media);
-//		player.setCycleCount(MediaPlayer.INDEFINITE);
-//	 	player.play();
-	 	return player; 
+	 	music = new MediaPlayer(media);
+		music.setCycleCount(MediaPlayer.INDEFINITE);
+	 	music.play(); 
 	}
 }

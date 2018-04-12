@@ -14,6 +14,8 @@ public class Leveling {
     public double difficulty = 1.00;
     public static int totalLevels;
     public static int currentLevel = 0;
+    // round 10: 11950
+    // round 5: 4300
     public int points = 0;
     public String message = "";
     public int num_enemyTiers;
@@ -188,7 +190,7 @@ public class Leveling {
 			this.current_boss_tier += 1;
 			for(int a = 0; a < this.current_boss_tier +1; a++) {
 
-				int boss_health = this.enemyBaseHealth *  4 + ((this.current_boss_tier + 1) * 2000);
+				int boss_health = this.enemyBaseHealth * 30 + ((this.current_boss_tier + 1) * 5000);
 				int boss_damage = this.enemyBaseDamage * 25 + ((this.current_boss_tier + 1) * 100);
 				String bosstier = list_colors_b.get(a);
 				int bossradius = this.enemyBaseRadius;
