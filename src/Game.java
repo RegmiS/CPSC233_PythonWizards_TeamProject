@@ -14,9 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -148,8 +150,20 @@ public class Game extends Application{
     			ArrayList<Timeline> missleList = Missles.getTimelineList();
     			for (int i = 0; i < missleList.size(); i++)
     				missleList.get(i).pause();
+    			
+    			Pane endPane = Base.gameOver();
+    			gridpane.getChildren().add(endPane);
 				
 			}
+				if (Leveling.returnCurrentLevel() == Leveling.getTotalLevels() 
+						&& enemyList.isEmpty() && getQueueList().isEmpty()
+						&& Base.getHealth() > 0)
+				{
+					timer.stop();
+					start.setVisible(false);
+					Pane winPane = Base.winGame();
+					gridpane.getChildren().add(winPane);
+				}
 				
 				removeEnemies(enemyList);
 				framecount++;
