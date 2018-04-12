@@ -73,7 +73,7 @@ public class Buttons {
 	 * @return startRound button
 	 */
     public static Button startRoundButton() {
-    	Button startRound = new Button("Start  Round");
+    	Button startRound = new Button("Start Round");
     	startRound.setOnAction(new EventHandler<ActionEvent>() {
 
         @Override

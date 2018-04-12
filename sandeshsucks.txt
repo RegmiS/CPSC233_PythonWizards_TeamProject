@@ -1,0 +1,127 @@
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Scanner;
+
+public class HighScore {
+	public String fileToWriteOnto;
+	public HashMap<String, BigInteger> scores = new HashMap<String, BigInteger>();
+	public String highscorestring;
+	
+	public HighScore() {
+		fileToWriteOnto = "output.txt";
+	}
+		
+	public void writeFile(String output, String newScore) {
+		File outputFile = new File(output);
+		PrintWriter pw = null;
+		try { pw = new PrintWriter(new FileWriter(outputFile, true)); } 
+		catch (IOException e)
+		{
+			System.out.println("Cannot open file to write");
+			return;
+		}
+		pw.println(newScore);
+		pw.close();
+	}
+	
+	public void clearText(String output) {
+		PrintWriter pw = null;
+		try { pw = new PrintWriter(new FileWriter(output)); }
+		catch (IOException e) {
+			System.out.println("Cannot open file to write");
+			return;
+		}
+		pw.print("");
+		pw.close();
+	}
+	
+	public void readFile(String output) {
+		Scanner scan = null;
+		try { scan = new Scanner(new FileReader(output));}
+		catch(IOException e) {
+			System.out.println("cannot open file to read");
+			scan.close();
+		}
+		
+		while (scan.hasNextLine()) {
+            String nextline = scan.nextLine();
+            List<String> lst = Arrays.asList(nextline.split(" "));
+            String score = lst.get(lst.size() - 2);
+            BigInteger number = new BigInteger(score);
+            String name = lst.get(0) + " " + lst.get(1);
+            this.scores.put(name, number);
+            
+		}
+	}
+	
+	public void sortValues() {
+		List<BigInteger> values = new ArrayList<BigInteger>();
+		
+		for (Entry<String, BigInteger> iterate : this.scores.entrySet()) {
+			String name = iterate.getKey();		
+			BigInteger Score = iterate.getValue();
+			values.add(Score);		
+		}
+
+		
+		Collections.sort(values);
+		Collections.reverse(values);
+		
+		ArrayList<String> testingsorting = new ArrayList<String>();
+		for(int a =0; a < values.size(); a++) {
+			BigInteger sortedScores = values.get(a);
+			//System.out.println(sortedScores);
+
+			for( String nameInScore : this.scores.keySet()) {
+				if(this.scores.get(nameInScore).equals(sortedScores)) {
+					//newScores.put(nameInScore, sortedScores);
+					//testing.put(nameInScore, sortedScores);
+					testingsorting.add(nameInScore);
+				}
+			}
+			
+		}
+		HashMap<String, Integer> newsortedHashMap = new HashMap<String, Integer>();
+		String testingname = testingsorting.get(0);
+		BigInteger scoretoreturn = this.scores.get(testingname);
+		this.highscorestring = testingname + " " + scoretoreturn + " pts";
+}
+	
+	public void printHashMap() {
+		System.out.println(scores.toString());
+	}
+	
+	public String returnHighScore(String name, int points) {
+		String nametowrite = name + " " + points + " pts";
+		writeFile(this.fileToWriteOnto, nametowrite);
+		readFile(this.fileToWriteOnto);
+		sortValues();
+		return this.highscorestring;
+	}
+	
+	public static void main(String argh[]) {
+		HighScore filething = new HighScore();
+		//filething.writeFile("output.txt");
+		//filething.clearText("output.txt");
+
+		System.out.println(filething.returnHighScore("Robbie Karg", 10000));
+		
+	}
+	
+	
+	
+
+}
+
+

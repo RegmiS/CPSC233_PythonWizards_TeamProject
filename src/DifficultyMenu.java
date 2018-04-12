@@ -23,10 +23,10 @@ public class DifficultyMenu extends MainMenu{
 
 	private static int WIDTH = 1250, HEIGHT = 700; //Set window dimensions
 	
-	private static String deafaultDifficulty = "Normal";
-	private static String difficulty = deafaultDifficulty;
-	private static int deafaultNumRounds = 20;
-	private static int numRounds = deafaultNumRounds;
+	private static String defaultDifficulty = "Normal";
+	private static String difficulty = defaultDifficulty;
+	private static int defaultNumRounds = 20;
+	private static int numRounds = defaultNumRounds;
 	private static String endlessMode = "Disabled"; //Default setting 
 	
 	//String properties for updating UI
@@ -161,8 +161,8 @@ public class DifficultyMenu extends MainMenu{
 					}else { //Resets number of rounds to default
 						setEndlessMode("Disabled");
 						isEndlessMode.setTextFill(Color.WHITE);
-						setNumRounds(deafaultNumRounds);
-						Game.setNumRounds(deafaultNumRounds);
+						setNumRounds(defaultNumRounds);
+						Game.setNumRounds(defaultNumRounds);
 					}
 				}	
 			});
@@ -212,8 +212,8 @@ public class DifficultyMenu extends MainMenu{
 						}
 					}else {
 						//Start game with deafult number of rounds
-						setNumRounds(deafaultNumRounds);
-						Game.setNumRounds(deafaultNumRounds);
+						setNumRounds(defaultNumRounds);
+						Game.setNumRounds(defaultNumRounds);
 						Game game = new Game(scene);
 						try {
 							System.out.println("Loading...");	
@@ -241,6 +241,10 @@ public class DifficultyMenu extends MainMenu{
 			
 	}
 	
+	public static String getDefaultDifficulty() {
+		return defaultDifficulty;
+	}
+	
 	public static StringProperty getDifficultyStr() {
 		return DIFFICULTYstr;
 	}
@@ -249,6 +253,10 @@ public class DifficultyMenu extends MainMenu{
         difficulty = difficultyVal;
         DIFFICULTYstr.set("Difficulty: " + difficultyVal);
     }
+    
+    public static int getDefaultNumRounds() {
+		return defaultNumRounds;
+	}
     
     public static int getNumRounds() {
 		return numRounds;

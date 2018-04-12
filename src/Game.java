@@ -24,8 +24,8 @@ import javafx.stage.Stage;
 
 public class Game extends Application{
 	
-	private static final int WIDTH = 1250;
-	private static final int HEIGHT = 700;
+	private static final int WIDTH = 1250; 
+	private static final int HEIGHT = 700; 
 	private static final int TILE_SIZE = 50;
 
 	private static GridPane gridpane;
@@ -43,11 +43,14 @@ public class Game extends Application{
 	private static ArrayList<Tower> towerList;
 	private static ArrayList<Enemy> queueList;
 	
-	private static String difficulty = "Normal";
-	private static int numRounds = 20;
+	private static String difficulty = DifficultyMenu.getDefaultDifficulty(); //Default difficulty
+	private static int numRounds = DifficultyMenu.getDefaultNumRounds(); //Default number of rounds 
 	private static Leveling scalingAlgo;
 	
-	
+	/**Game Constructor
+	 * 
+	 * @param gameScene Current scene
+	 */
 	public Game(Scene gameScene) {
 		scene = gameScene;
 		textgame = new TextGame(HEIGHT-50, WIDTH-200, TILE_SIZE);
@@ -56,6 +59,7 @@ public class Game extends Application{
 	
 	@Override 
 	public void start(Stage stage) throws Exception {
+		
 		System.out.println(difficulty + " " + numRounds);
 		scalingAlgo = new Leveling(difficulty, numRounds);
 		setGridpane(new GridPane());
@@ -73,41 +77,29 @@ public class Game extends Application{
 		textgame.setBase(5, 20, "B"); // does text base
 		Base b1 = new Base(getGridpane());
 
-		
+		//
 		VBox buttonBar = new VBox();
-		HBox playPause = new HBox();
 		buttonBar.setStyle("-fx-border-color: black");
 		buttonBar.setStyle("-fx-background-color: orange");
 		buttonBar.setAlignment(Pos.CENTER);
 		buttonBar.setSpacing(5);
-//		buttonBar.setPadding(new Insets(10, 10, 10, 10));
-		playPause.setSpacing(15);
-		playPause.setAlignment(Pos.CENTER);
-		//playPause.setPadding(new Insets(10, 10, 10, 10));
 		
         Button start = Buttons.startRoundButton();
-//        GridPane.setConstraints(start, 25, 0, 1, 1, HPos.CENTER, VPos.CENTER);
-//        GridPane.setColumnSpan(start, 2);
         Button pause = Buttons.pauseButton(timeline);
-//        GridPane.setConstraints(pause, 27, 0, 1, 1, HPos.CENTER, VPos.CENTER);
-//        GridPane.setColumnSpan(pause, 1);
         Button exit = Buttons.exitButton(stage);
-//        Button play = Buttons.playButton(timeline);
-//        GridPane.setConstraints(play, 28, 0, 1, 1, HPos.CENTER, VPos.CENTER);
-//        GridPane.setColumnSpan(play, 1);
-//        playPause.getChildren().addAll(pause, exit);
-        buttonBar.getChildren().addAll(start, pause, exit, playPause);
+        buttonBar.getChildren().addAll(start, pause, exit);
         GridPane.setConstraints(buttonBar, 21, 0, 4, 2, HPos.CENTER, VPos.CENTER);
         getGridpane().getChildren().addAll(buttonBar);
         MediaPlayer player = ImageLoader.getPlayer("res/sound/game.mp3");
 		
 		
-		//Enemy path
+		//Generate a random path
         new RandomPath();
 
-		
+		// Draw the path in textgame
 		TextGame.drawGame();
-		
+		//
+				
 		//game Timer
 		setTimer(new AnimationTimer() {
 			
@@ -174,8 +166,8 @@ public class Game extends Application{
 		});
 		
 		
-//		Store Menu				  (NAME, TEXTURE IMAGE, StorePOSITION, PRICE, DMG, RANGE)
-
+//		Store Menu	  (NAME, TEXTURE IMAGE, STORE POSITION, PRICE, DMG, RANGE)
+//		Add towers to the store menu
 		Store.newTower("Tower 1", "tank1.png", 1, 1000, 500, 100);
 		Store.newTower("Tower 2", "tank2.png", 2, 750, 700, 50);
 		Store.newTower("Tower 3", "tank3.png", 3, 1500, 250, 250);
@@ -190,7 +182,7 @@ public class Game extends Application{
 		
 //
 		
-		//Info Bar - WIP
+		//Game Info Bar
 	
 		HBox infobar = new HBox();
 		infobar.setPadding(new Insets(15, 10, 15, 10));
@@ -306,6 +298,8 @@ public class Game extends Application{
 		}
 	}
 
+	
+	//All getters and setters
 
 	public static GridPane getGridpane() {
 		return gridpane;
