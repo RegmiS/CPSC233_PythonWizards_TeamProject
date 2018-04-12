@@ -13,10 +13,10 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class HighScore {
-	public static String fileToWriteOnto = "output.txt";
-	public static HashMap<String, BigInteger> scores = new HashMap<String, BigInteger>();
-	public static String name;
-	public static String highscorestring;
+	private static String fileToWriteOnto = "output.txt";
+	private static HashMap<String, BigInteger> scores = new HashMap<String, BigInteger>();
+	private static String name;
+	private static String highscorestring;
 	
 	public static String getName() {
 		return name;
