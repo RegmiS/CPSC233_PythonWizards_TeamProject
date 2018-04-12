@@ -54,7 +54,7 @@ public class TextGame {
    public static int getLevel() {
 	   return LEVEL;
    }
-    
+    // gettes and setters for money, health and level
     public static void setHealth(int healthval) {
         TextGame.HEALTH = healthval;
         TextGame.HEALTHstr.set(" Health: " + Integer.toString(healthval));
@@ -67,20 +67,35 @@ public class TextGame {
         TextGame.LEVEL += 1;
         TextGame.LEVELstr.set("Round: " + Integer.toString(TextGame.LEVEL));
     }
+    /**
+     * increases enemies by 1
+     */
     public static void addEnemies() {
     	TextGame.ENEMIES += 1;
     	
     }
     
+    /**
+     * decreases enemies by 1
+     */
     public static void removeEnemies() { 
     	ENEMIES--;
     	}
     
+    /**
+     * returns rows and coloums
+     * @return
+     */
     public static int getNumCols() { return NUM_COLOUMS; }
     public static int getNumRows() { return NUM_ROWS; }
     
     
-   
+   /**
+    * the constructor that sets the height, width, size, rows and coloums so the text game prints correctly
+    * @param height
+    * @param width
+    * @param tile_size
+    */
     // constructor for the class( used in the grid game to create an object of this class)
     public TextGame(int height, int width, int tile_size) {
     	TextGame.HEIGHT = height;
@@ -94,13 +109,19 @@ public class TextGame {
 
     }
     
-    //returns the game in case it needs to be edited or changed
+    /**
+     * returns the textgame incase it needs to be edited through refrencing
+     * @return
+     */
     public static ArrayList<ArrayList<String>> getTextgame()
     {
     	return TextGame.textgame;
     }
 
-    // creates the arraylist to use for the game in the constructor
+    
+    /**
+     * creates an arraylist, and populates it. this arraylist is then later used to print out the textgame
+     */
     public static void createArrayList() {
         for(int a = 0; a < NUM_ROWS; a++)
             textgame.add(new ArrayList<String>());
@@ -112,7 +133,9 @@ public class TextGame {
         }
     }
 
-    //draws the game using a simple loop
+    /**
+     * simple loop that prints out all the values of the arraylist, hence, printing out the game
+     */
     public static void drawGame() {
     	System.out.println();
         for(int a = 0; a < NUM_ROWS; a++){
@@ -133,30 +156,41 @@ public class TextGame {
     }
     
     //editing the game, enemies and paths
+    /**
+     * edits the xvalue, and y value for when towers are placed into the game so things cant be placed on top of it
+     * @param xcord
+     * @param ycord
+     * @param val - string that represents tower in textgame
+     */
     public static void editGridTower(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
     	
     }
     
+    /**
+     * adds in spaces for the paths as blank statements to allow for path checking later
+     * @param xcord
+     * @param ycord
+     * @param val - string that represents paths in textgame
+     */
     public void editGridPath(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
     }
     
+    /**
+     * sets the coordinate for base in the game
+     * @param xcord
+     * @param ycord
+     * @param val - getting the value for base as a string in textgame
+     */
     public void setBase(int xcord, int ycord, String val) {
     	textgame.get(xcord).set(ycord, val);
     	setBaseRow(xcord);
     	setBaseCol(ycord);
     }
     
-    public void setShip(int xcord, int ycord, String val) { 
-    	textgame.get(xcord).set(ycord,  val);
-    }
-    
-    
-    public void updateEnemy(int xcord, int ycord, String val) {
-    	textgame.get(xcord).set(ycord, val);
-    }
 
+    
 	public static int getBaseCol() {
 		return baseCol;
 	}
