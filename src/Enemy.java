@@ -15,7 +15,7 @@ public class Enemy {
 	private int damage;
 	private int points;
 	private static ArrayList<int[][]> pathList = new ArrayList<int[][]>(); // list of start and end points for pathing
-	private static Pane pane;
+	private static Pane pane; // used to display enemies
 	private static ArrayList<Timeline> timelineList = new ArrayList<Timeline>(); // used for pausing
 	private Timeline animation; // animation for every enemy 
 	

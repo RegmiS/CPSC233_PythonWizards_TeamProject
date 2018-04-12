@@ -83,7 +83,7 @@ public class DifficultyMenu extends MainMenu{
 			isEndlessMode.setTextFill(Color.WHITE);
 			isEndlessMode.textProperty().bind(ENDLESSstr); //Binds Endless mode string property to label 
 		
-			//Set positon of all button/labels
+			//Set position of all button/labels
 			GridPane.setConstraints(difficulty, 0, 0, 3, 1);
 			GridPane.setConstraints(normal, 3, 0);
 			GridPane.setConstraints(hard, 4, 0);
