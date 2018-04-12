@@ -190,19 +190,34 @@ public class TextGame {
     }
     
 
-    
+    /**
+     * gets the base coloums
+     * @return
+     */
 	public static int getBaseCol() {
 		return baseCol;
 	}
-
+	
+	/**
+	 * sets coloums
+	 * @param baseCol
+	 */
 	public static void setBaseCol(int baseCol) {
 		TextGame.baseCol = baseCol;
 	}
-
+	
+	/**
+	 * sets base coloums
+	 * @return
+	 */
 	public static int getBaseRow() {
 		return baseRow;
 	}
-
+	
+	/**
+	 * sets base rows
+	 * @param baseRow
+	 */
 	public static void setBaseRow(int baseRow) {
 		TextGame.baseRow = baseRow;
 	}
