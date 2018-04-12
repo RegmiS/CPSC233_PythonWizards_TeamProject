@@ -59,6 +59,7 @@ public class Game extends Application{
 	
 	@Override 
 	public void start(Stage stage) throws Exception {
+		
 		System.out.println(difficulty + " " + numRounds);
 		scalingAlgo = new Leveling(difficulty, numRounds);
 		setGridpane(new GridPane());
@@ -76,21 +77,17 @@ public class Game extends Application{
 		textgame.setBase(5, 20, "B"); // does text base
 		Base b1 = new Base(getGridpane());
 
-		
+		//
 		VBox buttonBar = new VBox();
-		HBox playPause = new HBox();
 		buttonBar.setStyle("-fx-border-color: black");
 		buttonBar.setStyle("-fx-background-color: orange");
 		buttonBar.setAlignment(Pos.CENTER);
 		buttonBar.setSpacing(5);
-		playPause.setSpacing(15);
-		playPause.setAlignment(Pos.CENTER);
-
 		
         Button start = Buttons.startRoundButton();
         Button pause = Buttons.pauseButton(timeline);
         Button exit = Buttons.exitButton(stage);
-        buttonBar.getChildren().addAll(start, pause, exit, playPause);
+        buttonBar.getChildren().addAll(start, pause, exit);
         GridPane.setConstraints(buttonBar, 21, 0, 4, 2, HPos.CENTER, VPos.CENTER);
         getGridpane().getChildren().addAll(buttonBar);
         MediaPlayer player = ImageLoader.getPlayer("res/sound/game.mp3");
@@ -301,6 +298,8 @@ public class Game extends Application{
 		}
 	}
 
+	
+	//All getters and setters
 
 	public static GridPane getGridpane() {
 		return gridpane;
