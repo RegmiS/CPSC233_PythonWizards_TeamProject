@@ -13,6 +13,12 @@ import javafx.stage.Stage;
 
 public class Buttons {
 	
+	
+	/**
+	 * goes from the main menu to the difficulty setting menu
+	 * @param stage used by difficultyMenu to keep the stage constant
+	 * @return playButton the button itself used by MainMenu to display it
+	 */
 	public static Button playButton(Stage stage) {
 		//Event handler for play button, changes scene to difficulty menu
 		Button playButton = new Button("       Play       ");
@@ -32,23 +38,23 @@ public class Buttons {
 		return playButton;
 	}
 
-	public static Button loadButton()
-	{
-		Button loadButton = new Button("       Load       ");
-		loadButton.setOnAction(new EventHandler<ActionEvent>() {
-			//Placeholder button		
-			@Override
-			public void handle(ActionEvent event) {	
-				
-			}	
-		});
-		return loadButton;
-	}
+//	public static Button loadButton()
+//	{
+//		Button loadButton = new Button("       Load       ");
+//		loadButton.setOnAction(new EventHandler<ActionEvent>() {
+//			//Placeholder button		
+//			@Override
+//			public void handle(ActionEvent event) {	
+//				
+//			}	
+//		});
+//		return loadButton;
+//	}
 	
 	/**Exit current stage
 	 * 
-	 * @param stage
-	 * @return Exit button 
+	 * @param stage stage to be closed
+	 * @return exitButton the actual button
 	 */
 	public static Button exitButton(Stage stage) {
 		Button exitButton = new Button("       Exit       ");
@@ -64,7 +70,7 @@ public class Buttons {
 	
 	/**Start next round
 	 * 
-	 * @return Start round button
+	 * @return startRound button
 	 */
     public static Button startRoundButton() {
     	Button startRound = new Button("Start Round");
@@ -72,8 +78,9 @@ public class Buttons {
 
         @Override
         public void handle(ActionEvent event) {
-        	Game.setState(true);
-        	Leveling.increaseCurrentLevel();
+        	Game.setState(true); // when true means the game is running
+        	Leveling.increaseCurrentLevel(); // increases the current level by one in Leveling (starts at 0)
+        	// gets the queueList of enemies from Leveling to be used by game
         	Game.setQueueList(new ArrayList<Enemy>(Game.getScalingAlgo().returnEnemyList(Leveling.returnCurrentLevel())));
 //        	System.out.println(Game.getQueueList());
 //        	System.out.println(Game.getEnemyList());
@@ -85,7 +92,7 @@ public class Buttons {
     }
     
     
-    /**Pauses the game
+    /**Pauses and unpauses the game by pausing(or resuming) all animations at once 
      * 
      * @param timeline
      * @return the pause button
@@ -95,6 +102,7 @@ public class Buttons {
     	pause.setOnAction(new EventHandler<ActionEvent>() 
     	{
     		
+    		// checks whether state is 1 for running or 0 for paused and performs accordingly
     		@Override
     		public void handle(ActionEvent event) {
     			
@@ -107,7 +115,7 @@ public class Buttons {
     			ArrayList<Timeline> missleList = Missles.getTimelineList();
     			for (int i = 0; i < missleList.size(); i++)
     				missleList.get(i).pause();
-    			Game.setState(false);
+    			Game.setState(false); // when false the game is paused
     			}
     			else if (Game.getState() == 0 && !Game.getEnemyList().isEmpty())
     			{
@@ -118,7 +126,7 @@ public class Buttons {
     				ArrayList<Timeline> missleList = Missles.getTimelineList();
     				for (int i = 0; i < missleList.size(); i++)
     					missleList.get(i).play();
-    				Game.setState(true);
+    				Game.setState(true); // when true game is running
     			}
     		}});
 		return pause;
