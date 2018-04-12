@@ -26,15 +26,15 @@ public class Tower{
 	
 	private Rectangle rectangle;
 	private int ID;
-	private int damage;
+	private int damage; //damage done to enemys
 	private int health;
-	private int price;
-	private int upgradePrice;
-	private int xCoord;
-	private int yCoord;
-	private int range;
-	private int level = 0;
-	private int cost;
+	private int price; //initial cost
+	private int upgradePrice; // how much it cose to increase the level
+	private int xCoord; // x pos on the map
+	private int yCoord;//ypos on the map
+	private int range;	//range of towers
+	private int level = 0; // level, starts at 0, increments at 1
+	private int cost; //total cost spent on towers
 	private Pane pane;
 	
 	public int getUPrice() {return this.upgradePrice;}
@@ -90,10 +90,20 @@ public class Tower{
 		this.range = range;
 	}
 	
-	
+	/**Constructor for tower
+	 * 
+	 * @param xc, xcoord, where tower is placed
+	 * @param yc, ycoord
+	 * @param price, intital price
+	 * @param hp, health of tower
+	 * @param dmg, damage of tower
+	 * @param range, range of tower
+	 * @param filename, image for tower tpe
+	 * @param canvas, pane that the game is plated on
+	 * @param towerList, list of all towers
+	 */
 	public Tower(int xc, int yc, int price, int hp, int dmg, int range, String filename, GridPane canvas, ArrayList<Tower> towerList)  {
 		
-		//setID(id);
 		setXCoord(xc);
 		setYCoord(yc);
 		setPrice(price);
@@ -110,9 +120,9 @@ public class Tower{
 		Platform.runLater(new Runnable() {
 			@Override 
 			public void run() {
-				rectangle = new Rectangle(35, 35);
-				//rectangle.addEventFilter(MouseEvent.MOUSE_CLICKED, openStats);
-				GridPane.setConstraints(rectangle, xc, yc);
+				rectangle = new Rectangle(35, 35); // makes a rectangle, size 35px by 35px
+				
+				GridPane.setConstraints(rectangle, xc, yc); 	//sets where the tower is placed
 				GridPane.setHalignment(rectangle, HPos.CENTER);
 				ImageLoader.setImage(filename, rectangle);
 				canvas.getChildren().add(rectangle);
@@ -127,7 +137,7 @@ public class Tower{
 		            public void handle(ContextMenuEvent event) {
 		            	ContextMenu contextMenu = new ContextMenu();
 		            	
-		            	
+		            	//upgrade button
 		            	MenuItem item1 = new MenuItem("Upgrade! (" + getUPrice() + ")");
 		 		        item1.setOnAction(new EventHandler<ActionEvent>() {
 		 		        	
@@ -140,6 +150,8 @@ public class Tower{
 		 		                }
 		 		            }
 		 		        });
+		 		        
+		 		        //sell button
 		 		        MenuItem item2 = new MenuItem("Sell! (" + getCost()/2 +")");
 		 		        item2.setOnAction(new EventHandler<ActionEvent>() {
 		 		 
@@ -149,6 +161,8 @@ public class Tower{
 		 		            }
 		 		        });
 		            	
+		 		        
+		 		        // Stats button on the menu
 		            	String statsString = "Level:            " + getLevel() + "\n" +
 								 "Range:          " + getRange() + "\n" +
 								 "Damage:       " + getDMG() + "\n" ;
@@ -158,18 +172,10 @@ public class Tower{
 		                contextMenu.show(rectangle, event.getScreenX(), event.getScreenY());
 		            }
 		        });
-				
-				
-				
-				
-				
-				
-				
+	
 			}
 		});
-		
-		
-		
+
 	}
 	
 	
@@ -183,6 +189,8 @@ public class Tower{
 	
 		setLevel();
 		String filename = null;
+		
+		//diffrent image for each tower type
 		if (getLevel() == 3) {
 			if (health == 1) {
 				filename = "tank1up.png";
@@ -195,7 +203,8 @@ public class Tower{
 			}
 			ImageLoader.setImage(filename, this.rectangle);
 		}
-		
+
+		//spends money to upgrade
 		TextGame.setMoney(TextGame.getMoney()-getUPrice());// cost money to upgrade
 		setCost(getUPrice()); //updates total cost of tower
 		setUPrice(2* getUPrice()); // next upgrade doubles in cost
@@ -206,15 +215,11 @@ public class Tower{
 		setRange(newRange);
 		int newDamage = (int) (getDMG()*1.1);
 		setDMG(newDamage);
-		
-	
-		
-		
-		
+
 	}
 	
 	
-	/**Sells the tower for 1/2 the price?
+	/**Sells the tower and deletes it from the pane, and list
 	 * 
 	 */
 	public void sell(ArrayList<Tower> towerList) {
@@ -224,7 +229,7 @@ public class Tower{
 		TextGame.editGridTower(getY(),getX(),"#"); //removes tower from text version
 
 		this.pane.getChildren().remove(this.rectangle); //removes tower from veiw
-		towerList.remove(this);
+		towerList.remove(this); 
 	}
 	
 	

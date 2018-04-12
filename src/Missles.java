@@ -8,9 +8,9 @@ import javafx.util.Duration;
 
 public class Missles{
 	private Circle missle =  new Circle(5);
-	private int dmg;
+	private int dmg; // damage of the missle, based on tower type
 	private Pane pane;
-	private static ArrayList<Timeline> timelineList = new ArrayList<Timeline>();
+	private static ArrayList<Timeline> timelineList = new ArrayList<Timeline>(); //used for pause
 	private Timeline animation;
 	
 	
@@ -35,22 +35,28 @@ public class Missles{
 		return Missles.timelineList;
 	}
 	
+	
+	
+	/**Missile Constructor
+	 * 
+	 * @param pane, pane where the game is played
+	 * @param enemy, the enemy the missle is shooting
+	 * @param x, x coord of the tower
+	 * @param y, y coord of the tower
+	 * @param dmg, tower's damage
+	 */
 	public Missles(Pane pane, Enemy enemy, int x, int y, int dmg) {
+		
 		ImageLoader.setImage("ball.png", this.missle);
-		//this.missle =  new Rectangle(1,2,Color.BLACK);
 		this.pane = pane;
 		missle.setTranslateX(x*50+26);
 		missle.setTranslateY(y*50);
     	this.pane.getChildren().add(this.missle);
 
 		setDmg(dmg);
-		//setRectangle();
-		//setPane(pane); 
-//		System.out.println("X " + x);
-//		System.out.println("Y " + y);
 		Timeline animation = new Timeline();
 
-    	//this.pane.getChildren().add(this.missle);
+    	
     	animation.setAutoReverse(false);
     	animation.setOnFinished(e -> this.removeMissle(enemy));
     	//Starts at tower
@@ -66,7 +72,6 @@ public class Missles{
     			
     			
     	
-//    	this.pane.getChildren().add(this.missle);
     	animation.getKeyFrames().addAll(initial, Final);
     	
     	this.animation = animation;
@@ -74,7 +79,10 @@ public class Missles{
     	animation.play();
 	}
 	
-	
+	/**When the enemy animation is finished,damage is delt to the enemy
+	 * the missle is removed from the pane, and the time line list
+	 * @param enemy, enemy that the tower has targeted
+	 */
 	public void removeMissle(Enemy enemy) 
 	{	
 		enemy.setHealth(this.dmg);
