@@ -14,29 +14,26 @@ public class Enemy {
 	private int health;
 	private int damage;
 	private int points;
-	private static ArrayList<int[][]> list = new ArrayList<int[][]>();
+	private static ArrayList<int[][]> pathList = new ArrayList<int[][]>(); // list of start and end points for pathing
 	private static Pane pane;
-	private static ArrayList<Timeline> timelineList = new ArrayList<Timeline>();
-	private Timeline animation;
+	private static ArrayList<Timeline> timelineList = new ArrayList<Timeline>(); // used for pausing
+	private Timeline animation; // animation for every enemy 
 	
-	// Getters and setters for the circle object and list
+	// Simple getters and setters
 	public double getX() { return this.circle.getCenterX();	}
 	public void setX(double xValue)	{ this.circle.setCenterX(xValue); }
 	public void setY(double yValue)	{ this.circle.setCenterY(yValue);	}
 	public double getY() { return this.circle.getCenterY(); }
-	public void addList(int[][] list) { Enemy.list.add(list); }
+	public static void setPane(Pane pane) { Enemy.pane = pane;	}
+	public Circle getCircle() {return this.circle;}
+	public int getHealth() {return this.health;}
 	
 	public static ArrayList<int[][]> getList()
 	{ 
-		return list;
+		return pathList;
 	}
 	
-	public static void setList(ArrayList<int[][]> save) 
-	{
-		list = save;
-	}
-
-	
+	// used for pausing and unpausing
 	public static ArrayList<Timeline> getTimelineList()
 	{
 		return Enemy.timelineList;
@@ -44,38 +41,51 @@ public class Enemy {
 	
 	
 	
-	public static void setPane(Pane pane) { Enemy.pane = pane;	}
-	public Circle getCircle() {return this.circle;}
-	public int getHealth() {return this.health;}
 	
+	// damages the enemies
 	public void setHealth(int dmg) {
 		this.health = this.health - dmg;
 	}
 	
+	/**
+	 * Removes the enemy from the canvas and enemylist, stops its animation and adds points
+	 * also damages the base if hit is true
+	 * @param hit if true damages base
+	 */
 	public void removeEnemy(boolean hit) 
 	{	
 		if (hit)
 		{
-			Base.setHealth(this.damage);
+			Base.setHealth(this.damage); // damages the base the set damage
+		}
+		else
+		{
+			TextGame.setMoney(TextGame.getMoney() + this.points);
 		}
 		
-		else
-			TextGame.setMoney(TextGame.getMoney() + this.points);
 		Enemy.pane.getChildren().remove(this.circle);
 		Enemy.timelineList.remove(this.animation);
 		this.animation.stop();
 		Game.getEnemyList().remove(this);
 	}
 	
+	/**
+	 * used by RandomPath to create a list of start and end points for enemy pathing
+	 * @param a list to be added to the list
+	 */
 	public static void addToList(int[][] a)
 	{
-		list.add(a);
+		pathList.add(a);
 	}
 	
 	
-	/** Constructor creates a circle for each enemy then animates it
-	 * @param type: the type of enemy
-	 * @param TILE_SIZE: constant used for the tiles
+	/**
+	 * Constructor creates a circle for each enemy then sets the animation by calling enemyAnimation
+	 * @param TILE_SIZE used by enemyAnimation
+	 * @param health assigns the health variable
+	 * @param filename assigns the image fill to the circle
+	 * @param damage how much damage the enemy does to the base
+	 * @param radius size of the enemy
 	 */
 	public Enemy(int TILE_SIZE, int health, String filename, int damage, int radius) {
 		this.circle = new Circle(radius);
@@ -85,20 +95,19 @@ public class Enemy {
 		ImageLoader.setImage(filename, this.circle);
 		
 
-		
-		Timeline animation = enemyAnimation(TILE_SIZE);
-		this.circle.setTranslateX(list.get(0)[0][0] * TILE_SIZE);
-		this.circle.setTranslateY(list.get(0)[0][1] * TILE_SIZE);
+		this.animation = enemyAnimation(TILE_SIZE); // sets the animation
+		this.circle.setTranslateX(pathList.get(0)[0][0] * TILE_SIZE); // these set the circles start position
+		this.circle.setTranslateY(pathList.get(0)[0][1] * TILE_SIZE);
     	
     	animation.setAutoReverse(false);
-    	animation.setOnFinished(e -> this.removeEnemy(true));
-    	
-    	
-    	
-    	this.animation = animation;
-    	
+    	animation.setOnFinished(e -> this.removeEnemy(true)); // remove enemy with hit = true is called on finish
+    	    	
 	}
 
+	
+	/**
+	 * displays the enemy, adds it to the enemyList, adds an enemy to textgame, and starts the animation
+	 */
 	public void displayEnemy()
 	{
     	pane.getChildren().add(this.circle);
@@ -109,38 +118,45 @@ public class Enemy {
     	TextGame.addEnemies();
 	}
 	
-	
+	/**
+	 * creates the animation for each enemy using the pathList of start and end points
+	 * @param TILE_SIZE used for the spacing of the enemies along the path
+	 * @return animation the animation(timeline) to be used for every enemy
+	 */
 	public Timeline enemyAnimation(double TILE_SIZE)
 	{
-		double TILE_ADJ = TILE_SIZE / 2.0 - this.circle.getRadius();
+		double TILE_ADJ = TILE_SIZE / 2.0 - this.circle.getRadius(); // spacing for the enemy
 		Timeline animation = new Timeline();
-		KeyFrame initial = new KeyFrame (Duration.ZERO, 
-				new KeyValue(this.circle.translateXProperty(), list.get(0)[0][0] * TILE_SIZE ),
-	            new KeyValue(this.circle.translateYProperty(), list.get(0)[0][1] * TILE_SIZE));
+		KeyFrame initial = new KeyFrame (Duration.ZERO,  // starting keyframe with initial position
+				new KeyValue(this.circle.translateXProperty(), pathList.get(0)[0][0] * TILE_SIZE ), 
+	            new KeyValue(this.circle.translateYProperty(), pathList.get(0)[0][1] * TILE_SIZE));
 		animation.getKeyFrames().addAll(initial);
-		int size = 0;
-		int dur = 0;
-		for (int i = 0; i < list.size(); i++) 
+		int size = 0; // used in the for loop for size of each path section
+		int dur = 0; // used in the for loop to keep movement constant
+		for (int i = 0; i < pathList.size(); i++) 
 		{
-			size = Math.max(Math.abs(list.get(i)[1][0] - list.get(i)[0][0]),
-					Math.abs(list.get(i)[1][1] - list.get(i)[0][1] ));
-			dur += size * 1000;
-			KeyValue moveY = new KeyValue(this.circle.translateYProperty(), list.get(i)[0][1] *TILE_SIZE);
-			KeyValue moveX = new KeyValue(this.circle.translateXProperty(), list.get(i)[0][0] * TILE_SIZE + TILE_ADJ);
+			// size found by getting the max of absolute of y2-y1 and absolute of x2-x1
+			size = Math.max(Math.abs(pathList.get(i)[1][0] - pathList.get(i)[0][0]), 
+					Math.abs(pathList.get(i)[1][1] - pathList.get(i)[0][1] ));
+			dur += size * 1000; // increases by size * 1000 so they move 1 square per second
 			
-			if (list.get(i)[0][0] == list.get(i)[1][0])
+			// default moves depending on if the section is horizontal or vertical (these keep the circle in place one direction)
+			KeyValue moveY = new KeyValue(this.circle.translateYProperty(), pathList.get(i)[0][1] *TILE_SIZE);
+			KeyValue moveX = new KeyValue(this.circle.translateXProperty(), pathList.get(i)[0][0] * TILE_SIZE + TILE_ADJ);
+			
+			if (pathList.get(i)[0][0] == pathList.get(i)[1][0]) // if x stays the same
 			{
-				moveY = new KeyValue(this.circle.translateYProperty(), list.get(i)[1][1] * TILE_SIZE);
+				moveY = new KeyValue(this.circle.translateYProperty(), pathList.get(i)[1][1] * TILE_SIZE);
 
 			}
-			if (list.get(i)[0][1] == list.get(i)[1][1])
+			if (pathList.get(i)[0][1] == pathList.get(i)[1][1]) // if y stays the same
 			{
-				moveX = new KeyValue(this.circle.translateXProperty(), list.get(i)[1][0] * TILE_SIZE + TILE_ADJ);
-				if (list.get(i) == list.get(list.size() - 1))
-					moveX = new KeyValue(this.circle.translateXProperty(), list.get(i)[1][0] * TILE_SIZE - this.circle.getRadius());
+				moveX = new KeyValue(this.circle.translateXProperty(), pathList.get(i)[1][0] * TILE_SIZE + TILE_ADJ);
+				if (pathList.get(i) == pathList.get(pathList.size() - 1))
+					moveX = new KeyValue(this.circle.translateXProperty(), pathList.get(i)[1][0] * TILE_SIZE - this.circle.getRadius());
 			}
 			
-			KeyFrame frame = new KeyFrame(new Duration(dur), moveX, moveY);
+			KeyFrame frame = new KeyFrame(new Duration(dur), moveX, moveY); // putting it all together
 			animation.getKeyFrames().add(frame);
 		}
 		return animation;
