@@ -180,9 +180,9 @@ public class DifficultyMenu extends MainMenu{
 				@Override
 				public void handle(ActionEvent event) {
 					
-					if (getEndlessMode().equals("Disabled") && !roundsInput.getText().isEmpty()) {
-						//Start game with custom number of rounds
-						if (!nameInput.getText().isEmpty()) {
+					if (getEndlessMode().equals("Disabled") && !roundsInput.getText().isEmpty()) { //If endless mode is disabled and user has entered a custom round number
+						//Start game with custom number of rounds							
+						if (!nameInput.getText().isEmpty()) { //If user name is not empty
 							setNumRounds(Integer.parseInt(roundsInput.getText()));
 							Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
 							HighScore.setName(nameInput.getText());
@@ -193,10 +193,20 @@ public class DifficultyMenu extends MainMenu{
 								setNumRounds(999);
 								Game.setNumRounds(999);
 							}
-						}else {
+							//Game construtor
+							Game game = new Game(scene);
+							try {
+								System.out.println("Loading...");		
+								game.start(primaryStage); 
+								System.out.println("Done");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}else { //If user name input is empty
+							HighScore.setName("Generic Name");
 							setNumRounds(Integer.parseInt(roundsInput.getText()));
 							Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
-							HighScore.setName("Generic Name");
+
 							if(Integer.parseInt(roundsInput.getText()) <= 0) {
 								setNumRounds(20);
 								Game.setNumRounds(20);
@@ -204,47 +214,100 @@ public class DifficultyMenu extends MainMenu{
 								setNumRounds(999);
 								Game.setNumRounds(999);
 							}
-						}
-						
-						
-						
-						
-						/*setNumRounds(Integer.parseInt(roundsInput.getText()));
-						Game.setNumRounds(Integer.parseInt(roundsInput.getText()));*/ //Display max number of rounds in Game
-						//Game construtor
-						Game game = new Game(scene);
-						try {
-							System.out.println("Loading...");	
-							game.start(primaryStage); 
-							System.out.println("Done");
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}else if (getEndlessMode().equals("Enabled")){
-						//Start game in endless mode
-						Game game = new Game(scene);
-						try {
-							System.out.println("Loading...");	
-							game.start(primaryStage);
-							System.out.println("Done");
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}else {
-						//Start game with deafult number of rounds
+							//Game construtor
+							Game game = new Game(scene);
+							try {
+								System.out.println("Loading...");	
+								game.start(primaryStage); 
+								System.out.println("Done");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}					
+					}else if (getEndlessMode().equals("Disabled") && roundsInput.getText().isEmpty()) { //If endless mode is disabled and user did not enter custom number of rounds
+
+						//Start game with default number of rounds
 						setNumRounds(defaultNumRounds);
 						Game.setNumRounds(defaultNumRounds);
-						Game game = new Game(scene);
-						try {
-							System.out.println("Loading...");	
-							game.start(primaryStage);
-							System.out.println("Done");
-						} catch (Exception e) {
-							e.printStackTrace();
+						if (!nameInput.getText().isEmpty()) { //If user name is not empty
+							HighScore.setName(nameInput.getText());
+							//Game construtor
+							Game game = new Game(scene);
+							try {
+								System.out.println("Loading...");	
+								game.start(primaryStage); 
+								System.out.println("Done");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}else { //If user name input is empty
+							HighScore.setName("Generic Name");
+							//Game construtor
+							Game game = new Game(scene);
+							try {
+								System.out.println("Loading...");	
+								game.start(primaryStage); 
+								System.out.println("Done");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}	
+							
+					}else if (getEndlessMode().equals("Enabled")){
+						if (!nameInput.getText().isEmpty()){
+							HighScore.setName(nameInput.getText());
+							//Start game in endless mode
+							Game game = new Game(scene);
+							try {
+								System.out.println("Loading...");	
+								game.start(primaryStage);
+								System.out.println("Done");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}else {
+							HighScore.setName("Generic Name");
+							Game game = new Game(scene);
+							try {
+								System.out.println("Loading...");	
+								game.start(primaryStage);
+								System.out.println("Done");
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
 						}
 					}
-				}	
-			});
+//					else {
+//						if (!nameInput.getText().isEmpty()){
+//							setNumRounds(defaultNumRounds);
+//							Game.setNumRounds(defaultNumRounds);
+//							HighScore.setName(nameInput.getText());
+//							//Start game in endless mode
+//							Game game = new Game(scene);
+//							try {
+//								System.out.println("Loading...");	
+//								game.start(primaryStage);
+//								System.out.println("Done");
+//							} catch (Exception e) {
+//								e.printStackTrace();
+//							}
+//						}else {
+//							HighScore.setName("Generic Name");
+//							//Start game with deafult number of rounds
+//							setNumRounds(defaultNumRounds);
+//							Game.setNumRounds(defaultNumRounds);
+//							Game game = new Game(scene);
+//							try {
+//								System.out.println("Loading...");	
+//								game.start(primaryStage);
+//								System.out.println("Done");
+//							} catch (Exception e) {
+//								e.printStackTrace();
+//							}
+//					}
+//				}
+			}	
+		});
 			
 			/*From https://stackoverflow.com/a/30796829/8645685
 			 * Makes roundsInput Textbox only allow numbers to be entered
