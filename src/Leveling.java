@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import javafx.scene.paint.Color;
 
 public class Leveling {
 
@@ -12,13 +11,11 @@ public class Leveling {
     private double normal = 1.00;
     private double hard = 1.33;
     private double extereme = 1.66;
-    private double difficulty = 1.00;
     private static int totalLevels;
     private static int currentLevel = 0;
     // round 10: 11950
     // round 5: 4300
     private int points = 0;
-    private String message = "";
     private int num_enemyTiers;
     private int num_bossTiers;
     private int baseHealth = 1000;
@@ -36,7 +33,6 @@ public class Leveling {
     // the list of enemies, basically has all the stats for how enemies are spawned
     // also includes the list of sprites for enemies and sprites for bosses
     private HashMap<Integer, HashMap<String, Integer>> num_EnemiesList = new HashMap<Integer, HashMap<String, Integer>>();
-    private ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
     private ArrayList<String> list_colors_e = new ArrayList<String>();
     private ArrayList<String> list_colors_b = new ArrayList<String>();
 
@@ -71,12 +67,12 @@ public class Leveling {
      */
     public void setDifficulty(String difficulty){
         if(difficulty == "Normal")
-            this.difficulty = this.normal;
+            this.enemyBaseHealth *= this.normal;
         else if(difficulty == "Hard"){
-            this.difficulty = this.hard;
+        	this.enemyBaseHealth *= this.hard;
         }
         else if(difficulty == "Extreme")
-            this.difficulty = this.extereme;
+            this.enemyBaseHealth *= this.extereme;
     }
     
     /**
@@ -128,7 +124,6 @@ public class Leveling {
         for(int b = 0; b < this.num_EnemiesList.size(); b++) {
         	HashMap<String, Integer> round = this.num_EnemiesList.get(b);
         	int counter = 0;
-        	int bosstier_counter = 0;
         	for(int c = 0; c <= b; c++) {
         		String num_currentRound = Integer.toString(c);
         		if(c==0) {
@@ -225,7 +220,7 @@ public class Leveling {
 		//boss stuff
 		//setting the round that the boss spawns at
 		int bossSpawnRound = arraylistnum%this.boss_rounds;
-		int maxlevel = this.totalLevels -1;
+		int maxlevel = totalLevels -1;
 		// checking if the level is the right level to spawn the boss, according to see if the remainder is 2
 		//or if the current round is the max number of rounds in the game
 		if((bossSpawnRound == 2 && arraylistnum>this.num_enemyTiers)|| arraylistnum == maxlevel) {
