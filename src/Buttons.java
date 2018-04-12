@@ -13,10 +13,28 @@ import javafx.stage.Stage;
 
 public class Buttons {
 	
+	public static Button playButton(Stage stage) {
+		//Event handler for play button, changes scene to difficulty menu
+		Button playButton = new Button("       Play       ");
+		playButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event){
+				//Difficulty menu constructor
+				DifficultyMenu difficultyMenu = new DifficultyMenu();
+				try {
+					System.out.println("Loading...");	
+					difficultyMenu.start(stage);
+				} catch (Exception e) {
+				e.printStackTrace();
+				}
+			}
+		});
+		return playButton;
+	}
 
 	public static Button loadButton()
 	{
-		Button loadButton = new Button("Load");
+		Button loadButton = new Button("       Load       ");
 		loadButton.setOnAction(new EventHandler<ActionEvent>() {
 			//Placeholder button		
 			@Override
@@ -33,7 +51,7 @@ public class Buttons {
 	 * @return Exit button 
 	 */
 	public static Button exitButton(Stage stage) {
-		Button exitButton = new Button("Exit");
+		Button exitButton = new Button("       Exit       ");
 		exitButton.setOnAction(new EventHandler<ActionEvent>() {
 			//Exit scene when pressed
 			@Override
@@ -49,7 +67,7 @@ public class Buttons {
 	 * @return Start round button
 	 */
     public static Button startRoundButton() {
-    	Button startRound = new Button("Start Round");
+    	Button startRound = new Button("Start  Round");
     	startRound.setOnAction(new EventHandler<ActionEvent>() {
 
         @Override

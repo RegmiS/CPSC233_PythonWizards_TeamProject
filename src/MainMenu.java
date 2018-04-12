@@ -1,6 +1,4 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +11,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -49,11 +48,11 @@ public class MainMenu extends Application {
 //			canvas.setGridLinesVisible(true);
 //			canvas.getColumnConstraints().add(new ColumnConstraints(50));
 			
-			Button playButton = new Button("Play");
+			Button playButton = Buttons.playButton(primaryStage);
 			Button loadButton = Buttons.loadButton();
 			Button exitButton = Buttons.exitButton(primaryStage);
 			
-			Rectangle ship = new Rectangle(200,200);
+			Shape ship = new Rectangle(200,200);
 			Circle alien = new Circle(50);
 			Circle alien2 = new Circle(50);
 			ImageLoader.setImage("spaceship.png", ship);
@@ -81,9 +80,6 @@ public class MainMenu extends Application {
 			background.getChildren().addAll(canvas, ship, alien, alien2);
 			background.getChildren().add(title);
 			
-			
-			
-			
 			Scene scene = new Scene(background);
 			
 			primaryStage.setTitle("The Python Wizards");
@@ -91,22 +87,7 @@ public class MainMenu extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.show();
-			
-			//Event handler for play button, changes scene to difficulty menu
-			playButton.setOnAction(new EventHandler<ActionEvent>() {
-				@Override
-				public void handle(ActionEvent event){
-					//Difficulty menu constructor
-					DifficultyMenu difficultyMenu = new DifficultyMenu();
-					try {
-						System.out.println("Loading...");	
-						difficultyMenu.start(primaryStage);
-					} catch (Exception e) {
-					e.printStackTrace();
-					}
-				}
-			});
-		
+					
 	}
 	public static void main(String args[]) {
 		launch(args);
