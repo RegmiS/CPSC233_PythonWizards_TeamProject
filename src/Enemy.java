@@ -71,7 +71,7 @@ public class Enemy {
 	
 	/**
 	 * used by RandomPath to create a list of start and end points for enemy pathing
-	 * @param a list to be added to the list
+	 * @param an int list to be added to the pathList
 	 */
 	public static void addToList(int[][] a)
 	{
