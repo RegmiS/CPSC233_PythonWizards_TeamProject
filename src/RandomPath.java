@@ -144,11 +144,11 @@ public class RandomPath {
 			 */
 			public static void enemyPath(String direction, int row, int col, int length) {
 
+				int[] start = {col, row}; // start point of each section
 				if (direction == "right") {
-					int[] start = {col, row};
-					int[] end = {col + length, row};
-					int[][] temp = new int[][] {start, end};
-					Enemy.addToList(temp);
+					int[] end = {col + length, row}; // end point for each section which changes based on direction
+					int[][] temp = new int[][] {start, end}; // putting both together into an int[][]
+					Enemy.addToList(temp); // adds to the enemy pathList
 					
 					for (int i = col; i < (length + col); i++) {
 						Rectangle enemypath = new Rectangle(Game.getTileSize(), Game.getTileSize());
@@ -161,7 +161,6 @@ public class RandomPath {
 				}
 				if (direction == "left") {
 					
-					int[] start = {col, row};
 					int[] end = {col - length, row};
 					int[][] temp = new int[][] {start, end};
 					Enemy.addToList(temp);
@@ -177,7 +176,6 @@ public class RandomPath {
 				}
 				if (direction == "up") {
 					
-					int[] start = {col, row};
 					int[] end = {col, row - length};
 					int[][] temp = new int[][] {start, end};
 					Enemy.addToList(temp);
@@ -195,7 +193,6 @@ public class RandomPath {
 				
 				if (direction == "down") {
 					
-					int[] start = {col, row};
 					int[] end = {col, row + length};
 					int[][] temp = new int[][] {start, end};
 					Enemy.addToList(temp);

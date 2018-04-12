@@ -7,7 +7,7 @@ public class TextGame {
 	
 	// all the static variables that are used throughout the game itself
     public static int HEALTH;
-    public static int MONEY = 100000;
+    public static int MONEY = 1500;
     public static int LEVEL = 0;
     public static int ENEMIES = 0;
     private static int HEIGHT;

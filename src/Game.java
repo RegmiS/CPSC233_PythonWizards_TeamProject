@@ -60,6 +60,10 @@ public class Game extends Application{
 	@Override 
 	public void start(Stage stage) throws Exception {
 		
+		MediaPlayer player = ImageLoader.getPlayer("res/sound/game.mp3");
+		player.play();
+		player.setCycleCount(MediaPlayer.INDEFINITE);
+		
 		System.out.println(difficulty + " " + numRounds);
 		scalingAlgo = new Leveling(difficulty, numRounds);
 		setGridpane(new GridPane());
@@ -90,7 +94,7 @@ public class Game extends Application{
         buttonBar.getChildren().addAll(start, pause, exit);
         GridPane.setConstraints(buttonBar, 21, 0, 4, 2, HPos.CENTER, VPos.CENTER);
         getGridpane().getChildren().addAll(buttonBar);
-        MediaPlayer player = ImageLoader.getPlayer("res/sound/game.mp3");
+//        MediaPlayer player = ImageLoader.getPlayer("res/sound/game.mp3");
 		
 		
 		//Generate a random path
@@ -106,7 +110,7 @@ public class Game extends Application{
 			@Override
 			public void handle(long arg0) {
 				//Towers Shooting
-				if (framecount % 30 == 0) {
+				if (framecount % 25 == 0) {
 					getTowerList().forEach(Tower -> Tower.checkInRange(enemyList));
 				}
 				
@@ -170,10 +174,10 @@ public class Game extends Application{
 		
 //		Store Menu	  (NAME, TEXTURE IMAGE, STORE POSITION, PRICE, DMG, RANGE)
 //		Add towers to the store menu
-		Store.newTower("Tower 1", "tank1.png", 1, 1000, 500, 100);
-		Store.newTower("Tower 2", "tank2.png", 2, 750, 700, 50);
-		Store.newTower("Tower 3", "tank3.png", 3, 1500, 250, 250);
-		Store.newTower("Tower 4", "tank4.png", 4, 0, 0, 0);
+		Store.newTower("Tower 1", "tank1.png", 1, 500, 500, 100);
+		Store.newTower("Tower 2", "tank2.png", 2, 750, 650, 110);
+		Store.newTower("Tower 3", "tank3.png", 3, 1000, 800, 75);
+		Store.newTower("Tower 4", "tank4.png", 4, 1300, 250, 200);
 		
 		ScrollPane shoppane = new ScrollPane();
 		shoppane.setStyle("-fx-border-color: black");
