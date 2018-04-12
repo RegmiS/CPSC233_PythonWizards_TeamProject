@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import javafx.scene.Scene;
+
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,6 +27,11 @@ public class Buttons {
 		return loadButton;
 	}
 	
+	/**Exit current stage
+	 * 
+	 * @param stage
+	 * @return Exit button 
+	 */
 	public static Button exitButton(Stage stage) {
 		Button exitButton = new Button("Exit");
 		exitButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -39,47 +44,34 @@ public class Buttons {
 		return exitButton;
 	}
 	
-    public static Button startButton()
-{
-    	Button start = new Button("Start Round");
-    	start.setOnAction(new EventHandler<ActionEvent>() {
+	/**Start next round
+	 * 
+	 * @return Start round button
+	 */
+    public static Button startRoundButton() {
+    	Button startRound = new Button("Start Round");
+    	startRound.setOnAction(new EventHandler<ActionEvent>() {
 
         @Override
         public void handle(ActionEvent event) {
         	Game.setState(true);
         	Leveling.increaseCurrentLevel();
         	Game.setQueueList(new ArrayList<Enemy>(Game.getScalingAlgo().returnEnemyList(Leveling.returnCurrentLevel())));
-        	System.out.println(Game.getQueueList());
-        	System.out.println(Game.getEnemyList());
+//        	System.out.println(Game.getQueueList());
+//        	System.out.println(Game.getEnemyList());
         	Game.getTimer().start();
-        	start.setVisible(false);
-        		
-//        	gridpane.getChildren().remove(start);  
-        }
-	});
-	return start;
-}
-//
-//    public static Button playButton(Timeline timeline)
-//    {
-//    	Button play = new Button("Play");
-//    	play.setOnAction(new EventHandler<ActionEvent>() {
-//    		@Override
-//    		public void handle(ActionEvent event) {
-//    			Game.getTimer().start();
-//    			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
-//    			for (int i = 0; i < enemyList.size(); i++  )
-//    				enemyList.get(i).play();
-//    			ArrayList<Timeline> missleList = Missles.getTimelineList();
-//    			for (int i = 0; i < missleList.size(); i++)
-//    				missleList.get(i).play();
-//    		}
-//    	});
-//		return play;
-//    	
-//    }
+        	startRound.setVisible(false);  
+        	}
+    	});
+    	return startRound;
+    }
     
-    // experimenting with a pause button
+    
+    /**Pauses the game
+     * 
+     * @param timeline
+     * @return the pause button
+     */
     public static Button pauseButton(Timeline timeline) {
     	Button pause = new Button("Pause");
     	pause.setOnAction(new EventHandler<ActionEvent>() 
@@ -118,54 +110,67 @@ public class Buttons {
 
 
 
-	
-	  public static Button placeTower(int price, int hp, int dmg, int range, ArrayList<Tower> towerList, String image) 
+    /**Creates a button to buy a tower
+     * When pressed, buy button creates an 
+     * event handler for placing the tower
+     * Event handler checkes if the current 
+     * position of the mouse pointer is 
+     * within game boundaries and is not
+     * on top of another tower, enemy path, or base
+     * After tower is placed event handler is removed from scene
+     * @param price Cost of the tower
+     * @param type	Type of the tower
+     * @param dmg	Tower damage output
+     * @param range	Tower range
+     * @param towerList List of all current towers 
+     * @param image	Image of the tower type
+     * @return Buy button for current tower
+     */
+	public static Button placeTower(int price, int type, int dmg, int range, ArrayList<Tower> towerList, String image) 
 	    {
 	    	Button twr = new Button("Buy");
-	        twr.setOnAction(new EventHandler<ActionEvent>() {
-	            public void handle(ActionEvent event) {
-	                    	
-	            		Game.getGridpane().addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  
-	                        @Override
-	                        public void handle(MouseEvent e) {
-	                        	
-	                            for(Node node: Game.getGridpane().getChildren()) {
-	                                if(node instanceof Rectangle) {
-	                                		if(node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY()) 
-	                                     		&& e.getSceneX() <= 1050 
-	                                     		&& e.getSceneY() <= 650 
-	                                     		
-	                                     		&& ((TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "X")
-	                                     		&& (TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != " ") 
-	                                     		&& (TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "B" ))) {
-	                                		 if ((TextGame.getMoney() - price) >= 0){
-							                    	System.out.println(Double.toString(node.getLayoutX()) + "/" + Double.toString(node.getLayoutY()));
-							                        System.out.println( "Tower at:  " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
-							                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, hp, dmg, range, image, Game.getGridpane(),towerList);
-							                    	TextGame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
-//							                    	System.out.println("HERE" + TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)));
-							                    	TextGame.drawGame();
-							                    	towerList.add(t1);
-							                    	Game.getGridpane().removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
-							                    	TextGame.setHealth(Base.getHealth()); //For testing 
-							                    	TextGame.setMoney(TextGame.getMoney()-price);
-	            								}
-	                                		 else {
-	                                			 System.out.println("Insufficient Funds");
-	                                			 Game.getGridpane().removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
-	                                		 }
-	            
-	                                    	}
-	                              
-	                                }
-	                                
-	                            }
-	                        }
-	                    });
-	            }
-	        });
-
-	        return twr;
-	    }
+	    	twr.setOnAction(new EventHandler<ActionEvent>() {
+	        public void handle(ActionEvent event) {
+        		Game.getGridpane().addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  
+                    @Override
+                    public void handle(MouseEvent e) {
+                    	
+                        for(Node node: Game.getGridpane().getChildren()) {
+                            if(node instanceof Rectangle) {
+                            		if(node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY()) 
+                                 		&& e.getSceneX() <= 1050 
+                                 		&& e.getSceneY() <= 650 
+                                 		&& ((TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "X")
+                                 		&& (TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != " ") 
+                                 		&& (TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "B" ))) {
+                            		 if ((TextGame.getMoney() - price) >= 0){
+//					                    	System.out.println(Double.toString(node.getLayoutX()) + "/" + Double.toString(node.getLayoutY()));
+//					                        System.out.println( "Tower at:  " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
+					                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, type, dmg, range, image, Game.getGridpane(),towerList);
+					                    	TextGame.editGridTower(GridPane.getRowIndex(node), GridPane.getColumnIndex(node), "X");
+//					                    	System.out.println("HERE" + TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)));
+					                    	TextGame.drawGame();
+					                    	towerList.add(t1);
+					                    	Game.getGridpane().removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
+//					                    	TextGame.setHealth(Base.getHealth()); //For testing 
+					                    	TextGame.setMoney(TextGame.getMoney()-price);
+        								}
+                            		 else {
+                            			 System.out.println("Insufficient Funds");
+                            			 Game.getGridpane().removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
+                            		 }
+        
+                                	}
+                          
+                            }
+                            
+                        }
+                    }
+        		});
+	        }
+	    });
+	
+	    return twr;
+	}
 
 }

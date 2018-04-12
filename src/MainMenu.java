@@ -92,12 +92,12 @@ public class MainMenu extends Application {
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.show();
 			
-			
+			//Event handler for play button, changes scene to difficulty menu
 			playButton.setOnAction(new EventHandler<ActionEvent>() {
-				//Play button Event handler, will call next Game state when pressed
 				@Override
 				public void handle(ActionEvent event){
-					DifficultyMenu difficultyMenu = new DifficultyMenu(canvas, canvas, scene);
+					//Difficulty menu constructor
+					DifficultyMenu difficultyMenu = new DifficultyMenu();
 					try {
 						System.out.println("Loading...");	
 						difficultyMenu.start(primaryStage);

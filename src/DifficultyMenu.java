@@ -1,5 +1,7 @@
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
@@ -21,40 +23,33 @@ public class DifficultyMenu extends MainMenu{
 
 	private static int WIDTH = 1250, HEIGHT = 700; //Set window dimensions
 	
+	private static String deafaultDifficulty = "Normal";
+	private static String difficulty = deafaultDifficulty;
+	private static int deafaultNumRounds = 20;
+	private static int numRounds = deafaultNumRounds;
+	private static String endlessMode = "Disabled"; //Default setting 
 	
-	private static Pane background;
-	private static GridPane menu;
-	private static Scene scene;
-	private static String difficulty = "Normal";
-	private static int numRounds = 20;
-	private static String endlessRounds = "Endless";
-	private static String endlessMode = "Disabled"; 
-	private static StringProperty DIFFICULTYstr = new SimpleStringProperty("Difficulty: " + difficulty);
+	//String properties for updating UI
+	private static StringProperty DIFFICULTYstr = new SimpleStringProperty("Difficulty: " + difficulty); 
 	private static StringProperty ROUNDSstr = new SimpleStringProperty("Number of rounds: " + Integer.toString(numRounds));
 	private static StringProperty ENDLESSstr = new SimpleStringProperty("Endless mode: " + endlessMode);
 		
-	public DifficultyMenu(Pane background, GridPane menu, Scene menuScene) {
-		DifficultyMenu.setBackground(background);
-		DifficultyMenu.setMenu(menu);
-		DifficultyMenu.setScene(menuScene);
-	}
 	
-	@Override
 	public void start(Stage primaryStage) throws Exception {
 			
 			Pane background = new Pane();
-//			background.getChildren().add(ImageLoader.menuBackgroundImage("castle.jpg"));	
-			GridPane menu = new GridPane();
+			background.getChildren().add(ImageLoader.menuBackgroundImage("galaxy.jpg")); //Set scene background image	
+			
+			GridPane menu = new GridPane(); 
 			menu.setMinSize(WIDTH, HEIGHT);
 			menu.setPadding(new Insets(10, 10, 10, 10));
 			menu.setVgap(10);
 			menu.setHgap(10);
 			menu.setAlignment(Pos.CENTER);
 			
-
-			
 			HBox difficultyButtons = new HBox();
 			difficultyButtons.setSpacing(100);
+			
 			
 			Button start = new Button("Start Game");
 			Button normal = new Button("Normal");
@@ -63,31 +58,32 @@ public class DifficultyMenu extends MainMenu{
 			Button endlessMode = new Button("Endless Mode");
 			
 			GridPane.setHalignment(start, HPos.CENTER);
-			GridPane.setHalignment(normal, HPos.CENTER);
-			GridPane.setHalignment(hard, HPos.CENTER);
-			GridPane.setHalignment(extreme, HPos.CENTER);
+			GridPane.setHalignment(endlessMode, HPos.CENTER); 
 			
 			Label difficulty = new Label("Choose Difficulty: ");
 			difficulty.setFont(new Font("Arial", 30));
-			difficulty.setTextFill(Color.BLACK);
+			difficulty.setTextFill(Color.WHITE);
 			
 			Label rounds = new Label("Enter number of rounds (default 20): ");
+			TextField roundsInput = new TextField(); //Textbox to set custom number of rounds
 			rounds.setFont(new Font("Arial", 19));
-			rounds.setTextFill(Color.BLACK);
-			TextField roundsInput = new TextField();
+			rounds.setTextFill(Color.WHITE);
 			
-			Label currentDifficulty = new Label();
+			Label currentDifficulty = new Label(); //Displays current difficulty
 			currentDifficulty.setFont(new Font("Arial", 19));
-			currentDifficulty.textProperty().bind(DIFFICULTYstr);
+			currentDifficulty.setTextFill(Color.LIMEGREEN);
+			currentDifficulty.textProperty().bind(DIFFICULTYstr); //Binds Difficulty string property to label 
 			
-			Label currentRounds= new Label();
+			Label currentRounds= new Label(); //Not currently used
 			currentRounds.setFont(new Font("Arial", 19));
-			currentRounds.textProperty().bind(ROUNDSstr);
+			currentRounds.textProperty().bind(ROUNDSstr); //Binds number of rounds string property to label 
 			
-			Label isEndlessMode = new Label();
+			Label isEndlessMode = new Label(); //Displays if endless mode is enabled/disabled
 			isEndlessMode.setFont(new Font("Arial", 19));
-			isEndlessMode.textProperty().bind(ENDLESSstr);
+			isEndlessMode.setTextFill(Color.WHITE);
+			isEndlessMode.textProperty().bind(ENDLESSstr); //Binds Endless mode string property to label 
 		
+			//Set positon of all button/labels
 			GridPane.setConstraints(difficulty, 0, 0, 3, 1);
 			GridPane.setConstraints(normal, 3, 0);
 			GridPane.setConstraints(hard, 4, 0);
@@ -95,11 +91,12 @@ public class DifficultyMenu extends MainMenu{
 			GridPane.setConstraints(rounds, 0, 2, 6, 1);
 			GridPane.setConstraints(roundsInput, 4, 2, 2, 1);
 			GridPane.setConstraints(endlessMode, 0, 3);
-			GridPane.setConstraints(start, 1, 3);
-			GridPane.setConstraints(currentDifficulty, 0, 4, 2, 1);
+			GridPane.setConstraints(start, 0, 4);
+			GridPane.setConstraints(currentDifficulty, 2, 4, 2, 1);
 			GridPane.setConstraints(currentRounds, 0, 5);
-			GridPane.setConstraints(isEndlessMode, 2, 4, 3, 1);
+			GridPane.setConstraints(isEndlessMode, 2, 3, 3, 1);
 			
+			//Add button/labels to menu gridpane
 			menu.getChildren().addAll(
 					difficulty, 
 					normal, 
@@ -114,27 +111,30 @@ public class DifficultyMenu extends MainMenu{
 					isEndlessMode);
 			
 //			menu.setGridLinesVisible(true);
-			
+			//Add menu to background image
 			background.getChildren().add(menu);
 			
-			scene = new Scene(background);
+			//Create scene and add to stage
+			Scene scene = new Scene(background);
 			primaryStage.setTitle("The Python Wizards");
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			
-			
+			//Event handlers for all buttons			
 			normal.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {	
 					setDifficulty("Normal");
+					currentDifficulty.setTextFill(Color.LIMEGREEN);
 					Game.setDifficulty("Normal");
 				}	
 			});
 			
 			hard.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
-				public void handle(ActionEvent event) {	
+				public void handle(ActionEvent event) {
 					setDifficulty("Hard");
+					currentDifficulty.setTextFill(Color.YELLOW);
 					Game.setDifficulty("Hard");
 				}	
 			});
@@ -143,6 +143,7 @@ public class DifficultyMenu extends MainMenu{
 				@Override
 				public void handle(ActionEvent event) {	
 					setDifficulty("Extreme");
+					currentDifficulty.setTextFill(Color.RED);
 					Game.setDifficulty("Extreme");
 				}	
 			});
@@ -153,12 +154,14 @@ public class DifficultyMenu extends MainMenu{
 					if (getEndlessMode().equals("Disabled")) {
 						roundsInput.clear();
 						setEndlessMode("Enabled");
+						isEndlessMode.setTextFill(Color.RED);
 						setNumRounds(999);
 						Game.setNumRounds(999);
-					}else {
+					}else { //Resets number of rounds to default
 						setEndlessMode("Disabled");
-						setNumRounds(20);
-						Game.setNumRounds(20);
+						isEndlessMode.setTextFill(Color.WHITE);
+						setNumRounds(deafaultNumRounds);
+						Game.setNumRounds(deafaultNumRounds);
 					}
 				}	
 			});
@@ -167,38 +170,55 @@ public class DifficultyMenu extends MainMenu{
 				@Override
 				public void handle(ActionEvent event) {
 					if (getEndlessMode().equals("Disabled") && !roundsInput.getText().isEmpty()) {
+						//Start game with custom number of rounds
 						setNumRounds(Integer.parseInt(roundsInput.getText()));
-						Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
+						Game.setNumRounds(Integer.parseInt(roundsInput.getText())); //Display max number of rounds in Game
+						//Game construtor
 						Game game = new Game(scene);
 						try {
 							System.out.println("Loading...");	
-							game.start(primaryStage);
+							game.start(primaryStage); 
 							System.out.println("Done");
 						} catch (Exception e) {
-						e.printStackTrace();
+							e.printStackTrace();
 						}
 					}else if (getEndlessMode().equals("Enabled")){
+						//Start game in endless mode
 						Game game = new Game(scene);
 						try {
 							System.out.println("Loading...");	
 							game.start(primaryStage);
 							System.out.println("Done");
 						} catch (Exception e) {
-						e.printStackTrace();
+							e.printStackTrace();
 						}
 					}else {
-						setNumRounds(20);
-						Game.setNumRounds(20);
+						//Start game with deafult number of rounds
+						setNumRounds(deafaultNumRounds);
+						Game.setNumRounds(deafaultNumRounds);
 						Game game = new Game(scene);
 						try {
 							System.out.println("Loading...");	
 							game.start(primaryStage);
 							System.out.println("Done");
 						} catch (Exception e) {
-						e.printStackTrace();
+							e.printStackTrace();
 						}
 					}
 				}	
+			});
+			
+			/*From https://stackoverflow.com/a/30796829/8645685
+			 * Makes roundsInput Textbox only allow numbers to be entered
+			 */
+			roundsInput.textProperty().addListener(new ChangeListener<String>() {
+			    @Override
+			    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+			        String newValue) {
+			        if (!newValue.matches("\\d*")) {
+			            roundsInput.setText(newValue.replaceAll("[^\\d]", ""));
+			        }
+			    }
 			});
 			
 	}
@@ -226,7 +246,7 @@ public class DifficultyMenu extends MainMenu{
     		ROUNDSstr.set("Number of rounds: " + Integer.toString(NumRoundsVal));
     	}else {
     		numRounds = NumRoundsVal;
-    		ROUNDSstr.set("Number of rounds: " + endlessRounds);
+    		ROUNDSstr.set("Number of rounds: Endless");
     	}
     }
     
@@ -238,38 +258,6 @@ public class DifficultyMenu extends MainMenu{
     public static String getEndlessMode() {
     	return endlessMode;
     }
-    
-	public static Pane getBackground() {
-		return background;
-	}
-
-	public static void setBackground(Pane background) {
-		DifficultyMenu.background = background;
-	}
-
-	public static GridPane getMenu() {
-		return menu;
-	}
-
-	public static void setMenu(GridPane menu) {
-		DifficultyMenu.menu = menu;
-	}
-
-	public static Scene getScene() {
-		return scene;
-	}
-
-	public static void setScene(Scene scene) {
-		DifficultyMenu.scene = scene;
-	}
-
-	public static String getEndlessRounds() {
-		return endlessRounds;
-	}
-
-	public static void setEndlessRounds(String endlessRounds) {
-		DifficultyMenu.endlessRounds = endlessRounds;
-	}
 
 	public static String getDifficulty() {
 		return difficulty;

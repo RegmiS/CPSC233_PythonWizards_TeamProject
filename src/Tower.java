@@ -1,8 +1,6 @@
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import javafx.application.Application;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,16 +8,10 @@ import javafx.geometry.HPos;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
 import javafx.scene.input.ContextMenuEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
 
 
 public class Tower{
@@ -27,7 +19,7 @@ public class Tower{
 	private Rectangle rectangle;
 	private int ID;
 	private int damage; //damage done to enemys
-	private int health;
+	private int type;
 	private int price; //initial cost
 	private int upgradePrice; // how much it cose to increase the level
 	private int xCoord; // x pos on the map
@@ -39,7 +31,7 @@ public class Tower{
 	
 	public int getUPrice() {return this.upgradePrice;}
 	public int getDMG() {return this.damage;}
-	public int getHP() {return this.health;}
+	public int getType() {return this.type;}
 	public int getPrice() {return price;}
 	public int getX() {return this.xCoord;}
 	public int getY() {return this.yCoord;}
@@ -77,7 +69,7 @@ public class Tower{
 	}
 	
 	private void setHP(int hp) {
-		this.health = hp;
+		this.type = hp;
 	}
 	
 	private void setDMG(int dmg) {
@@ -95,19 +87,19 @@ public class Tower{
 	 * @param xc, xcoord, where tower is placed
 	 * @param yc, ycoord
 	 * @param price, intital price
-	 * @param hp, health of tower
+	 * @param type, type of tower
 	 * @param dmg, damage of tower
 	 * @param range, range of tower
 	 * @param filename, image for tower tpe
 	 * @param canvas, pane that the game is plated on
 	 * @param towerList, list of all towers
 	 */
-	public Tower(int xc, int yc, int price, int hp, int dmg, int range, String filename, GridPane canvas, ArrayList<Tower> towerList)  {
+	public Tower(int xc, int yc, int price, int type, int dmg, int range, String filename, GridPane canvas, ArrayList<Tower> towerList)  {
 		
 		setXCoord(xc);
 		setYCoord(yc);
 		setPrice(price);
-		setHP(hp);
+		setHP(type);
 		setDMG(dmg);
 		setLevel();
 		setRange(range);
@@ -115,7 +107,7 @@ public class Tower{
 		setUPrice(getPrice() *2);
 		setCost(price);
 		
-		System.out.println(hp);
+		System.out.println(type);
 		
 		Platform.runLater(new Runnable() {
 			@Override 
@@ -192,13 +184,13 @@ public class Tower{
 		
 		//diffrent image for each tower type
 		if (getLevel() == 3) {
-			if (health == 1) {
+			if (type == 1) {
 				filename = "tank1up.png";
-			}else if (health == 2) {
+			}else if (type == 2) {
 				filename = "tank2up.png";
-			}else if (health == 3) {
+			}else if (type == 3) {
 				filename = "tank3up.png";
-			}else if (health == 4) {
+			}else if (type == 4) {
 				filename = "tank4up.png";
 			}
 			ImageLoader.setImage(filename, this.rectangle);

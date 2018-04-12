@@ -11,7 +11,7 @@ public class Leveling {
     public double hard = 1.33;
     public double extereme = 1.66;
     public double difficulty = 1.00;
-    public int totalLevels;
+    public static int totalLevels;
     public static int currentLevel = 0;
     public int points = 0;
     public String message = "";
@@ -38,7 +38,7 @@ public class Leveling {
     // function to check health everytime an enemy reaches base
 
     public Leveling(String difficulty, int levels){
-        this.totalLevels = levels;
+        totalLevels = levels;
         setDifficulty(difficulty);
         setTieredEnemies();
         setTieredBosses();
@@ -46,6 +46,11 @@ public class Leveling {
         populateColorList();
         TextGame.setHealth(baseHealth);
 
+    }
+    
+    public static int getTotalLevels()
+    {
+    	return totalLevels;
     }
     
     // theres a list of 7 tiered enemies, 3 bosses
@@ -64,7 +69,7 @@ public class Leveling {
     }
     
     public void setTieredEnemies() {
-    	this.num_enemyTiers = this.totalLevels /4 + 2;
+    	this.num_enemyTiers = totalLevels /4 + 2;
     }
     
     public void setTieredBosses() {
@@ -80,7 +85,7 @@ public class Leveling {
 
     public boolean checkConditions(int health){
         // game is over
-        if(health <= 0 || currentLevel > this.totalLevels){
+        if(health <= 0 || currentLevel > totalLevels){
             return false;
         }
         // game still going on
@@ -90,7 +95,7 @@ public class Leveling {
     }
 
     public void addTieredEnemies(){
-        for(int a = 0; a < this.totalLevels; a++) {
+        for(int a = 0; a < totalLevels; a++) {
         	HashMap<String, Integer> enemy = new HashMap<String, Integer>();
         	this.num_EnemiesList.put(a, enemy);
         }
