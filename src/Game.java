@@ -1,7 +1,6 @@
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
-
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -14,13 +13,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -256,10 +254,8 @@ public class Game extends Application{
 		//Grid builder - Creates a grid of Rectangles, each rectangle is a node with its own texture 	
 		for (int col = 0; col < ((WIDTH)/ getTileSize()); col++) {
 			for (int row = 0; row < ((HEIGHT)/ getTileSize()); row++) {
-				Rectangle rec = new Rectangle(getTileSize(), getTileSize());
-				ImagePattern texturePattern = new ImagePattern(ImageLoader.backgroundImage("grass.jpg"));
-//				rec.setId(Integer.toString(col) + ", " + Integer.toString(row)); //Assign Id to each node
-				rec.setFill(texturePattern);
+				Shape rec = new Rectangle(getTileSize(), getTileSize());
+				ImageLoader.setImage("grass.jpg", rec);
 				GridPane.setRowIndex(rec, row);
 				GridPane.setColumnIndex(rec, col);
 				getGridpane().getChildren().addAll(rec);
@@ -273,9 +269,8 @@ public class Game extends Application{
 			for (int row = 0; row < TextGame.getNumRows(); row++) {
 				if (textgame.get(row).get(col) == " ")
 				{
-					Rectangle rec = new Rectangle(getTileSize(), getTileSize());
-					ImagePattern texturePattern = new ImagePattern(ImageLoader.backgroundImage("enemypath.jpg"));
-					rec.setFill(texturePattern);
+					Shape rec = new Rectangle(getTileSize(), getTileSize());
+					ImageLoader.setImage("enemypath.jpg", rec);
 					GridPane.setRowIndex(rec, row);
 					GridPane.setColumnIndex(rec, col);
 					getGridpane().getChildren().addAll(rec);

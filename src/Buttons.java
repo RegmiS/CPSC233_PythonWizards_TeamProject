@@ -73,7 +73,7 @@ public class Buttons {
      * @return the pause button
      */
     public static Button pauseButton(Timeline timeline) {
-    	Button pause = new Button("Pause");
+    	Button pause = new Button("     Pause     ");
     	pause.setOnAction(new EventHandler<ActionEvent>() 
     	{
     		
@@ -118,6 +118,7 @@ public class Buttons {
      * within game boundaries and is not
      * on top of another tower, enemy path, or base
      * After tower is placed event handler is removed from scene
+     * 
      * @param price Cost of the tower
      * @param type	Type of the tower
      * @param dmg	Tower damage output
@@ -125,11 +126,10 @@ public class Buttons {
      * @param towerList List of all current towers 
      * @param image	Image of the tower type
      * @return Buy button for current tower
-     * 
      */
 	public static Button placeTower(int price, int type, int dmg, int range, ArrayList<Tower> towerList, String image) 
 	    {
-	    	Button twr = new Button("Buy");
+	    	Button twr = new Button("               Buy               ");
 	    	twr.setOnAction(new EventHandler<ActionEvent>() {
 	        public void handle(ActionEvent event) {
         		Game.getGridpane().addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  

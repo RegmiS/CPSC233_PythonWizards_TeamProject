@@ -206,13 +206,3 @@ public class RandomPath {
 				RandomPath.currentRow = currentRow;
 			}
 	}
-
-
-//Ignore
-//enemyPath("right", 2, 0, 5, reference);
-//enemyPath("down", 2, 5, 5, reference);
-//enemyPath("left", 7, 5, 3, reference);
-//enemyPath("down", 7, 2, 3, reference);
-//enemyPath("right", 10, 2, 10, reference);
-//enemyPath("up", 10, 12, 5, reference);
-//enemyPath("right", 5, 12, 12, reference);

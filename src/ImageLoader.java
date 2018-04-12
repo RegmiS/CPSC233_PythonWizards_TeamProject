@@ -1,34 +1,24 @@
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import javafx.scene.paint.ImagePattern;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.shape.*;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Shape;
 
 
 public class ImageLoader {
 	
-	public static Image backgroundImage(String filename) throws FileNotFoundException {
-		/*
-		 * Takes image filename from "res/images/" directory and sets it as window background 
-		 */
-		FileInputStream inputStream = new FileInputStream("res/images/" + filename);
-		Image image = new Image(inputStream);
-		ImageView imageView = new ImageView(image);
-		imageView.setFitWidth(Game.getTileSize()); 
-		imageView.setFitHeight(Game.getTileSize());
-		
-		return image;
-		
-	}
-	
+	/**Takes image filename from "res/images/" directory and sets it as window background
+	 * 
+	 * @param filename
+	 * @return ImageView of background image
+	 * @throws FileNotFoundException
+	 */
 	public static ImageView menuBackgroundImage(String filename) throws FileNotFoundException {
-		/*
-		 * Takes image filename from "res/images/" directory and sets it as window background 
-		 */
 		FileInputStream inputStream = new FileInputStream("res/images/" + filename);
 		Image image = new Image(inputStream);
 		ImageView imageView = new ImageView(image);
@@ -39,6 +29,11 @@ public class ImageLoader {
 		
 	}
 	
+	/**Fills shape object with image from filename
+	 *
+	 * @param filename Name of image
+	 * @param s Shape object to be filled
+	 */
 	public static void setImage(String filename, Shape s) 
 	{
 		FileInputStream inputStream;
@@ -54,7 +49,11 @@ public class ImageLoader {
 		
 		
 	}
-	
+	/**
+	 * 
+	 * @param path Sound file path
+	 * @return MediaPlayer object
+	 */
 	public static MediaPlayer getPlayer(String path)
 	{
 		File source = new File(path);
