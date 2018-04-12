@@ -80,7 +80,7 @@ public class Leveling {
      */
     public void setTieredEnemies() {
     	//this.num_enemyTiers = totalLevels /4 + 2;
-    	this.num_bossTiers = 7;
+    	this.num_enemyTiers = 7;
     }
     
     /**

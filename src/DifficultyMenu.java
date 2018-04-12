@@ -227,9 +227,10 @@ public class DifficultyMenu extends MainMenu{
 					}else if (getEndlessMode().equals("Disabled") && roundsInput.getText().isEmpty()) { //If endless mode is disabled and user did not enter custom number of rounds
 
 						//Start game with default number of rounds
-						setNumRounds(defaultNumRounds);
-						Game.setNumRounds(defaultNumRounds);
 						if (!nameInput.getText().isEmpty()) { //If user name is not empty
+							setNumRounds(defaultNumRounds);
+							Game.setNumRounds(defaultNumRounds);
+							System.out.println(defaultNumRounds);
 							HighScore.setName(nameInput.getText());
 							//Game construtor
 							Game game = new Game(scene);
@@ -242,6 +243,9 @@ public class DifficultyMenu extends MainMenu{
 							}
 						}else { //If user name input is empty
 							HighScore.setName("Generic Name");
+							setNumRounds(defaultNumRounds);
+							Game.setNumRounds(defaultNumRounds);	
+							System.out.println(defaultNumRounds);
 							//Game construtor
 							Game game = new Game(scene);
 							try {
