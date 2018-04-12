@@ -111,6 +111,7 @@ public class DifficultyMenu extends MainMenu{
 					isEndlessMode);
 			
 //			menu.setGridLinesVisible(true);
+			
 			//Add menu to background image
 			background.getChildren().add(menu);
 			
