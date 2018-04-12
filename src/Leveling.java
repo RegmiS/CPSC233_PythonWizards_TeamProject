@@ -7,26 +7,7 @@ import java.util.Random;
 import javafx.scene.paint.Color;
 
 public class Leveling {
-<<<<<<< HEAD
-  // all the variables used in leveling for the various programs
-    public double normal = 1.00;
-    public double hard = 1.33;
-    public double extereme = 1.66;
-    public double difficulty = 1.00;
-    public static int totalLevels;
-    public static int currentLevel = 0;
-    // round 10: 11950
-    // round 5: 4300
-    public int points = 0;
-    public String message = "";
-    public int num_enemyTiers;
-    public int num_bossTiers;
-    public int baseHealth = 1000;
-    public int enemyBaseHealth = 2000;
-    public int enemyBaseDamage = 10;
-    public int enemyBaseRadius = 15;
-    public int TILE_SIZE = 50;
-=======
+
   // all the variables used in leveling for the various programs
     private double normal = 1.00;
     private double hard = 1.33;
@@ -34,16 +15,20 @@ public class Leveling {
     private double difficulty = 1.00;
     private static int totalLevels;
     private static int currentLevel = 0;
+    
+    // round 10: 11950
+    // round 5: 4300
+
     private int points = 0;
     private String message = "";
     private int num_enemyTiers;
     private int num_bossTiers;
-    private int baseHealth = 100000;
-    private int enemyBaseHealth = 1000;
+    private int baseHealth = 1000;
+    private int enemyBaseHealth = 2000;
     private int enemyBaseDamage = 100 ;
     private int enemyBaseRadius = 15;
     private int TILE_SIZE = 50;
->>>>>>> a555516974eb8e794013bc6442bdd34d5c8824f3
+
 
     //boss remainder determiner, set every four levels right now
     private int boss_rounds = 4;// makes it so that bosses spawn every 4 rounds
