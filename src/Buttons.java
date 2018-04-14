@@ -12,6 +12,12 @@ import javafx.stage.Stage;
 
 
 public class Buttons {
+	private static int count = 0;
+	
+	private static int getCount() { return count; }
+	private static void incCount() { count++; }
+	private static void decCount() { count--; }
+	private static void resetCount() { count = 0; }
 	
 	
 	/**
@@ -162,7 +168,8 @@ public class Buttons {
         		Game.getGridpane().addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  
                     @Override
                     public void handle(MouseEvent e) {
-                    	
+                    	incCount();
+                    	if (getCount() == 1) {
                         for(Node node: Game.getGridpane().getChildren()) {
                             if(node instanceof Rectangle) {
                             		if(node.getBoundsInParent().contains(e.getSceneX(),  e.getSceneY()) 
@@ -171,7 +178,7 @@ public class Buttons {
                                  		&& ((TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "X")
                                  		&& (TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != " ") 
                                  		&& (TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)) != "B" ))) {
-                            		 if ((TextGame.getMoney() - price) >= 0){
+                            		 if ((TextGame.getMoney() - price) >= 0 && getCount() == 1){
 //					                    	System.out.println(Double.toString(node.getLayoutX()) + "/" + Double.toString(node.getLayoutY()));
 //					                        System.out.println( "Tower at:  " + GridPane.getRowIndex( node) + "/" + GridPane.getColumnIndex(node));
 					                    	Tower t1 = new Tower(GridPane.getColumnIndex(node), GridPane.getRowIndex(node), price, type, dmg, range, image, Game.getGridpane(),towerList);
@@ -179,6 +186,7 @@ public class Buttons {
 //					                    	System.out.println("HERE" + TextGame.getTextgame().get(GridPane.getRowIndex(node)).get(GridPane.getColumnIndex(node)));
 					                    	TextGame.drawGame();
 					                    	towerList.add(t1);
+					                    	decCount();
 					                    	Game.getGridpane().removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
 //					                    	TextGame.setHealth(Base.getHealth()); //For testing 
 					                    	TextGame.setMoney(TextGame.getMoney()-price);
@@ -194,9 +202,12 @@ public class Buttons {
                             
                         }
                     }
-        		});
+                    	else
+                    		resetCount();
+        		}});
 	        }
 	    });
+	    	
 	
 	    return twr;
 	}

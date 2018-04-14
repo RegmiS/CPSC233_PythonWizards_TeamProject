@@ -122,6 +122,7 @@ public class Game extends Application{
 				//if enemy list is empty makes new list
 				else if (framecount % 40 == 0 && enemyList.isEmpty())
 				{
+					Base.checkHealth(gridpane, timer);
 					setState(false);
 					start.setVisible(true);
 					timer.stop();
@@ -133,21 +134,7 @@ public class Game extends Application{
 				*/
 				
 				//checks if base still has hp, pauses the game if it doesnt
-				if(Base.getHealth() <= 0) {
-				
-				timer.stop();
-    			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
-    			for (int i = 0; i < enemyList.size(); i++  )
-    				enemyList.get(i).pause();
-    			ArrayList<Timeline> missleList = Missles.getTimelineList();
-    			for (int i = 0; i < missleList.size(); i++)
-    				missleList.get(i).pause();
-    			
-    			Pane endPane = Base.gameOver();
-//    			HighScore.returnHighScore(TextGame.getMoney());
-    			gridpane.getChildren().add(endPane);
-				
-				}
+				Base.checkHealth(gridpane, timer);
 				
 				
 				

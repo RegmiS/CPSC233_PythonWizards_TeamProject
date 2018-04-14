@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import javafx.animation.AnimationTimer;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -113,6 +116,25 @@ public class Base {
 		highscore.setAlignment(Pos.CENTER);
 		return highscore;
 		
+	}
+	
+	public static void checkHealth(GridPane gridpane, AnimationTimer timer)
+	{
+	if(Base.getHealth() <= 0) {
+		
+		timer.stop();
+		ArrayList<Timeline> enemyList = Enemy.getTimelineList();
+		for (int i = 0; i < enemyList.size(); i++  )
+			enemyList.get(i).pause();
+		ArrayList<Timeline> missleList = Missles.getTimelineList();
+		for (int i = 0; i < missleList.size(); i++)
+			missleList.get(i).pause();
+		
+		Pane endPane = Base.gameOver();
+//		HighScore.returnHighScore(TextGame.getMoney());
+		gridpane.getChildren().add(endPane);
+		
+		}
 	}
 	
 }
