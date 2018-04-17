@@ -1,8 +1,13 @@
+package algorithms;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import gameObjects.Enemy;
+import main.TextGame;
 
 
 public class Leveling {
