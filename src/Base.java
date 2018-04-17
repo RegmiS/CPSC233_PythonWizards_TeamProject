@@ -75,7 +75,7 @@ public class Base {
 		Pane winPane = new Pane();
 		winPane.toFront();
 		
-		Label win = new Label("Congrats! You win!");
+		Label win = new Label("Congrats! You win! U of C is saved!");
 		win.setFont(new Font("Arial", 60));
 		win.setTextFill(Color.WHITE);
 		win.setLayoutX(0);

@@ -58,7 +58,7 @@ public class MainMenu extends Application {
 		ship.setLayoutY(100);
 		
 		
-		Label title = new Label("Tower Defence Game");
+		Label title = new Label("Defend U of C");
 		title.setFont(new Font("Arial", 65));
 		title.setLayoutX(50);
 		GridPane.setHalignment(playButton, HPos.CENTER);
