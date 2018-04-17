@@ -1,7 +1,13 @@
+package algorithms;
+
 import java.util.Random;
+
+import gameObjects.Enemy;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import main.Game;
+import main.TextGame;
 
 public class RandomPath {
 	private static int baseRow = TextGame.getBaseRow();; //Row position of base

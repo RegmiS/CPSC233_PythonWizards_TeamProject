@@ -1,6 +1,14 @@
+package main;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+
+import algorithms.Leveling;
+import algorithms.RandomPath;
+import gameObjects.Base;
+import gameObjects.Enemy;
+import gameObjects.Tower;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -20,6 +28,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import ui.Buttons;
+import ui.DifficultyMenu;
+import ui.ImageLoader;
+import ui.Store;
 
 public class Game extends Application{
 	
@@ -107,7 +119,7 @@ public class Game extends Application{
 			@Override
 			public void handle(long arg0) {
 				//Towers Shooting
-				if (framecount % 25 == 0) {
+				if (framecount % 25 == 0 ) {
 					getTowerList().forEach(Tower -> Tower.checkInRange(enemyList));
 				}
 				
@@ -120,7 +132,7 @@ public class Game extends Application{
 				}
 				
 				//if enemy list is empty makes new list
-				else if (framecount % 40 == 0 && enemyList.isEmpty())
+				else if (framecount % 40 == 0 && enemyList.isEmpty() && Leveling.returnCurrentLevel() != Leveling.getTotalLevels())
 				{
 					setState(false);
 					start.setVisible(true);
@@ -132,7 +144,7 @@ public class Game extends Application{
 					TextGame.drawGame();
 				
 				// If you beat all the Rounds ends the game with win screen
-				if (framecount % 100 == 0 && Leveling.returnCurrentLevel() == Leveling.getTotalLevels() 
+				if (Leveling.returnCurrentLevel() == Leveling.getTotalLevels() 
 						&& enemyList.isEmpty() && getQueueList().isEmpty() 
 						&& Base.getHealth() > 0)
 				{

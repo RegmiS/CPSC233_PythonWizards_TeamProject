@@ -1,4 +1,8 @@
+package gameObjects;
+
 import java.util.ArrayList;
+
+import algorithms.Leveling;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -8,6 +12,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import main.HighScore;
+import main.TextGame;
+import ui.ImageLoader;
 
 
 

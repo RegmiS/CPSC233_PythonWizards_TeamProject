@@ -1,3 +1,5 @@
+package ui;
+
 import java.io.FileNotFoundException;
 
 import javafx.geometry.HPos;
@@ -6,9 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import main.Game;
 
 public class Store {
 	

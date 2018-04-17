@@ -1,3 +1,5 @@
+package gameObjects;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -12,6 +14,8 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import main.TextGame;
+import ui.ImageLoader;
 
 
 public class Tower{
