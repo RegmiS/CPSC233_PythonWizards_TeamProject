@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import javafx.animation.AnimationTimer;
+import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -23,13 +26,11 @@ public class Base {
 	 * @param dmg, the dmg from an enemy, 
 	 */
 	public static void setHealth(int dmg) { 
-		if (health - dmg >= 0) {
-			health = health-dmg;
-			TextGame.setHealth(TextGame.getHealth()-dmg);
-			}
+		health = health-dmg;
+		TextGame.setHealth(TextGame.getHealth()-dmg);
 		}
-	public void setX(int x) { this.Xcoord = x;}
-	public void setY(int y) { this.Ycoord = y;}
+	public void setX(int x) { Xcoord = x;}
+	public void setY(int y) { Ycoord = y;}
 	
 	
 	
@@ -59,12 +60,13 @@ public class Base {
 		gameOver.setLayoutY(200);
 		gameOver.setAlignment(Pos.CENTER);
 		
+		Label score = getScore();
 		Label round = getRound();
 		Label highscore = getHighscore();
 	
 		endPane.setLayoutX(0);
 		endPane.setLayoutY(0);
-		endPane.getChildren().addAll(gameOver, round, highscore);
+		endPane.getChildren().addAll(gameOver, round, highscore, score);
 		return endPane;
 	}
 	
@@ -82,12 +84,14 @@ public class Base {
 		 
 		Leveling.increaseCurrentLevel();
 		
+		Label score = getScore();
+		
 		Label round = getRound();
 		Label highscore = getHighscore();
 		
 		winPane.setLayoutX(0);
 		winPane.setLayoutY(0);
-		winPane.getChildren().addAll(win, round, highscore);
+		winPane.getChildren().addAll(win, round, highscore, score);
 		
 		return winPane;
 	}
@@ -109,10 +113,40 @@ public class Base {
 		highscore.setFont(new Font("Arial", 40));
 		highscore.setTextFill(Color.WHITE);
 		highscore.setLayoutX(0);
-		highscore.setLayoutY(350);
+		highscore.setLayoutY(300);
 		highscore.setAlignment(Pos.CENTER);
 		return highscore;
 		
+	}
+	
+	private static Label getScore() 
+	{
+		Label score = new Label("Your score: " + String.valueOf(TextGame.getMoney()));
+		score.setFont(new Font("Arial", 40));
+		score.setTextFill(Color.WHITE);
+		score.setLayoutX(0);
+		score.setLayoutY(350);
+		score.setAlignment(Pos.CENTER);
+		return score;
+	}
+	
+	public static void checkHealth(GridPane gridpane, AnimationTimer timer)
+	{
+	if(Base.getHealth() <= 0) {
+		
+		timer.stop();
+		ArrayList<Timeline> enemyList = Enemy.getTimelineList();
+		for (int i = 0; i < enemyList.size(); i++  )
+			enemyList.get(i).pause();
+		ArrayList<Timeline> missleList = Missles.getTimelineList();
+		for (int i = 0; i < missleList.size(); i++)
+			missleList.get(i).pause();
+		
+		Pane endPane = Base.gameOver();
+//		HighScore.returnHighScore(TextGame.getMoney());
+		gridpane.getChildren().add(endPane);
+		
+		}
 	}
 	
 }

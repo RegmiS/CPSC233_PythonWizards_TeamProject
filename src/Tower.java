@@ -107,7 +107,7 @@ public class Tower{
 		setUPrice(getPrice() *2);
 		setCost(price);
 		
-		System.out.println(type);
+//		System.out.println(type);
 		
 		Platform.runLater(new Runnable() {
 			@Override 

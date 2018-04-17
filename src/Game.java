@@ -127,33 +127,13 @@ public class Game extends Application{
 					timer.stop();
 				}
 				
-				/*
+				// displays the text info to the console
 				if (framecount % 100 == 0) 
 					TextGame.drawGame();
-				*/
-				
-				//checks if base still has hp, pauses the game if it doesnt
-				if(Base.getHealth() <= 0) {
-				
-				timer.stop();
-    			ArrayList<Timeline> enemyList = Enemy.getTimelineList();
-    			for (int i = 0; i < enemyList.size(); i++  )
-    				enemyList.get(i).pause();
-    			ArrayList<Timeline> missleList = Missles.getTimelineList();
-    			for (int i = 0; i < missleList.size(); i++)
-    				missleList.get(i).pause();
-    			
-    			Pane endPane = Base.gameOver();
-//    			HighScore.returnHighScore(TextGame.getMoney());
-    			gridpane.getChildren().add(endPane);
-				
-				}
-				
-				
 				
 				// If you beat all the Rounds ends the game with win screen
-				if (Leveling.returnCurrentLevel() == Leveling.getTotalLevels() 
-						&& enemyList.isEmpty() && getQueueList().isEmpty()
+				if (framecount % 100 == 0 && Leveling.returnCurrentLevel() == Leveling.getTotalLevels() 
+						&& enemyList.isEmpty() && getQueueList().isEmpty() 
 						&& Base.getHealth() > 0)
 				{
 					timer.stop();
@@ -163,7 +143,8 @@ public class Game extends Application{
 //					HighScore.returnHighScore(TextGame.getMoney());
 				}
 				
-				removeEnemies(enemyList);
+				Base.checkHealth(gridpane, timer); //checks if base still has hp, ends the game if it doesn't
+				removeEnemies(enemyList); // removes enemies with no HP left
 				framecount++;
 			}
 		});
@@ -183,7 +164,6 @@ public class Game extends Application{
 		GridPane.setConstraints(shoppane, 21, 2, 5, 11);
 		getGridpane().getChildren().addAll(shoppane);
 		
-//
 		
 		//Game Info Bar
 	
