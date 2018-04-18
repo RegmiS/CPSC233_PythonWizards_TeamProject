@@ -270,6 +270,30 @@ public class Game extends Application{
 			}
 		}
 	}
+	
+	/**Draws the Random path on the grid
+	 * To be used with loading 
+	 * 
+	 * 
+	 * @param textgame, 
+	 * @throws FileNotFoundException
+	 */
+	
+//	public void drawPath(ArrayList<ArrayList<String>> textgame) throws FileNotFoundException
+//	{
+//		for (int col = 0; col < TextGame.getNumCols(); col++) {
+//			for (int row = 0; row < TextGame.getNumRows(); row++) {
+//				if (textgame.get(row).get(col) == " ")
+//				{
+//					Shape rec = new Rectangle(getTileSize(), getTileSize());
+//					ImageLoader.setImage("enemypath.jpg", rec);
+//					GridPane.setRowIndex(rec, row);
+//					GridPane.setColumnIndex(rec, col);
+//					getGridpane().getChildren().addAll(rec);
+//				}
+//			}
+//		}
+//	}
 
 	//All getters and setters
 

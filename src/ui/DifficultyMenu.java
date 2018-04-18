@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 import main.Game;
 import main.HighScore;
 
-public class DifficultyMenu extends MainMenu{
+public class DifficultyMenu {
 	
 
 	private static int WIDTH = 1250, HEIGHT = 700; //Set window dimensions
