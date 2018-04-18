@@ -30,6 +30,7 @@ public class DifficultyMenu extends MainMenu{
 	private static String defaultDifficulty = "Normal";
 	private static String difficulty = defaultDifficulty;
 	private static int defaultNumRounds = 20;
+	private static int maxNumRounds = 999;
 	private static int numRounds = defaultNumRounds;
 	private static String endlessMode = "Disabled"; //Default setting 
 	
@@ -169,8 +170,8 @@ public class DifficultyMenu extends MainMenu{
 						roundsInput.clear();
 						setEndlessMode("Enabled");
 						isEndlessMode.setTextFill(Color.RED);
-						setNumRounds(100);
-						Game.setNumRounds(100);
+						setNumRounds(maxNumRounds);
+						Game.setNumRounds(maxNumRounds);
 					}else { //Resets number of rounds to default
 						setEndlessMode("Disabled");
 						isEndlessMode.setTextFill(Color.WHITE);
@@ -191,11 +192,11 @@ public class DifficultyMenu extends MainMenu{
 							Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
 							HighScore.setName(nameInput.getText());
 							if(Integer.parseInt(roundsInput.getText()) <= 0) {
-								setNumRounds(20);
-								Game.setNumRounds(20);
-							} else if(Integer.parseInt(roundsInput.getText()) > 999) {
-								setNumRounds(999);
-								Game.setNumRounds(999);
+								setNumRounds(defaultNumRounds);
+								Game.setNumRounds(defaultNumRounds);
+							} else if(Integer.parseInt(roundsInput.getText()) > maxNumRounds) {
+								setNumRounds(maxNumRounds);
+								Game.setNumRounds(maxNumRounds);
 							}
 							//Game construtor
 							Game game = new Game(scene);
@@ -212,11 +213,11 @@ public class DifficultyMenu extends MainMenu{
 							Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
 
 							if(Integer.parseInt(roundsInput.getText()) <= 0) {
-								setNumRounds(20);
-								Game.setNumRounds(20);
-							} else if(Integer.parseInt(roundsInput.getText()) > 100) {
-								setNumRounds(100);
-								Game.setNumRounds(100);
+								setNumRounds(defaultNumRounds);
+								Game.setNumRounds(defaultNumRounds);
+							} else if(Integer.parseInt(roundsInput.getText()) > maxNumRounds) {
+								setNumRounds(maxNumRounds);
+								Game.setNumRounds(maxNumRounds);
 							}
 							//Game construtor
 							Game game = new Game(scene);
@@ -262,7 +263,7 @@ public class DifficultyMenu extends MainMenu{
 						}	
 							
 					}else if (getEndlessMode().equals("Enabled")){
-						if (!nameInput.getText().isEmpty()){
+						if (!nameInput.getText().isEmpty()){ //If user name input is not empty
 							HighScore.setName(nameInput.getText());
 							//Start game in endless mode
 							Game game = new Game(scene);
@@ -273,7 +274,7 @@ public class DifficultyMenu extends MainMenu{
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
-						}else {
+						}else {//If user name input is empty
 							HighScore.setName("Player");
 							Game game = new Game(scene);
 							try {
@@ -285,35 +286,6 @@ public class DifficultyMenu extends MainMenu{
 							}
 						}
 					}
-//					else {
-//						if (!nameInput.getText().isEmpty()){
-//							setNumRounds(defaultNumRounds);
-//							Game.setNumRounds(defaultNumRounds);
-//							HighScore.setName(nameInput.getText());
-//							//Start game in endless mode
-//							Game game = new Game(scene);
-//							try {
-//								System.out.println("Loading...");	
-//								game.start(primaryStage);
-//								System.out.println("Done");
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//							}
-//						}else {
-//							HighScore.setName("Player");
-//							//Start game with deafult number of rounds
-//							setNumRounds(defaultNumRounds);
-//							Game.setNumRounds(defaultNumRounds);
-//							Game game = new Game(scene);
-//							try {
-//								System.out.println("Loading...");	
-//								game.start(primaryStage);
-//								System.out.println("Done");
-//							} catch (Exception e) {
-//								e.printStackTrace();
-//							}
-//					}
-//				}
 			}	
 		});
 			
@@ -324,8 +296,8 @@ public class DifficultyMenu extends MainMenu{
 			    @Override
 			    public void changed(ObservableValue<? extends String> observable, String oldValue, 
 			        String newValue) {
-			        if (!newValue.matches("\\d*")) {
-			            roundsInput.setText(newValue.replaceAll("[^\\d]", ""));
+			        if (!newValue.matches("\\d*")) {//(Regex)If input is not a digit 
+			            roundsInput.setText(newValue.replaceAll("[^\\d]", "")); //Replace input with empty string
 			        }
 			    }
 			});
@@ -337,7 +309,7 @@ public class DifficultyMenu extends MainMenu{
 			    @Override
 			    public void changed(ObservableValue<? extends String> observable, String oldValue, 
 			        String newValue) {
-			        if (!newValue.matches("\\w*")) {
+			        if (!newValue.matches("\\w*")) {//(Regex)If input is not a letter/number
 			            nameInput.setText(newValue.replaceAll("[^\\w]", ""));
 			        }
 			    }
