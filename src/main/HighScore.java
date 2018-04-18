@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class HighScore {
 	// all the variables for the file to be written into, the hashmap for string and integers
-	private static String fileToWriteOnto = "output.txt";
+	private static String fileToWriteOnto;
 	private static HashMap<String, BigInteger> scores = new HashMap<String, BigInteger>();
 	private static String name;
 	private static String highscorestring;
@@ -40,8 +40,8 @@ public class HighScore {
 	/**
 	 * constructor that sets the file output to the variable assigned at the top
 	 */
-	public HighScore() {
-		fileToWriteOnto = "output.txt";
+	public HighScore(String filename) {
+		fileToWriteOnto = filename;
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class HighScore {
             List<String> lst = Arrays.asList(nextline.split(" "));
             String score = lst.get(lst.size() - 2);
             BigInteger number = new BigInteger(score);
-            String name = lst.get(0) + " " + lst.get(1);
+            String name = lst.get(0);// + " " + lst.get(1);
             scores.put(name, number);
 		}
 		scan.close();
@@ -129,7 +129,7 @@ public class HighScore {
 	 * @param points
 	 * @return - the string that is used to set the highscore: in game
 	 */
-	public static String returnHighScore(int points) {
+	public String returnHighScore(int points) {
 		String nametowrite = name + " " + points + " pts";
 		writeFile(fileToWriteOnto, nametowrite);
 		readFile(fileToWriteOnto);

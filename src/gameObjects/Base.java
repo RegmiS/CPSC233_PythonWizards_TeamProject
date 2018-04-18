@@ -116,7 +116,8 @@ public class Base {
 	
 	public static Label getHighscore()
 	{
-		Label highscore = new Label("Highscore: " + HighScore.returnHighScore(TextGame.getMoney()));
+		HighScore hs = new HighScore("highscores.txt");
+		Label highscore = new Label("Highscore: " + hs.returnHighScore(TextGame.getMoney()));
 		highscore.setFont(new Font("Arial", 40));
 		highscore.setTextFill(Color.WHITE);
 		highscore.setLayoutX(0);

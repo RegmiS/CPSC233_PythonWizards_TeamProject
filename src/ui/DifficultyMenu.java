@@ -169,8 +169,8 @@ public class DifficultyMenu extends MainMenu{
 						roundsInput.clear();
 						setEndlessMode("Enabled");
 						isEndlessMode.setTextFill(Color.RED);
-						setNumRounds(999);
-						Game.setNumRounds(999);
+						setNumRounds(100);
+						Game.setNumRounds(100);
 					}else { //Resets number of rounds to default
 						setEndlessMode("Disabled");
 						isEndlessMode.setTextFill(Color.WHITE);
@@ -207,16 +207,16 @@ public class DifficultyMenu extends MainMenu{
 								e.printStackTrace();
 							}
 						}else { //If user name input is empty
-							HighScore.setName("Generic Name");
+							HighScore.setName("Player");
 							setNumRounds(Integer.parseInt(roundsInput.getText()));
 							Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
 
 							if(Integer.parseInt(roundsInput.getText()) <= 0) {
 								setNumRounds(20);
 								Game.setNumRounds(20);
-							} else if(Integer.parseInt(roundsInput.getText()) > 999) {
-								setNumRounds(999);
-								Game.setNumRounds(999);
+							} else if(Integer.parseInt(roundsInput.getText()) > 100) {
+								setNumRounds(100);
+								Game.setNumRounds(100);
 							}
 							//Game construtor
 							Game game = new Game(scene);
@@ -246,7 +246,7 @@ public class DifficultyMenu extends MainMenu{
 								e.printStackTrace();
 							}
 						}else { //If user name input is empty
-							HighScore.setName("Generic Name");
+							HighScore.setName("Player");
 							setNumRounds(defaultNumRounds);
 							Game.setNumRounds(defaultNumRounds);	
 							System.out.println(defaultNumRounds);
@@ -274,7 +274,7 @@ public class DifficultyMenu extends MainMenu{
 								e.printStackTrace();
 							}
 						}else {
-							HighScore.setName("Generic Name");
+							HighScore.setName("Player");
 							Game game = new Game(scene);
 							try {
 								System.out.println("Loading...");	
@@ -300,7 +300,7 @@ public class DifficultyMenu extends MainMenu{
 //								e.printStackTrace();
 //							}
 //						}else {
-//							HighScore.setName("Generic Name");
+//							HighScore.setName("Player");
 //							//Start game with deafult number of rounds
 //							setNumRounds(defaultNumRounds);
 //							Game.setNumRounds(defaultNumRounds);
@@ -326,6 +326,19 @@ public class DifficultyMenu extends MainMenu{
 			        String newValue) {
 			        if (!newValue.matches("\\d*")) {
 			            roundsInput.setText(newValue.replaceAll("[^\\d]", ""));
+			        }
+			    }
+			});
+			
+			/*From https://stackoverflow.com/a/30796829/8645685
+			 * Makes nameInput Textbox only allow letters/numbers (no spaces) to be entered
+			 */
+			nameInput.textProperty().addListener(new ChangeListener<String>() {
+			    @Override
+			    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+			        String newValue) {
+			        if (!newValue.matches("\\w*")) {
+			            nameInput.setText(newValue.replaceAll("[^\\w]", ""));
 			        }
 			    }
 			});

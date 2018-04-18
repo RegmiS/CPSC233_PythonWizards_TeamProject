@@ -23,7 +23,7 @@ public class Leveling {
     private int points = 0;
     private int num_enemyTiers;
     private int num_bossTiers;
-    private int baseHealth = 1000;
+    private int baseHealth = 10;
     private int enemyBaseHealth = 2000;
     private int enemyBaseDamage = 10 ;
     private int enemyBaseRadius = 15;
@@ -152,8 +152,8 @@ public class Leveling {
         		else if(c > this.num_enemyTiers-1 && (c% 4 != 2) && (c% 4 != 0)) {
         			// after the highest tier enemy spawns, after that round, that tier enemy gets added +3 while the lowest
         			// gets -3
-        			String highiest_tier = String.valueOf(this.num_enemyTiers-1);
-        			int num_highTierEnmy = round.get(highiest_tier);
+        			String highest_tier = String.valueOf(this.num_enemyTiers-1);
+        			int num_highTierEnmy = round.get(highest_tier);
         			round.put(Integer.toString(this.num_enemyTiers-1), num_highTierEnmy+2);
         			int num_firstTier = round.get(String.valueOf(counter));
         			if((num_firstTier - 3) > 0) {
