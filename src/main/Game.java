@@ -270,7 +270,7 @@ public class Game extends Application{
 			}
 		}
 	}
-	
+
 	//All getters and setters
 
 	public static GridPane getGridpane() {
