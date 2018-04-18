@@ -148,6 +148,7 @@ public class Game extends Application{
 						&& enemyList.isEmpty() && getQueueList().isEmpty() 
 						&& Base.getHealth() > 0)
 				{
+					pause.setDisable(true);
 					timer.stop();
 					start.setVisible(false);
 					Pane winPane = Base.winGame();
@@ -155,6 +156,8 @@ public class Game extends Application{
 //					HighScore.returnHighScore(TextGame.getMoney());
 				}
 				
+				if (Base.getHealth() < 0)
+					pause.setDisable(true);
 				Base.checkHealth(gridpane, timer); //checks if base still has hp, ends the game if it doesn't
 				removeEnemies(enemyList); // removes enemies with no HP left
 				framecount++;
