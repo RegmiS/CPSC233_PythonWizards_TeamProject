@@ -23,7 +23,7 @@ public class Leveling {
     private int points = 0;
     private int num_enemyTiers;
     private int num_bossTiers;
-    private int baseHealth = 10;
+    private int baseHealth = 1000;
     private int enemyBaseHealth = 2000;
     private int enemyBaseDamage = 10 ;
     private int enemyBaseRadius = 15;
