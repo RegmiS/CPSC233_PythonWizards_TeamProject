@@ -49,6 +49,10 @@ public class Buttons {
 		return playButton;
 	}
 	
+	/**
+	 * disables or enables the buy buttons for all four towers (disables if true, enables if false)
+	 * @param status whether or not to disable or enable
+	 */
 	public static void disableBuy(boolean status)
 	{
 		 for (int i = 0; i < buyList.size(); i++ )
