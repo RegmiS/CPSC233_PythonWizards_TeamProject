@@ -6,6 +6,7 @@ import algorithms.Leveling;
 import javafx.animation.AnimationTimer;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -14,6 +15,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import main.HighScore;
 import main.TextGame;
+import ui.Buttons;
 import ui.ImageLoader;
 
 
@@ -138,10 +140,12 @@ public class Base {
 		return score;
 	}
 	
-	public static void checkHealth(GridPane gridpane, AnimationTimer timer)
+	public static void checkHealth(GridPane gridpane, AnimationTimer timer, Button pause)
 	{
 	if(Base.getHealth() <= 0) {
 		
+		pause.setDisable(true);
+		Buttons.disableBuy(true);
 		timer.stop();
 		ArrayList<Timeline> enemyList = Enemy.getTimelineList();
 		for (int i = 0; i < enemyList.size(); i++  )

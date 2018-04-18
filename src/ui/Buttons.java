@@ -48,6 +48,14 @@ public class Buttons {
 		});
 		return playButton;
 	}
+	
+	public static void disableBuy(boolean status)
+	{
+		 for (int i = 0; i < buyList.size(); i++ )
+     	{
+     		buyList.get(i).setDisable(status);
+     	}
+	}
 
 //	public static Button loadButton()
 //	{
@@ -173,17 +181,11 @@ public class Buttons {
         		Game.getGridpane().addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {  
                     @Override
                     public void handle(MouseEvent e) {
-                    	for (int i = 0; i < buyList.size(); i++ )
-                    	{
-                    		buyList.get(i).setDisable(true);
-                    	}                 		
+                    	disableBuy(true);                		
                         for(Node node: Game.getGridpane().getChildren()) {
                         	Game.getGridpane().addEventFilter(KeyEvent.ANY, KeyEvent -> {
 
-            					  for (int i = 0; i < buyList.size(); i++ )
-                                	{
-                                		buyList.get(i).setDisable(false);
-                                	}
+            					 disableBuy(false);
             					  Game.getGridpane().removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
             	        		
             	        	});
@@ -211,10 +213,7 @@ public class Buttons {
                         			 System.out.println("Insufficient Funds");
                         			 Game.getGridpane().removeEventFilter(MouseEvent.MOUSE_CLICKED, this);
                         		 }
-                        		  for (int i = 0; i < buyList.size(); i++ )
-                              	{
-                              		buyList.get(i).setDisable(false);
-                              	}
+                        		  disableBuy(false);
                             	}
                       
                         } 
