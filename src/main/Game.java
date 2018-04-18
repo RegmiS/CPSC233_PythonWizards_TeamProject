@@ -86,7 +86,7 @@ public class Game extends Application{
 		setTowerList(new ArrayList<Tower>());
 
 		Enemy.setPane(gridpane);
-		drawGrid();
+		drawGrid(); //Draws game grid
 		textgame.setBase(5, 20, "B"); // does text base
 		Base b1 = new Base(getGridpane());
 
@@ -232,7 +232,7 @@ public class Game extends Application{
 	 * @param enemyList, list of enemies on screen
 	 * @throws ConcurrentModificationException
 	 */
-	public void removeEnemies (ArrayList<Enemy> enemyList) { //throws ConcurrentModificationException {
+	public void removeEnemies (ArrayList<Enemy> enemyList) {
 		for (int i = 0; i < enemyList.size(); i++)
 		{
 			if(enemyList.get(i).getHealth() <= 0) {
@@ -270,31 +270,6 @@ public class Game extends Application{
 			}
 		}
 	}
-	
-	/**Draws the Random path on the grid
-	 * 
-	 * 
-	 * 
-	 * @param textgame, 
-	 * @throws FileNotFoundException
-	 */
-	
-	public void drawPath(ArrayList<ArrayList<String>> textgame) throws FileNotFoundException
-	{
-		for (int col = 0; col < TextGame.getNumCols(); col++) {
-			for (int row = 0; row < TextGame.getNumRows(); row++) {
-				if (textgame.get(row).get(col) == " ")
-				{
-					Shape rec = new Rectangle(getTileSize(), getTileSize());
-					ImageLoader.setImage("enemypath.jpg", rec);
-					GridPane.setRowIndex(rec, row);
-					GridPane.setColumnIndex(rec, col);
-					getGridpane().getChildren().addAll(rec);
-				}
-			}
-		}
-	}
-
 	
 	//All getters and setters
 
