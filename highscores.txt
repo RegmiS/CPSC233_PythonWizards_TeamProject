@@ -3,4 +3,3 @@ brody 1500 pts
 San 1000 pts
 Robbie 1750 pts
 Player 130 pts
-Player 300 pts

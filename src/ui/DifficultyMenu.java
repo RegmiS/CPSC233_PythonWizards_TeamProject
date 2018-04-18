@@ -265,7 +265,7 @@ public class DifficultyMenu extends MainMenu{
 						if (!nameInput.getText().isEmpty()){ //If user name input is not empty
 							HighScore.setName(nameInput.getText());
 							//Start game in endless mode
-							Game game = new Game(scene);
+							Game game = new Game(scene);	
 							try {
 								System.out.println("Loading...");	
 								game.start(primaryStage);
