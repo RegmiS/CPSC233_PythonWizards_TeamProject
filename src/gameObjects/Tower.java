@@ -21,7 +21,6 @@ import ui.ImageLoader;
 public class Tower{
 	
 	private Rectangle rectangle;
-	private int ID;
 	private int damage; //damage done to enemys
 	private int type;
 	private int price; //initial cost
