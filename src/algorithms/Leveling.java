@@ -165,36 +165,6 @@ public class Leveling {
                     }
 
                 }
-//        		else if(c < this.num_enemyTiers && c!= 0) {
-//        			//if the current round is not 0 and less than 7, then it increments the first tier of the 0th place enemy by -3 and adds 6 of the new tier
-//        			// if the first one subtracted 3 is =< 0, it just removes that key
-//        			round.put(num_currentRound, 6);
-//        			int num_firstTier = round.get(String.valueOf(counter));
-//        			if((num_firstTier - 3) > 0) {
-//        				round.put(Integer.toString(counter), num_firstTier-3);
-//        			}
-//        			else {
-//        				round.remove(Integer.toString(counter));
-//        				counter++;
-//        			}
-//        		}
-//
-//        		else if(c > this.num_enemyTiers-1 && (c% 4 != 2) && (c% 4 != 0)) {
-//        			// after the highest tier enemy spawns, after that round, that tier enemy gets added +3 while the lowest
-//        			// gets -3
-//        			String highest_tier = String.valueOf(this.num_enemyTiers-1);
-//        			int num_highTierEnmy = round.get(highest_tier);
-//        			round.put(Integer.toString(this.num_enemyTiers-1), num_highTierEnmy+2);
-//        			int num_firstTier = round.get(String.valueOf(counter));
-//        			if((num_firstTier - 3) > 0) {
-//        				round.put(Integer.toString(counter), num_firstTier-3);
-//        			}
-//        			else {
-//        				round.remove(Integer.toString(counter));
-//        				counter++;
-//        			}
-//
-//        		}
         	}
         }
         //printRoundInfo();

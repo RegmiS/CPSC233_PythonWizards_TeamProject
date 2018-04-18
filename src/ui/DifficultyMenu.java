@@ -191,10 +191,10 @@ public class DifficultyMenu extends MainMenu{
 							setNumRounds(Integer.parseInt(roundsInput.getText()));
 							Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
 							HighScore.setName(nameInput.getText());
-							if(Integer.parseInt(roundsInput.getText()) <= 0) {
+							if(Integer.parseInt(roundsInput.getText()) <= 0) { //If rounds Input is <= 0
 								setNumRounds(defaultNumRounds);
 								Game.setNumRounds(defaultNumRounds);
-							} else if(Integer.parseInt(roundsInput.getText()) > maxNumRounds) {
+							} else if(Integer.parseInt(roundsInput.getText()) > maxNumRounds) { //If rounds Input is > 999
 								setNumRounds(maxNumRounds);
 								Game.setNumRounds(maxNumRounds);
 							}
@@ -212,10 +212,10 @@ public class DifficultyMenu extends MainMenu{
 							setNumRounds(Integer.parseInt(roundsInput.getText()));
 							Game.setNumRounds(Integer.parseInt(roundsInput.getText()));
 
-							if(Integer.parseInt(roundsInput.getText()) <= 0) {
+							if(Integer.parseInt(roundsInput.getText()) <= 0) { //If rounds Input is <= 0
 								setNumRounds(defaultNumRounds);
 								Game.setNumRounds(defaultNumRounds);
-							} else if(Integer.parseInt(roundsInput.getText()) > maxNumRounds) {
+							} else if(Integer.parseInt(roundsInput.getText()) > maxNumRounds) { //If rounds Input is > 999
 								setNumRounds(maxNumRounds);
 								Game.setNumRounds(maxNumRounds);
 							}
@@ -230,7 +230,6 @@ public class DifficultyMenu extends MainMenu{
 							}
 						}					
 					}else if (getEndlessMode().equals("Disabled") && roundsInput.getText().isEmpty()) { //If endless mode is disabled and user did not enter custom number of rounds
-
 						//Start game with default number of rounds
 						if (!nameInput.getText().isEmpty()) { //If user name is not empty
 							setNumRounds(defaultNumRounds);
